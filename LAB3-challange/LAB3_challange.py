@@ -1,6 +1,4 @@
 
-# Part 1
-
 flights = [
     {"flightnumber" : "SK142",
      "dest" : "Munich",
@@ -84,16 +82,21 @@ flights = [
       "cancelled" : False}
 ]
 
+
+
+
 for flight in flights:
     if not flight["gate"]:
         flight["gate"] = "Gate not assigned"
 
 print("AIRPORT DEPARTURE SYSTEM\n")
 
+
+
 while True:
 
-    print(f"1. View all flights\n2. View delayed flights\n3. View cancelled flights\n4. Search for a flight")
-    print(f"5. View flight statistics\n6. Quit\n")
+    print(f"0. Gate overview \n1. View all flights\n2. View delayed flights\n3. View cancelled flights")
+    print(f"4. Search for a flight\n5. View flight statistics\n6. Quit\n")
 
     user_input = input("Choose an option (number): ")
     try:
@@ -101,7 +104,20 @@ while True:
     except ValueError:
         print("\nOnly one single number, please try again\n")
 
-    if user_input == 1:
+
+    if user_input == 0:
+        print ("\nGATE OVERVIEW\n")
+        terminal_list = ["A", "B", "C"]
+        gatenr = 1
+        for terminal in terminal_list:
+            while gatenr <= 4:
+                print ("Gate", terminal + str(gatenr))
+                gatenr += 1
+            gatenr = 1 
+
+        print("")
+
+    elif user_input == 1:
         print ("\nALL FLIGHTS\n")
         num = 1
         for flight in flights:
@@ -222,4 +238,16 @@ while True:
         break
 
 
+
+
+# FINISH GATE PRINT FUNCTION!
+
+
+
+# variables where the type is not defined becomes strings under the input command, before this excercise i thought that this was more arbitrary for some reason
+# (why would it be..?), but it is quite clear that even numbers become strings. For this program the problem with that becomes that I need to convert the sting to an integer for the main input loop to work.
+# But if that input is something that cannot be converted to an integer we will get a ValueError.
+# In this program I solved it by the try-statement even though i know we havn't learned it yet. I do think that this is the right solution.
+# But I also couldnt figure out an if-statement that would work to solve the problem completley unless I just declare every single agreeable option (numbers 1-6) in the if-statement,
+# and that seemed to constraining somehow... Also if anyone wanted to add a new option in the program later on it wouldnt work unless they also changed that if-tree.
 

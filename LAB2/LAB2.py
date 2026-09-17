@@ -102,7 +102,7 @@ print(city)
 # Tuples are immutable so you can't just assign a value in them, this makes them useful for showing that something should not be changed.
 
 # 4.
-""" 
+'''
 coordinates = [
     (10, 20),
     (50, 80),
@@ -115,7 +115,7 @@ y = coordinates[1][1]
 
 print(x)
 print(y)
- """
+'''
 
 
 # Part C
@@ -408,3 +408,10 @@ print(sum(totalstock))
 # sets are useful when duplicates are not allowed.
 # dicts are useful for searchability among other things, since they rely on keys rather than indexation. 
 # There can be a lot of information connected to a key easily avalible for search in dicts.
+
+
+list1 = ["1", "2", "3"]
+
+residual = list1.pop(1)
+
+print(residual)

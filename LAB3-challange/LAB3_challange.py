@@ -240,14 +240,14 @@ while True:
 
 
 
-# FINISH GATE PRINT FUNCTION!
 
-
-
-# variables where the type is not defined becomes strings under the input command, before this excercise i thought that this was more arbitrary for some reason
+# variables where the type is not defined becomes strings under the input() function, before this excercise i thought that this was more arbitrary for some reason
 # (why would it be..?), but it is quite clear that even numbers become strings. For this program the problem with that becomes that I need to convert the sting to an integer for the main input loop to work.
 # But if that input is something that cannot be converted to an integer we will get a ValueError.
-# In this program I solved it by the try-statement even though i know we havn't learned it yet. I do think that this is the right solution.
-# But I also couldnt figure out an if-statement that would work to solve the problem completley unless I just declare every single agreeable option (numbers 1-6) in the if-statement,
-# and that seemed to constraining somehow... Also if anyone wanted to add a new option in the program later on it wouldnt work unless they also changed that if-tree.
+# In this program I solved it by the try-statement even though I know we havn't learned it yet, I do think that this is the right solution.
+# But I also couldnt figure out an if-statement that would work to solve the problem completley unless I just declare every single agreeable option (numbers 0-6 as strings) in the if-statement,
+# and that seemed both constraining and bloated somehow... Also if anyone wanted to add a new option in the program later on it wouldnt work unless they also changed that if-tree.
+
+# Now i get it: the if statement could be taking from a list of "agreable options". if in... etc. else: "error message".
+# I still think the try-statement is probably the "right" solution, but i should have done the list for this task.
 

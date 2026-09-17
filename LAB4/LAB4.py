@@ -473,9 +473,9 @@ def part_summery(participant_name: str, list_of_participants: list) -> str:
             
 # Part G
 
-
-# 1.
 '''
+# 1.
+
 booklist = [
     {"title": "brave new world", "author": "Aldous Huxley", "pages" : 525, "genre": "fiction", "year" : 1946},
     {"title": "1984", "author": "George Orwell", "pages" : 480, "genre": "fiction", "year" : 1944},

@@ -2,23 +2,23 @@
 # Part A
 
 # 1.
-""" 
+''' 
 languages = ["Python", "Java", "JavaScript", "R", "C", "C#", "C++", "Rust"]
 print(languages[0])
 print(languages[-1])
 print(languages[2])
 print(languages[-2])
- """
+'''
 # 2.
-""" 
+''' 
 languages = ["Python", "Java", "JavaScript", "R", "C", "C#", "C++", "Rust"]
 print(languages[1:3])
 print(languages[3:5])
 print(languages[5:])
 print(languages[::-1])
- """
+'''
 # 3.
-""" 
+''' 
 languages = ["Python", "Java", "JavaScript", "R", "C", "C#", "C++", "Rust"]
 languages.append("test")
 print(languages)
@@ -30,20 +30,20 @@ residual = languages.pop(0)
 
 print(languages)
 print(residual)
- """
+'''
 
 # 4.
-""" 
+''' 
 nums = [1, 2, 5, 4, 8]
 
 print(len(nums))
 print(min(nums))
 print(max(nums))
 print(sum(nums))
- """
+'''
 
 # 5.
-""" 
+''' 
 nums = [1, 2, 5, 4, 8]
 
 nums_s = sorted(nums) # Sorted returns a new list wheras sort changes the old one
@@ -53,10 +53,10 @@ print(nums_s)
 print(nums)
 nums.reverse()
 print(nums)
- """
+'''
 
 # 6.
-""" 
+''' 
 nums_a = [1, 2, 5, 4, 8]
 
 nums_b = nums_a
@@ -72,30 +72,30 @@ nums_b.append(5)
 
 print(nums_a)
 print(nums_b)
- """
+'''
 
 
 # Part B
 
 # 1.
-""" 
+''' 
 rgb = (155, 20, 255)
 r, g, b = rgb
 
 print(r)
 print(g)
 print(b)
- """
+'''
 
 # 2.
-""" 
+''' 
 person = ("Chris", 42, "STHLM")
 name, age, city = person
 
 print(name)
 print(age)
 print(city)
- """
+'''
 
 # 3.
 
@@ -121,7 +121,7 @@ print(y)
 # Part C
 
 # 1.
-""" 
+''' 
 course_names = ["Py1", "Py2", "Py3", "Py1", "Py1"]
 
 print(len(course_names))
@@ -129,20 +129,20 @@ print(len(course_names))
 course_names = set(course_names)
 
 print(len(course_names))
- """
+'''
 
 # 2.
-""" 
+''' 
 dev1 = {"C", "C++", "C#", "Python"}
 dev2 = {"C#", "Python", "Java"}
 
 print(dev1 & dev2) # shared
 print(dev1 - dev2) # only first
 print(dev1 | dev2) # either one (union)
- """
+'''
 
 # 3.
-""" 
+''' 
 set1 = {"C", "C++", "C#", "Python"}
 
 set1.remove("C")
@@ -151,7 +151,7 @@ set1.add("C")
 print(set1)
 print("C" in set1)
 print("Beaver" in set1)
- """
+'''
 
 # 4.
 
@@ -161,7 +161,7 @@ print("Beaver" in set1)
 # Part D
 
 # 1.
-"""  
+'''  
 lap1 = {"brand" : "Dell", "model" : "XPS", "RAM" : "32GB", "storage" : "2TB", "price" : 3000}
 
 print(lap1.get("brand"))
@@ -184,18 +184,18 @@ print(lap1.get("model")) # since we removed "model" this returns None where as a
 print(lap1.keys())
 print(lap1.values())
 print(lap1.items())
- """
+'''
 # 5.
-""" 
+''' 
 courses = {"Py1" : 100, "Py2" : 50, "Py3" : 200, "Py4" : 300, "Py5" : 1000}
 
 print(sum(courses.values()))
- """
+'''
 
 # Part E
 
 # 1.
-""" 
+''' 
 booklist = [
     {"title": "brave new world", "author": "Aldous Huxley", "pages" : 525, "available": True},
     {"title": "1984", "author": "George Orwell", "pages" : 480, "available": True},
@@ -216,15 +216,15 @@ print(booklist)
 
 booklist[4]["Good?"] = True
 print(booklist)
- """
+'''
 
 # 4.
-"""  
+'''  
 employees = {"sales" : ["George", "Glen", "Tina"], "production" : ["Lisa", "Jörgen", "Ishmail"]}
 print(employees)
- """
+'''
 # 5.
-""" 
+''' 
 courses = [
     {"name" : "Py1",
      "teacher" : "Aladdin",
@@ -241,12 +241,12 @@ courses = [
 ]
 
 print(courses[0]["topics"][0])
- """
+'''
 
 # Part F
 
 # 1 - 2
-""" 
+''' 
 booklist = [
     {"title": "brave new world", "author": "Aldous Huxley", "pages" : 525, "genre": "fiction", "year" : 1946},
     {"title": "1984", "author": "George Orwell", "pages" : 480, "genre": "fiction", "year" : 1944},
@@ -258,9 +258,9 @@ booklist = [
     {"title": "group dynamics", "author": "Donelson R. Forsyth", "pages" : 667, "genre": "non fiction", "year" : 2012},
     {"title": "business reseach methods", "author": "Emma Bell", "pages" : 600, "genre": "non fiction", "year" : 2018}
     ]
- """
+'''
 # 3.
-""" 
+''' 
 genre = []
 
 for books in booklist:
@@ -269,9 +269,9 @@ for books in booklist:
 genre = set(genre)
 
 print(genre)
- """
+'''
 # 4.
-""" 
+''' 
 years = []
 
 for books in booklist:
@@ -281,10 +281,10 @@ for books in booklist:
     years.append((title, year))
 
 print(years)
- """ 
+''' 
 
 # 5.
-""" 
+''' 
 print(booklist[0]["author"])
 print(booklist[0]["title"])
 print(len(booklist))
@@ -319,10 +319,10 @@ print(booklist2)
 book1 = booklist[0]
 del book1["year"]
 print(book1)
- """
+'''
 
 # 6.
-""" 
+''' 
 print(f"{booklist[0]["author"]} - {booklist[0]["title"]}")
 print(f"{booklist[1]["author"]} - {booklist[1]["title"]}")
 print(f"{booklist[2]["author"]} - {booklist[2]["title"]}")
@@ -332,12 +332,12 @@ print(f"{booklist[5]["author"]} - {booklist[5]["title"]}")
 print(f"{booklist[6]["author"]} - {booklist[6]["title"]}")
 print(f"{booklist[7]["author"]} - {booklist[7]["title"]}")
 print(f"{booklist[8]["author"]} - {booklist[8]["title"]}")
- """
+'''
 
 # Part G
 
 # 1.
-"""  
+'''  
 list_a = ["apan1", "bison99", "flojten"]
 list_b = ["apan1", "maktor12", "jens94"]
 
@@ -347,11 +347,11 @@ unique = set(list_c) - duplicates
 
 print(duplicates)
 print(unique)
- """
+'''
 
 
 # 2.
-""" 
+''' 
 course_platform = [
     {"courses" : ["literature1"],
      "teacher" : "teacher1",
@@ -366,10 +366,10 @@ course_platform = [
 ]
 
 print(course_platform)
- """
+'''
 
 # 3.
-""" 
+''' 
 inventory = [
     {"i_number" : 0,
      "prodname" : "prod1",
@@ -399,7 +399,7 @@ for i in inventory:
     totalstock.append(i.get("stock"))
 
 print(sum(totalstock))
- """
+'''
 
 # 4.
 
@@ -407,4 +407,4 @@ print(sum(totalstock))
 # tuples are immutable and are therefore useful when data should not be changed. Heavily used to store multivariate data in embedded systems.
 # sets are useful when duplicates are not allowed.
 # dicts are useful for searchability among other things, since they rely on keys rather than indexation. 
-# There can be a lot of information connected to a key easily avalible for search in dicts.
+# There can be a lot of information connected to a key easily avalible for search in dicts. ###

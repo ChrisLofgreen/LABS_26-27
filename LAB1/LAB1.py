@@ -69,13 +69,13 @@ print("Your age is:", user_age)
 """
 # 2.
 
-
+'''
 user_input_price = (float(input("Enter price: ")))
 user_input_discount = (float(input("Enter discount percentage: ")))
 
 discounted_price = user_input_price * (1 - user_input_discount / 100)   
 print("Discounted price:", f"{format(discounted_price,'.2f')}")
-
+'''
 
 # 3.
 """ 

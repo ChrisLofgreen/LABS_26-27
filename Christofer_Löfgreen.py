@@ -210,7 +210,7 @@ print(sorted_list)
 
 # 4.
 
-for index, player in enumerate(sorted_list):
+for index, player in enumerate(sorted_list, start=1):
     print(f"{index}. {player["name"]} - {player["score"]}")
 
 # 5.

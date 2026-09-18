@@ -358,8 +358,7 @@ guitar_tuning(transpose=-2, E=82.41, A=110.0, D=146.83, G=196.00, B=246.94, e=32
 # In the explicit version it is a bit easier to follow what the program does if you don't have the input at hand i'd say.
 # In this case we have 7 parameters, 6 of those are "guitar strings", each of which can be clearly distiguished by the E to e terminology. 
 # In that case it might be useful to make that explicit in code too.
-# One could of course do a version where the "transpose" parameter is also in **kwargs, that would make it messier for sure,
-# but I think it would lean towards the absurd for this case.
+# One could of course do a version where the "transpose" parameter is also in **kwargs, that would make it harder to see what is happening.
 '''
 
 # 4.
@@ -402,10 +401,9 @@ receipt_printer(orangutan="priceless")
 
 # Part F
 
-# 1.
+# 1 - 7
 
-
-
+'''
 def create_report(title, *sections, **metadata):
     report = {"title" : title}
     sections_list = []
@@ -426,14 +424,213 @@ def create_report(title, *sections, **metadata):
 
 
 def summarize_report(report):
+    word_count = count_words(report)
+    title = report["title"].upper()
+    metadata = dict(report["metadata"].items())
+    report_summery = f"\n{title}\n\n"
 
-    report_summery = f"\n{report["title"].upper()}\n\ntest"
-    print(report_summery)
+    for section in report["sections"]:
+        report_summery = report_summery + section + "\n\n"
+
+    for key, value in metadata.items():
+        value = str(value)
+        key = key.replace("_", " ")
+        report_summery = report_summery + "\n" + key[0].upper() + key[1:] + " : " + value
+
+    report_summery = report_summery + "\n" + str(word_count)
+    return(report_summery)
 
 
 
+def count_words(*sections):
+    indata = sections[0]["sections"]
+    all_strings = sections[0]["title"].lower()
+    
+    for string in indata:
+        all_strings = all_strings + " " + string.lower() + " "
+
+    all_strings = all_strings.split()
+    word_count = len(all_strings)
+    
+    return f"Word count: {word_count}"
 
 
+    
+report1 = create_report("Q2 report", "Markets \nOur CEO taking his pants of on stage seems to have had a slight negative global effect " \
+                        "on different actor's long term comittment the market in general, \nand likewise regarding our cause in particular.", 
+                        "R&D \nThe experiment of unplugging Sid's bass-rig has been deemed a total success by all stakeholders.", 
+                        "Finance \nThe beer money jar have been subject to intervention by one or serveral malicius actor(s). " \
+                        "This have negativly affected the quartarly earnings, \nand also the estimated credit risk to possible financiers.", 
+                        author="Johnny Rotten", 
+                        report_type="Q-report", 
+                        version=1.0
+                        )
 
-report1 = create_report("Q2 report", "Markets", "R&D", "Finance", author="Johnny Rotten", report_type="Q-report", version=1.0)
-summarize_report(report1)
+report2 = create_report("Test", "test2", "test3", "test4", "test5", "test6", metatest=10)
+
+report3 = create_report("test")
+
+print(summarize_report(report3))
+
+print(summarize_report(report2))
+
+print(summarize_report(report1))
+
+'''
+
+
+# Part G
+
+# 1.
+'''
+def merge_settings (default, **overrides):
+    return default, overrides
+
+
+print(merge_settings(10 , setting1=55, setting2=20))
+'''
+
+# 2.
+'''
+def call_summery(function_name, *args, **kwargs):
+    output_string = f"This {function_name} provides you with "
+    
+
+    for arg in args:
+        output_string += str(arg) + ", "
+
+    output_string += "and "
+
+    for key, value in kwargs.items():
+        value = str(value)
+        key = key.replace("_", " ")
+        if key[-1] == "s":
+            output_string += value  + " " + key + ", "
+        else:
+            output_string += value  + " " + key + "s, "
+
+    output_string += "etc. etc!"
+        
+    return output_string
+
+
+print(call_summery("inventory checker", 
+                   "outstanding reliability", 
+                   "pleasant language", 
+                   "pedigree", 
+                   settings=20, 
+                   day_night_mode=3, 
+                   background_options=80))
+
+'''
+
+# 3.
+'''
+def statistics(*numbers):
+    count = 0
+    total = 0
+    minimum = numbers[0]
+    maximum = numbers[0]
+
+    for number in numbers:
+        count += 1
+
+    for number in numbers:
+        total += number
+
+    for number in numbers:
+
+        if number > maximum:
+            maximum = number
+
+        if number < minimum:
+            minimum = number
+
+    avarage = total / count
+
+    return f"Number count: {count}\nTotal: {total}\nAvarage: {avarage}\nMinimum: {minimum}\nMaximum: {maximum}"
+
+
+print(statistics(-5, -9, -2, -6, -101, -50, -5, -5))
+'''
+
+# 4.
+
+
+'''
+print ("\nHi! and welcome to prediction training version 0.00002!" \
+" Please predict the outcome of the following 5 examples: \n")
+
+
+score = 0
+answer = 0
+
+def scorer(answer, y):
+    global score
+    if y == answer:
+        score += 1
+        return(f"Great work! Score: {score}\n")
+    else:
+        return(f"Sorry, wrong answer... Score: {score}\n")
+
+
+print("Question 1(5)\n\n x, y = (5, 6)\n a, b = (6, 5)\n b, a = y, x\n x, y = y, x\n")
+
+x, y = (5, 6)
+a, b = (6, 5)
+b, a = y, x
+x, y = y, x
+
+answer = input("please type the value of y(int): ")
+answer = int(answer)
+
+print(scorer(answer, y))
+    
+print("Question 2(5)\n\n x = \"Superman has returned!\"\n y = x[13] + " " + x[16] + " " + x[5:7] + x[-2]\n y = y.upper()\n")
+
+x = "Superman has returned!"
+y = x[13] + " " + x[16] + " " + x[5:7] + x[-2]
+y = y.upper()
+print(y)
+
+answer = input("please type the value of y: ")
+answer = answer
+
+print(scorer(answer, y))
+
+
+print("Question 3(5)\n\n x = \"4\" + \"4\" + \"4\"\n string = int(x + x)\n y = string\n")
+
+x = "4" + "4" + "4"
+string = int(x + x)
+y = string
+
+answer = input("please type the value of y(int): ")
+answer = int(answer)
+
+print(scorer(answer, y))
+
+
+print("Question 4(5)\n\n a = [[11]]\n b = [[11]]\n y = len(a) + len(b)\n")
+
+a = [[11]]
+b = [[11]]
+y = len(a) + len(b)
+
+answer = input("please type the value of y(int): ")
+answer = int(answer)
+
+print(scorer(answer, y))
+
+
+print("Question 5(5)\n\n a = {\"a\" : 4, \"A\" : 3, \"a\" : 5, \"A\" : 2}\n y = a[\"a\"]\n")
+
+a = {"a" : 4, "A" : 3, "a" : 5, "A" : 2}
+y = a["a"]
+
+answer = input("please type the value of y(int): ")
+answer = int(answer)
+
+print(scorer(answer, y))
+
+'''

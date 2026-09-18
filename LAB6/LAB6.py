@@ -146,9 +146,8 @@ print(sum(totalpages))
 
 
 # NEW VERSION
-totalpages = [book.get("pages") for book in booklist]
+totalpages = sum([book.get("pages") for book in booklist])
 
-totalpages = sum(totalpages)
 print(totalpages)
 '''
 
@@ -253,11 +252,26 @@ for index, task in enumerate(tasks, 1):
 '''
 
 # 4.
+'''
+numbers = [9, 5, 8, 3, 1, 4, 6, 4]
 
-# Q == Rewrite a range(len(...)) loop using enumarate and explain why the new version is clearer.
+# range(len()):
 
-# REVISIT WHEN I FIND ONE!
+for index in range(len(numbers)):
+    outnum = numbers[index]
+    print(index, "-", outnum)
 
+# enumerate()
+
+for index, number in enumerate(numbers):
+    print(index, "-", number)
+
+
+# I guess it's just clearer what it does, easier to follow. Maybe it is therelationship between the index and the other variable
+# that becomes is more obvious to me at least, combined with the lack of that extra step.
+# I was taught enumerate from the beginning so for me it is the choice for this kind of thing. 
+
+'''
 
 # PART D
 
@@ -404,3 +418,193 @@ print(sorted_booklist)
 '''
 
 # 5.
+
+
+'''
+words = ["Glenn", "Peter", "Ann", "Patricia"]
+
+words_sorted = sorted(words,key=lambda word:len(word))
+
+print(words_sorted)
+
+
+words = ["Glenn", "Peter", "Ann", "Patricia"]
+
+def lenght_key(word):
+    return len(word)
+
+words_sorted = sorted(words,key=lenght_key)
+
+print(words_sorted)
+'''
+
+
+
+
+# Part F
+'''
+# 1.
+booklist = [
+    {"title": "brave   new world", "price" : 525, "stock" : 0},
+    {"title": "1984  ", "price" : 480, "stock" : 5},
+    {"title": "the angel of   darkness", "price" : 625, "stock" : 19},
+    {"title": "the trial"  , "price" : 270, "stock" : 0},
+    {"title": "the transformation", "price" : 70, "stock" : 1},
+    {"title": "Problems of knowledge", "price" : 200, "stock" : 2},
+    {"title": "the principles of morals", "price" : 260, "stock" : 0},
+    {"title": "  group dynamics", "price" : 667, "stock" : 12},
+    {"title": "business reseach methods", "price" : 600, "stock" : 10},
+    {"title": "the sublime    object of ideology", "price" : 300, "stock" : 22},
+    {"title": "reasonS  and persons", "price" : 500, "stock" : 0},
+    {"title": "meTaphysics  ", "price" : 423, "stock" : 4}
+    ]
+
+# 2.
+
+c_booklist = []
+
+for book in booklist:
+    book["title"] = book["title"].strip()
+    book["title"] = book["title"].lower()
+    if "  " or "   " in book["title"]:
+        book["title"] = book["title"].replace("   ", " ")
+        book["title"] = book["title"].replace("  ", " ")
+
+    c_booklist.append(book)
+# 3.
+in_stock = [{book.get("title"):
+            book.get("stock")
+            for book in booklist 
+            if book.get("stock") > 0}]
+
+# 4.
+categories = {"philosophy", "fiction", "reseach"}
+
+# 5.
+stock_value = {book["title"]: book["price"] * book["stock"]
+               for book in booklist}
+
+# 6.
+sorted_value = sorted(
+    booklist,
+    key=lambda book:book["price"] * book["stock"], reverse=True
+)
+# 7.
+#for index, book in enumerate(sorted_value, start=1):
+    #print(index, book)
+
+# 8.
+
+stock_value = [stock_value]
+
+#for book, book in zip(booklist, stock_value):
+#    print (book)
+
+'''
+
+# 9.
+
+'''
+complicated = [
+    number
+    for numbers in [range(1, 101)]
+    for number in numbers
+    if any(number % value == 0 for value in [2])]
+
+simple = [number for number in range(1, 101) 
+          if number % 2 == 0]
+
+print(simple)
+print(complicated)
+'''
+
+# I guess this one is a bit too far out. But i guess: no nested comprehensions if not needed. And if there is a simpler way to calculate
+# the thing, do that.
+
+
+# Part G
+
+# 1.
+'''
+list_of_lists = [[1, 2], [3, 4], [5, 6]]
+
+list1 = [value for lists in list_of_lists for value in lists]
+
+print(list1)
+'''
+# 2.
+'''
+multitable = [[v1 * v2 for v1 in range(1, 10)]
+              for v2 in range(1, 10)]
+
+print(multitable)
+
+# Is it readable enough? Hard to say, a tentative... yes!?
+# I have to underscore that i am new to reading (and writing) comprehentions, so read into that what you will. Ask me in two weeks :)
+# The output could be prettier though I must say.
+'''
+
+# 3. 
+'''
+students = ["Glenn", "Peter", "Ann", "Patricia"]
+
+scores = [48, 68, 82, 75]
+
+passing_students = {student:score for student, score in zip(students, scores)
+                    if score >= 70}
+
+print (passing_students)
+'''
+# 4.
+'''
+scores = [45, 12, 65, 86]
+
+counter = 0
+for score in scores:
+    if score != 0:
+        counter += 1
+
+if counter > 0:
+    print(True)
+else:
+    print(False)
+
+counter = 0
+for score in scores:
+    if score == 0:
+        continue
+    else:
+        counter += 1
+
+if counter == len(scores):
+    print(True)
+else:
+    print(False)
+
+
+print (any(scores)) # Are there any valid scores (not zero)
+
+print (all(scores)) # Are all scores valid (not zero)
+'''
+
+# 5.
+
+#one = [number for number in range(1, 101) 
+#       if number % 2 == 0]
+
+# I think this one is quite clean
+
+
+#x, y = 1, 2
+#x, y = y, x
+
+# I dont know if its only Pyhon, but I can think of places where swapping is really good
+
+#any()
+
+#all()
+
+# As shown in the prevous question...
+
+# sorted() 
+# this is crazy powerful. and strips away a whole lot of nonsense I can imagine

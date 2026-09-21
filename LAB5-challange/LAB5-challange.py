@@ -50,7 +50,7 @@ customers = [
         "customer_name": "Brian May",
         "customer_email": "brian@queen.com"},
         {"customer_id": 5,
-         "customer_name": "Soul Hudson",
+         "customer_name": "Saul Hudson",
          "customer_email": "slash@gnr.com"}
 ]
 
@@ -77,7 +77,7 @@ def order_creator(customer_id, *ordered_products, **options,):
 
     order_options = {key: value for key, value in options.items()}
 
-    return order_id, customer_id, products_on_order, order_options
+    print (order_id, customer_id, products_on_order, order_options)
 
 
 '''
@@ -116,5 +116,40 @@ def order_summery(order_id, customer, *notes, **options):
 
     return output_string
 
-
+'''
 print(order_summery("order-1568", "Johnny Thunders", "Express delivery", "PAYMENT BEFORE DELIVERY!", priority=True, campaign="SUMMER88"))
+'''
+
+
+# PART 5 Unpacking existing data
+
+# First example: We don't know how many guitars will appear in the list
+'''
+list_a = ["Guthrie Govan", "Marshall Plexi", "Vigier Excalibur Surfreter Special", "Gibson Les Paul Standard"]
+
+def gearlist_unpacker(artist, amplifier, *guitars):
+
+    print("artist:", artist)
+    print("amp:", amplifier)
+    for guitar in guitars:
+        print("guitar:", guitar)
+    return ""
+
+print(gearlist_unpacker(*list_a))
+
+'''
+'''
+# Second example: We know that there will be one guitars in the tuple
+
+tuple_a = ("Guthrie Govan", "Marshall Plexi", "Vigier Excalibur Surfreter Special")
+
+def geartuple_unpacker(artist, amplifier, guitar):
+
+    print("artist:", artist)
+    print("amp:", amplifier)
+    print("guitar:", guitar)
+    return ""
+
+print(geartuple_unpacker(*tuple_a))
+'''
+

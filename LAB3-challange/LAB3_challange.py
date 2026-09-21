@@ -183,8 +183,8 @@ def search_for_flight():
             print("\nFlight not found.\n")
 
 
-def flight_statistics():
-    print ("\nFLIGHT STATISTICS\n")
+def operations_report():
+    print("\nAIRPORT OPERATIONS REPORT\n")
     scheduled = len(flights)
     no_pass = 0
     cancelled = 0
@@ -192,12 +192,14 @@ def flight_statistics():
     total_pass = 0
     max_pass = 0
     max_pass_flight = ""
-    cap_80 = 0
+    max_pass_dest = ""
+    cap_80 = {flight["flightnumber"]:flight["dest"] for flight in flights 
+              if flight["passangers"]/ flight["max_cap"] >= 0.8}
 
-    for flight in flights:
-        if flight["cancelled"] == True:
+    for flight in flights: 
+        if flight["status"] == "CANCELLED":
             cancelled  += 1
-        elif flight["delay"] > 0 and flight["cancelled"] == False:
+        elif flight["delay"] > 0 and flight["status"] != "CANCELLED":
             delayed += 1
 
     for flight in flights:
@@ -205,9 +207,7 @@ def flight_statistics():
         if flight["passangers"] > max_pass:
             max_pass = flight["passangers"]
             max_pass_flight = flight["flightnumber"]
-
-        if flight["passangers"]/ flight["max_cap"] >= 0.8:
-            cap_80 += 1
+            max_pass_dest = flight["dest"]
 
         if flight["passangers"] == 0:
             no_pass += 1
@@ -215,20 +215,25 @@ def flight_statistics():
     print("Scheduled flights:",scheduled)
     print("Cancelled flights:",cancelled)
     print("Delayed flights:",delayed)
-    print("Flights on time:",(scheduled - cancelled) - delayed)
-    print("Total passangers:",total_pass)
+    print("On-time flights:",(scheduled - cancelled) - delayed)
+    print("\nTotal passangers:",total_pass)
+    print(f"\nBusiest flight:\n{max_pass_flight} - {max_pass_dest} - {max_pass} passangers\n")
+
+    print(f"Flights above 80% capacity:")
+    for flightnumber,dest in cap_80.items():
+        print(flightnumber, "-", dest)
+
+    print(f"\nPercentage of cancelled flights: {format((scheduled / cancelled),'.0f')}%")
     print("Avg passanger count:", total_pass / (scheduled - no_pass))
-    print("Highest passanger count:","Flight",max_pass_flight,"Passangers:",max_pass)
-    print(f"Number of flights with 80% or more capacity utilized: {cap_80}")
     return "\n"
-    
+
 
 
 
 while True:
 
     print(f"0. Gate overview \n1. View all flights\n2. View delayed flights\n3. View cancelled flights")
-    print(f"4. Search for a flight\n5. View flight statistics\n6. Quit\n")
+    print(f"4. Search for a flight\n5. View operations report\n6. Quit\n")
 
     user_input = input("Choose an option (number): ")
     try:
@@ -253,7 +258,7 @@ while True:
         print(search_for_flight())
 
     elif user_input == 5:
-        print(flight_statistics())
+        print(operations_report())
         
     elif user_input == 6:
         print ("\nSHUTTING DOWN\n")
@@ -262,7 +267,7 @@ while True:
 
 
 
-
+# Comments regarding "try":
 # variables where the type is not defined becomes strings under the input() function, before this excercise i thought that 
 # this was more arbitrary for some reason (why would it be..?). But it is quite clear that even numbers become strings when using input(). 
 # For this program the problem with that becomes that I need to convert the sting to an integer for the main input loop to work.
@@ -276,5 +281,13 @@ while True:
 
 # Now i get it: the if statement could be taking from a list of "agreable options". if in... etc. else: "error message".
 # I still think the try-statement is probably the "right" solution, but I should have done the list for this task 
-# since try had not been part of the course yet.
+# since try had not been part of the course yet. But i'll let it be there as for this challange
 
+# CHANGES AND IMPROVEMENTS:
+# Originally everything was in the main while loop, this was partliy because we had not done functions in the course yet,
+# but also because i hadn't figured out some things that are best done before the main loop.
+
+# The two big changes was therefore: To define the "functions" using functions, and to add a data cleaning/structuring step 
+# before the main loop.
+# The use of functions made it much easier to understand the program from a user prespective and the cleaning/structuring step
+# removed quite a bit of copied code having to do with flight status (delayed, cancelled etc.) within the functions.

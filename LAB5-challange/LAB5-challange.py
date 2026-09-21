@@ -73,22 +73,48 @@ def order_configuration(**order_options):
 def order_creator(customer_id, *ordered_products, **options,):
     order_id = order_counter()
     
-    products_on_order = [product for product in ordered_products]
+    products_on_order = [product.lower() for product in ordered_products]
 
     order_options = {key: value for key, value in options.items()}
 
     return order_id, customer_id, products_on_order, order_options
 
 
-
-
-print(order_creator(3, "Marshall 2555 SL", "Marshall Plexi", priority=True, discount=20))
-
-last_order_id = order_counter()
-
-print(order_creator(4, "Marshall 2555 SL", "Marshall Plexi", priority=True, discount=20))
+'''
+order1 = order_creator(5, "Marshall 2555 SL", "Gibson Les Paul Standard", priority=True, discount=20)
 
 last_order_id = order_counter()
 
-print(order_configuration(priority=True, discount=20, test=None))
+order2 = order_creator(4, "Vox AC30", "Fender Stratocaster", priority=True, discount=20)
 
+last_order_id = order_counter()
+
+order3 = order_creator(3, "Vigier Excalibur Surfreter Special", "Marshall Plexi", priority=True, discount=20)
+
+last_order_id = order_counter()
+
+order4 = order_creator(2, "Fender Stratocaster", "Gibson Les Paul Classic", priority=True, discount=20)
+
+last_order_id = order_counter()
+
+order5 = order_creator(1, "Vigier Excalibur Surfreter Special", "Gibson Les Paul Standard", "Marshall Plexi", priority=True, discount=20)
+
+last_order_id = order_counter()
+'''
+
+
+def order_summery(order_id, customer, *notes, **options):
+    output_string = f"order_summery:\n{order_id},\n{customer},\n"
+
+    for note in notes:
+        output_string = output_string + note + "," + "\n"
+
+    for key, value in options.items():
+        value = str(value)
+        output_string = output_string + key + "="+ value +"," + "\n"
+
+
+    return output_string
+
+
+print(order_summery("order-1568", "Johnny Thunders", "Express delivery", "PAYMENT BEFORE DELIVERY!", priority=True, campaign="SUMMER88"))

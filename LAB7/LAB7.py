@@ -127,16 +127,26 @@ class Course:
         self.students = []
 
     def add_student(self, student):
-        self.students.append(student)
+        if student.name != "" and student.score > 0:
+            self.students.append(student)
+
+        else:
+            raise ValueError(
+                "Student has to have a name and a score above 0"
+            )
 
     def students_in_course(self):
         counter = 0
         for student in self.students:
             counter += 1
+
         return counter
 
     def list_of_passed(self):
-        list_of_passed = [student for student in self.students if student.pass_check() == "PASS"]
+        list_of_passed = [student for student 
+                          in self.students 
+                          if student.pass_check() == "PASS"]
+
         return list_of_passed
 
 
@@ -153,6 +163,7 @@ student5 = Student("Ludwig van", 65)
 student6 = Student("Ann", 68)
 
 
+
 course1.add_student(student1)
 course1.add_student(student2)
 course1.add_student(student3)
@@ -160,9 +171,43 @@ course1.add_student(student4)
 course1.add_student(student5)
 course1.add_student(student6)
 
-print(course1.students_in_course())
 
-# 7.
+
+
+# 7-8. Added ValueError to add_student() in Course: "Student has to have a name and a score above 0"
+
+# 9. 
+
+student7 = Student("Axl", 95)
+student8 = Student("Joe", 92)
+student9 = Student("Courtney", 89)
+student10 = Student("Sebastian", 32)
+student11 = Student("Gary", 65)
+student12 = Student("Vince", 68)
+
+teacher2 = Teacher("Mick")
+course2 = Course("Posing 101", teacher2)
+
+course2.add_student(student7)
+course2.add_student(student8)
+course2.add_student(student9)
+course2.add_student(student10)
+course2.add_student(student11)
+course2.add_student(student12)
+
+#print(course2.name,":", course2.teacher.name)
+
+#for student in course2.students:
+#    print(student.name, student.score)
+
+#for student in course2.list_of_passed():
+#    print(student.name)
+
+#print(course2.students_in_course())
+
+# 10
+
+print(f"\nCOURSE SUMMERY: {course1.name.upper()}\n\nTeacher: {course1.teacher.name}\nStudents in course: {course1.students_in_course()}\n")
+print("Students who passed (apologies for choice of words):")
 for student in course1.list_of_passed():
     print(student.name)
-

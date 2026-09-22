@@ -85,7 +85,7 @@ print(course1.name, ":",course1.teacher.name)
 # 5.
 student1 = Student("Alenka")
 student2 = Student("Slavoj")
-student3 = Student("GF Wilhelm")
+student3 = Student("GW Friedrich")
 student4 = Student("Ludwig von")
 student5 = Student("Ludwig van")
 student6 = Student("Ann")
@@ -116,20 +116,26 @@ class Student:
 
         return "FAIL"
 
+    def update_score(self, new_score):
+        if new_score > 0 and new_score <= 100:
+            self.score = new_score
+        else:
+            raise ValueError("Scores must be between 1 and 100")
+
 class Teacher:
     def __init__(self, name):
         self.name = name
 
 class Course:
-    def __init__(self, name, teacher):
+    def __init__(self, name, teacher, course_description="blank"):
         self.name = name
         self.teacher = teacher
         self.students = []
+        self.course_description = course_description
 
     def add_student(self, student):
         if student.name != "" and student.score > 0:
             self.students.append(student)
-
         else:
             raise ValueError(
                 "Student has to have a name and a score above 0"
@@ -149,6 +155,13 @@ class Course:
 
         return list_of_passed
 
+    def score_above(self, threshold):
+        for student in self.students:
+            if student.score >= threshold:
+                print(student.name)
+
+        return ""
+
 
 # 5-6.
 
@@ -157,7 +170,7 @@ course1 = Course("Social Skills", teacher1)
 
 student1 = Student("Alenka", 95)
 student2 = Student("Slavoj", 92)
-student3 = Student("GF Wilhelm", 89)
+student3 = Student("GW Friedrich", 89)
 student4 = Student("Ludwig von", 32)
 student5 = Student("Ludwig van", 65)
 student6 = Student("Ann", 68)
@@ -170,9 +183,6 @@ course1.add_student(student3)
 course1.add_student(student4)
 course1.add_student(student5)
 course1.add_student(student6)
-
-
-
 
 # 7-8. Added ValueError to add_student() in Course: "Student has to have a name and a score above 0"
 
@@ -206,8 +216,40 @@ course2.add_student(student12)
 #print(course2.students_in_course())
 
 # 10
-
+'''
 print(f"\nCOURSE SUMMERY: {course1.name.upper()}\n\nTeacher: {course1.teacher.name}\nStudents in course: {course1.students_in_course()}\n")
 print("Students who passed (apologies for choice of words):")
 for student in course1.list_of_passed():
     print(student.name)
+'''
+
+
+# PART G
+
+# 1.
+
+student1.update_score(80)
+#print(student1.score)
+
+# 2.
+
+# print(course2.score_above(90))
+
+# 3.
+'''
+for student in course1.students:
+    print(student.name, student.score)
+
+print("")
+
+for student in course2.students:
+    print(student.name, student.score)
+'''
+
+# 4.
+
+course1.course_description = "This is a course for anyone who often find themselves in trouble while being around other people."
+print(course1.course_description)
+
+# I added "course_description" since it is inherantly connected to any object created by the Course class.
+# If it was an indiviual object it would create extra complexity with some kind of matching.

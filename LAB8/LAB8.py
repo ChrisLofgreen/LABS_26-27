@@ -91,3 +91,38 @@ employee1 = Employee("?")
 # employee1.add_language("C#") Returns AttributeError: 'Employee' object has no attribute 'add_language'
 '''
 
+# Part E
+'''
+# 1-4.
+
+class Device:
+    def __init__(self, brand, year):
+        self.brand = brand
+        self.year = year
+        self.is_functional = True
+
+        if self.year < 0:
+            raise ValueError ("year cannot be a negative value")
+
+
+class Laptop(Device):
+    def __init__(self, brand, year, ram_gb):
+        super().__init__(brand, year)
+        self.ram_gb = ram_gb
+
+class Desktop(Device):
+    def __init__(self, brand, year):
+        super().__init__(brand, year)
+
+
+laptop1 = Laptop("Apple", 2025, 16) # raises ValueError: year cannot be a negative value
+desktop1 = Desktop("Asus", 2026)
+
+# 5.
+
+print (desktop1.is_functional)
+print (laptop1.is_functional)
+
+#laptop1 = Laptop("Apple", -2025, 16) # raises ValueError: year cannot be a negative value
+#desktop1 = Desktop("Asus", -2026) # raises ValueError: year cannot be a negative value
+'''

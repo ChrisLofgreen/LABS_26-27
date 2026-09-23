@@ -1,5 +1,35 @@
+# PART C
+
+# 1-6.
+'''
+class Product:
+
+    tax_rate = 0.25
+
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
 
 
+    def price_with_tax(self):
+        return self.price * (1 + self.tax_rate)
+
+product1 = Product("T-rex", 50)
+product2 = Product("Deynonychus", 100)
+product3 = Product("Brachiosaurus", 150)
+
+print(product2.price_with_tax())
+
+Product.tax_rate = 0.4
+
+print(product2.price_with_tax())
+
+product2.tax_rate = 0.5
+
+print(product2.tax_rate)
+print(product1.tax_rate)
+print(Product.tax_rate)
+'''
 
 # PART D
 '''
@@ -104,7 +134,7 @@ for student in course1.students:
 # PART F
 
 # 1-4.
-
+'''
 class Student:
     def __init__(self, name, score):
         self.name = name
@@ -127,7 +157,7 @@ class Teacher:
         self.name = name
 
 class Course:
-    def __init__(self, name, teacher, course_description="blank"):
+    def __init__(self, name, teacher, course_description=None):
         self.name = name
         self.teacher = teacher
         self.students = []
@@ -217,18 +247,17 @@ course2.add_student(student12)
 
 # 10
 '''
-print(f"\nCOURSE SUMMERY: {course1.name.upper()}\n\nTeacher: {course1.teacher.name}\nStudents in course: {course1.students_in_course()}\n")
-print("Students who passed (apologies for choice of words):")
-for student in course1.list_of_passed():
-    print(student.name)
-'''
+#print(f"\nCOURSE SUMMERY: {course1.name.upper()}\n\nTeacher: {course1.teacher.name}\nStudents in course: {course1.students_in_course()}\n")
+#print("Students who passed (apologies for choice of words):")
+#for student in course1.list_of_passed():
+#    print(student.name)
 
 
 # PART G
 
 # 1.
 
-student1.update_score(80)
+#student1.update_score(80)
 #print(student1.score)
 
 # 2.
@@ -248,8 +277,10 @@ for student in course2.students:
 
 # 4.
 
-course1.course_description = "This is a course for anyone who often find themselves in trouble while being around other people."
-print(course1.course_description)
+#course1.course_description = "This is a course for anyone who often find themselves in trouble while being around other people."
+#print(course1.course_description)
+#print(course2.course_description)
 
 # I added "course_description" since it is inherantly connected to any object created by the Course class.
 # If it was an indiviual object it would create extra complexity with some kind of matching.
+# I have it default to None since it need not be in place when the semester is planned.

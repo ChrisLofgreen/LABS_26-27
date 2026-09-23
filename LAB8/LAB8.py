@@ -126,3 +126,34 @@ print (laptop1.is_functional)
 #laptop1 = Laptop("Apple", -2025, 16) # raises ValueError: year cannot be a negative value
 #desktop1 = Desktop("Asus", -2026) # raises ValueError: year cannot be a negative value
 '''
+
+# PART F
+'''
+# 1-4.
+
+class Notification:
+    def send(self):
+        return "This is a test message, nothing to worry about"
+
+class EmailNotification(Notification):
+    def send(self):
+        return "This is an E-Mail: The bombers are over the Baltic!"
+
+class SMSNotification(Notification):
+    def send(self):
+        return "This is an SMS: Sorry... Those where seals... Our guys confused the terms 'sonar' and 'radar'.. Sorry"
+
+message1 = Notification()
+message2 = EmailNotification()
+message3 = SMSNotification()
+
+#print(message1.send())
+#print(message2.send())
+#print(message3.send())
+
+# 5.
+
+# On all three messages the send() method in class Notification is called. But the behaivior of the method is altered by the subsequent
+# sub-class versions.
+
+'''

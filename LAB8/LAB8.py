@@ -141,7 +141,7 @@ class EmailNotification(Notification):
 
 class SMSNotification(Notification):
     def send(self):
-        return "This is an SMS: Sorry... Those where seals... Our guys confused the terms 'sonar' and 'radar'.. Sorry"
+        return "This is a SMS: Sorry... Those where seals... Our guys confused the terms 'sonar' and 'radar'.. Sorry"
 
 message1 = Notification()
 message2 = EmailNotification()
@@ -153,7 +153,27 @@ message3 = SMSNotification()
 
 # 5.
 
-# On all three messages the send() method in class Notification is called. But the behaivior of the method is altered by the subsequent
+# On all three messages the send() method in class Notification is called. But the behaivior of send() is altered by the subsequent
 # sub-class versions.
 
 '''
+
+# PART G
+'''
+# 1-3.
+
+class Report:
+    def get_summery(self):
+        return "This is a general report summery:"
+
+class SalesReport(Report):
+    def get_summery(self):
+        report_summery = super().get_summery() + "\n"
+
+        return report_summery + "\nSales\nSales where really good!"
+
+# 4.
+salesreport1 = SalesReport()
+print(salesreport1.get_summery())
+'''
+

@@ -177,3 +177,90 @@ salesreport1 = SalesReport()
 print(salesreport1.get_summery())
 '''
 
+# PART H
+
+# 1-9.
+'''
+class User:
+    def __init__(self, username, email):
+        self.username = username
+        self.email = email
+
+    def change_username(self, new_username):
+        if " " not in new_username:
+            self.username = new_username
+
+            return "username changed"
+
+        raise ValueError("username cannot include blank spaces")
+
+    def change_email(self, new_email):
+        if "@" in new_email:
+            self.email = new_email
+
+            return "e-mail changed"
+
+        raise ValueError("an e-mail adress must include @")
+
+    def get_user_description(self):
+
+        return "You are a general user"
+
+
+class PremiumUser(User):
+    def __init__(self, username, email, account_nr):
+        super().__init__(username, email)
+
+        self.account_nr = account_nr
+
+    def get_user_description(self):
+        general_info = super().get_user_description()
+
+        return general_info + f" sort of. But you do have some special privilages. Your account number is: {self.account_nr}" 
+
+    def get_account_nr(self):
+
+        return self.account_nr
+    
+
+class AdminUser(User):
+    def __init__(self, username, email):
+        super().__init__(username, email)
+
+        self.security_access = False
+
+    def get_user_description(self):
+        if self.security_access == True:
+            return "You are an admin user with security access"
+        
+        return "You are an admin user, but you do not have security access"
+
+    def implement_security_access(self):
+        if self.security_access == True:
+            return "Already have security access"
+
+        self.security_access = True
+        return "You now have security access! (A bit easy to get maybe...)"
+
+
+user1 = User("anna_a", "anna@andersson.se")
+premiumuser1 = PremiumUser("benny_b", "benny@bjornsson.se", 11111)
+admin1 = AdminUser("carrie_c", "carrie@convinient.com")
+admin1.implement_security_access()
+admin2 = AdminUser("darryl_d", "darryl@donaldsson.com")
+
+print(user1.get_user_description())
+print(premiumuser1.get_user_description())
+print(admin1.get_user_description())
+print(admin2.get_user_description())
+
+admin2.change_username("darril_d")
+admin2.change_email("darril@donaldsson.nu")
+print(admin2.username)
+print(admin2.email)
+
+# 10.
+# Both AdminUser and PremiumUser are users. The may have a little bit different info and privileges on top but under that
+# they all need the basics for being a User, in this case a username and an email. And the fact that they can share functions
+# like change_email() saves us from some duplicated code and update problems.
+'''

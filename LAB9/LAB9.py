@@ -4,6 +4,46 @@
 # REVISIT H 10
 
 
+# Part B
+'''
+class Document:
+    def __init__(self, title):
+        self.title = title
+
+    def describe(self):
+        return "Unknown file format"
+
+class PDFDocument(Document):
+
+    def describe(self):
+        return ".pdf"
+
+class TextDocument(Document):
+
+    def describe(self):
+        return ".txt"
+
+
+object1 = PDFDocument("the_priniciple_of_morals")
+object2 = PDFDocument("a_guide_to_origami")
+object3 = PDFDocument("the_best_songs_EVER!!!")
+object4 = TextDocument("part1_An_introduction_to_alchemy")
+object5 = TextDocument("part2_Reactor_physics")
+object6 = TextDocument("part3_Never_underestimate_the_alchemists!")
+
+list_of_objects = []
+
+list_of_objects.append(object1)
+list_of_objects.append(object2)
+list_of_objects.append(object3)
+list_of_objects.append(object4)
+list_of_objects.append(object5)
+list_of_objects.append(object6)
+
+for object in list_of_objects:
+    print(f"{object.title}{object.describe()}")
+'''
+
 
 # Part C
 

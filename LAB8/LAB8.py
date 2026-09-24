@@ -1,6 +1,33 @@
 
+# Part B
+'''
+movie = {
+    "title": "fire walk with me",
+    "director": "David Lynch",
+    "rating": 67
+}
 
+class Movie:
+    def __init__(self, title, director, rating):
+        self.title = title
+        self.director = director
+        self.rating = rating
 
+    def is_above_85(self):
+        if self.rating > 85:
+            return "It's above 85!"
+        
+        return "It's not above 85"
+
+movie1 = Movie("fire walk with me", "David Lynch", 67)
+
+# I would choose dictionary if when we don't need calculations within the class. In this case i would lean towards dictionary if this was
+# all we needed to do because the "is_above_85" method could easily, and perhaps preferibly be a function iterating over a list of
+# dictionaries or something like that. This method is not inherent to any object "Movie" but is better understood as a function to work 
+# with a collection of movies. 
+'''
+
+    
 
 # Part C
 '''
@@ -127,7 +154,7 @@ print (laptop1.is_functional)
 #desktop1 = Desktop("Asus", -2026) # raises ValueError: year cannot be a negative value
 '''
 
-# PART F
+# Part F
 '''
 # 1-4.
 
@@ -158,7 +185,7 @@ message3 = SMSNotification()
 
 '''
 
-# PART G
+# Part G
 '''
 # 1-3.
 
@@ -177,7 +204,7 @@ salesreport1 = SalesReport()
 print(salesreport1.get_summery())
 '''
 
-# PART H
+# Part H
 
 # 1-9.
 '''
@@ -189,7 +216,6 @@ class User:
     def change_username(self, new_username):
         if " " not in new_username:
             self.username = new_username
-
             return "username changed"
 
         raise ValueError("username cannot include blank spaces")
@@ -197,13 +223,11 @@ class User:
     def change_email(self, new_email):
         if "@" in new_email:
             self.email = new_email
-
             return "e-mail changed"
 
         raise ValueError("an e-mail adress must include @")
 
     def get_user_description(self):
-
         return "You are a general user"
 
 
@@ -219,7 +243,6 @@ class PremiumUser(User):
         return general_info + f" sort of. But you do have some special privilages. Your account number is: {self.account_nr}" 
 
     def get_account_nr(self):
-
         return self.account_nr
     
 
@@ -259,8 +282,9 @@ admin2.change_email("darril@donaldsson.nu")
 print(admin2.username)
 print(admin2.email)
 
+'''
+
 # 10.
 # Both AdminUser and PremiumUser are users. The may have a little bit different info and privileges on top but under that
-# they all need the basics for being a User, in this case a username and an email. And the fact that they can share functions
+# they do need the basics for being a User, in this case a username and an email. And the fact that they can share functions
 # like change_email() saves us from some duplicated code and update problems.
-'''

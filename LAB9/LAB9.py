@@ -1,5 +1,31 @@
 
 
+# Part D
+
+# 1-4.
+'''
+class User:
+    def __init__(self):
+        pass
+
+class AdminUser(User):
+    pass
+
+admin_object = AdminUser()
+
+list_of_types = [str, User, AdminUser]
+
+for type1 in list_of_types:
+    if isinstance(admin_object, type1) == True:
+        print(f"adminuser is {type1}")
+    else:
+        print(f"adminuser is not {type1}")
+'''
+# 5.
+
+# the admin_object is considered an instance of User since User is the parent of AdminUser, in the same way that
+# the genus Triceratops is the sub-class of the clade Dinosauria. Triceratops is therefore an instance of Dinosauria.
+
 
 
 # Part E
@@ -95,7 +121,7 @@ print(computer.cpu.model)
 
 
 # Part H
-
+'''
 class Exporter:
     def __init__(self):
         pass
@@ -177,3 +203,6 @@ for object in list_of_objects:
 
     print(f"{object.export(data1)}, which is{exporter_status}an instance of the Exporter parent class")
 
+'''
+
+# REVISIT 10

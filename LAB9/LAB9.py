@@ -111,11 +111,11 @@ class ConsoleExporter(Exporter):
 
     def export(self, data):
         self.data = data
-        master_addon = super().export(data) + " that is being processed by the Console exporter"
+        master_addon = super().export(data) + " being processed by the Console exporter"
         return master_addon
 
     def __str__(self):
-        return "Console Exporter"
+        return "This is a console exporter"
 
     
 class TextExporter(Exporter):
@@ -124,11 +124,11 @@ class TextExporter(Exporter):
 
     def export(self, data):
         self.data = data
-        master_addon = super().export(data) + " that is being processed by the Text exporter"
+        master_addon = super().export(data) + " being processed by the Text exporter"
         return master_addon
 
     def __str__(self):
-        return "Text Exporter"
+        return "This is a text exporter"
 
 
 class SummeryExporter(Exporter):
@@ -137,23 +137,43 @@ class SummeryExporter(Exporter):
 
     def export(self, data):
         self.data = data
-        master_addon = super().export(data) + " that is being processed by the Summery exporter"
+        master_addon = super().export(data) + " being processed by the Summery exporter"
         return master_addon
 
     def __str__(self):
-            return "Summery Exporter"
+            return "This is a Summery exporter"
+
+class AnotherExporter:
+    def __init__(self):
+        pass
+
+    def export(self, data):
+        self.data = data
+        another_addon = data + " being processed by Another exporter"
+        return another_addon
+
 
 
 ex1 = ConsoleExporter()
 ex2 = TextExporter()
 ex3 = SummeryExporter()
-data1 = "This is a string of data"
+ex4 = AnotherExporter()
+data1 = "I am"
 
 list_of_objects = []
 
 list_of_objects.append(ex1)
 list_of_objects.append(ex2)
 list_of_objects.append(ex3)
+list_of_objects.append(ex4)
 
 for object in list_of_objects:
-    print(object.export(data1))
+    exporter_status = ""
+
+    if isinstance(object, Exporter) == True:
+        exporter_status = " "
+    else:
+        exporter_status = " NOT "
+
+    print(f"{object.export(data1)}, which is{exporter_status}an instance of the Exporter parent class")
+

@@ -1,5 +1,55 @@
 
 
+
+# REVISIT H 10
+
+
+
+# Part C
+
+# 1-4.
+'''
+class Printer:
+    def __init__(self):
+        pass
+
+    def display_status(self):
+        return "Printer"
+
+
+class Screen:
+    def __init__(self):
+        pass
+
+    def display_status(self):
+        return "Screen"
+
+
+object1 = Printer()
+object2 = Printer()
+object3 = Printer()
+object4 = Screen()
+object5 = Screen()
+object6 = Screen()
+
+list_of_objects = []
+
+list_of_objects.append(object1)
+list_of_objects.append(object2)
+list_of_objects.append(object3)
+list_of_objects.append(object4)
+list_of_objects.append(object5)
+list_of_objects.append(object6)
+
+for object in list_of_objects:
+    print(object.display_status())
+'''
+
+# 5.
+
+# This works because Python looks for what the object "is". And since we defined that while creating them we
+# will get the appropriate display_status() return.
+
 # Part D
 
 # 1-4.
@@ -205,4 +255,4 @@ for object in list_of_objects:
 
 '''
 
-# REVISIT 10
+# REVISIT 10 + make prettier

@@ -102,15 +102,17 @@ class Exporter:
 
     def export(self, data):
         self.data = data
+        return data
 
 
 class ConsoleExporter(Exporter):
     def __init__(self):
         pass
 
-    def export(self):
-        from_master = super().export(self.data)
-        return from_master
+    def export(self, data):
+        self.data = data
+        master_addon = super().export(data) + " that is being processed by the Console exporter"
+        return master_addon
 
     def __str__(self):
         return "Console Exporter"
@@ -120,9 +122,10 @@ class TextExporter(Exporter):
     def __init__(self):
         pass
 
-    def export(self):
-        from_master = super().export(self.data)
-        return from_master
+    def export(self, data):
+        self.data = data
+        master_addon = super().export(data) + " that is being processed by the Text exporter"
+        return master_addon
 
     def __str__(self):
         return "Text Exporter"
@@ -132,9 +135,10 @@ class SummeryExporter(Exporter):
     def __init__(self):
         pass
 
-    def export(self):
-        from_master = super().export(self.data)
-        return from_master
+    def export(self, data):
+        self.data = data
+        master_addon = super().export(data) + " that is being processed by the Summery exporter"
+        return master_addon
 
     def __str__(self):
             return "Summery Exporter"
@@ -152,4 +156,4 @@ list_of_objects.append(ex2)
 list_of_objects.append(ex3)
 
 for object in list_of_objects:
-    print(object)
+    print(object.export(data1))

@@ -57,3 +57,38 @@ print(account1)
 print(s_account1)
 '''
 
+# Part G
+'''
+# 1-4.
+
+class CPU:
+    def __init__(self, model):
+        self.model = model
+
+class Computer:
+    def __init__(self, brand, cpu):
+        self.brand = brand
+        self.cpu = cpu
+
+
+cpu = CPU("9700 X")
+
+computer = Computer("Asus", cpu)
+
+print(computer.brand)
+print(computer.cpu.model)
+'''
+# 5.
+
+# It makes more sense since it is true in a very boolean sense :) There is a case to be made that you could make a "computer" without
+# what we call a CPU today, but it is not true that a computer in the modern sense is a CPU, the CPU is a part of what makes up a computer.
+# Therefor the computer HAS-A CPU, like it HAS-A Case, a motherbord (That in turn motherboard might have a CPU socket) etc.
+
+# 6.
+
+# Car HAS-An Engine, Phone IS-A Device, then it becomes a bit more complicated since:
+# Course HAS-A Teacher, but Teacher also HAS-A Course - but none of them IS the other.
+# Next level of complexity: Manager HAS-An Employee (one could say). But it's also likley that Manager IS-An Employee.
+
+# So in the more complex cases it matters what the program is supposed to do, or to be more precise:
+# What structure the code is supposed to manifest.

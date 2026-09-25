@@ -1,4 +1,53 @@
-# PART C
+
+
+
+
+# Part A
+
+# 1-5.
+
+'''
+class Book:
+    def __init__(self, title, author, pages="unknown"):
+        self.title = title
+        self.author = author
+        self.pages = pages
+
+class Laptop:
+    def __init__(self, brand, model, ram_gb, price):
+        self.brand = brand
+        self.model = model
+        self.ram_gb = ram_gb
+        self.price = price
+
+
+book1 = Book("the trial", "Franz Kafka", 270)
+book2 = Book("the transformation", "Franz Kafka", 70)
+book3 = Book("the angel of darkness", "Caleb Carr", 625)
+book4 = Book("the sublime object of ideology", "Slavoj Zizek")
+
+print(book1.title, book1.author, book1.pages)
+print(book2.title, book2.author, book2.pages)
+print(book3.title, book3.author, book3.pages)
+print(book4.title, book4.author, book4.pages)
+
+lap1 = Laptop("Apple", "Macbook Neo", 16, 10000)
+lap2 = Laptop("Apple", "Macbook Pro", 64, 40000)
+lap3 = Laptop("Dell", "XPS", 32, 30000)
+
+lap3.price = 32000
+# 5.
+lap4 = Laptop(brand="Apple", model="Macbook Pro", ram_gb=64, price=40000)
+
+print(lap2 is lap4)
+'''
+
+
+# Part B
+
+
+
+# Part C
 
 # 1-6.
 '''
@@ -31,7 +80,7 @@ print(product1.tax_rate)
 print(Product.tax_rate)
 '''
 
-# PART D
+# Part D
 '''
 # 1.
 
@@ -84,7 +133,7 @@ for student in passing_students:
     print (student.name, student.score)
 '''
 
-# PART E
+# Part E
 '''
 # 1.
 class Teacher:
@@ -131,7 +180,7 @@ for student in course1.students:
     print(student.name)
 '''
 
-# PART F
+# Part F
 
 # 1-4.
 '''
@@ -253,7 +302,7 @@ course2.add_student(student12)
 #    print(student.name)
 
 
-# PART G
+# Part G
 
 # 1.
 

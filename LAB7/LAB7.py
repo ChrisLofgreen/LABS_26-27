@@ -44,7 +44,59 @@ print(lap2 is lap4)
 
 
 # Part B
+'''
+class Book:
+    def __init__(self, title, author, pages="unknown"):
+        self.title = title
+        self.author = author
+        self.pages = pages
 
+    def is_long(self):
+        if type(self.pages) == str:
+            return self.pages
+        
+        elif self.pages > 300:
+            return True
+
+        return False
+
+
+class BankAccount:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+
+    def deposit(self, number):
+        self.number = number
+        self.balance = self.balance + self.number
+        return f"New balance: {self.balance}"
+
+    def withdraw(self, number):
+        self.number = number
+        if self.number > self.balance:
+            raise ValueError ("You cant withdraw more than you have!")
+        self.balance = self.balance - self.number
+        return f"New balance: {self.balance}"
+
+
+class Task:
+    def __init__(self, title, completed=False):
+        self.title = title
+        self.completed = completed
+
+    def complete(self):
+        self.completed = True
+
+    def reopen(self):
+        self.completed = False
+
+account1 = BankAccount("Lenny", 500)
+account2 = BankAccount("Tamara", 500)
+
+account1.withdraw(250)
+print(account1.balance)
+print(account2.balance)
+'''
 
 
 # Part C

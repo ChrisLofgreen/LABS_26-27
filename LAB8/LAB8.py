@@ -1,4 +1,54 @@
 
+
+
+
+# Part A
+'''
+class BadTeam:
+    def __init__(self, name, members=[]):
+        self.name = name
+        self.members = members
+
+    def add_member(self, member):
+        self.member = member
+        self.members.append(member)
+
+object1 = BadTeam("Aston Martin F1")
+object2 = BadTeam("Philadelphia Flyers")
+
+object1.add_member("Adrian Newey")
+
+print(object1.members)
+print(object2.members)
+
+# The new member gets stored as a part of the class rather than the object generated from the class. So not only do we change the default value, 
+# but also the list inherent to the objects in the class.
+
+
+class Team:
+    def __init__(self, name, members=None):
+        self.name = name
+
+        if members == None:
+            members = []
+
+        self.members = members
+
+    def add_member(self, member):
+        self.member = member
+        self.members.append(member)
+
+object3 = Team("Ferrari F1")
+object4 = Team("Pittsburgh Penguins")
+
+object3.add_member("Lewis Hamilton")
+object4.add_member("Sidney Crosby")
+
+print(object3.members)
+print(object4.members)
+'''
+
+
 # Part B
 '''
 movie = {
@@ -21,10 +71,12 @@ class Movie:
 
 movie1 = Movie("fire walk with me", "David Lynch", 67)
 
-# I would choose dictionary if when we don't need calculations within the class. In this case i would lean towards dictionary if this was
+# I would choose dictionary when we don't need calculations within the class. In this case i would lean towards dictionary if this was
 # all we needed to do because the "is_above_85" method could easily, and perhaps preferibly be a function iterating over a list of
-# dictionaries or something like that. This method is not inherent to any object "Movie" but is better understood as a function to work 
-# with a collection of movies. 
+# dictionaries or something like that. This method is not inherent to any object "Movie" but is, I think, better understood as a function
+# to work with a collection of movies. (that collection of movies could of course be a list of Movie objects if we need calculation 
+# within those objects)
+
 '''
 
     

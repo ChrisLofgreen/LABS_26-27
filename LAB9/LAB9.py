@@ -1,7 +1,52 @@
 
 
 
-# REVISIT H 10
+
+# Part A
+
+# 1-4.
+
+'''
+class EmailNotification:
+    def __init__(self):
+        pass
+
+    def send(self):
+        return "I am an e-mail"
+
+
+class SMSNotification:
+    def __init__(self):
+        pass
+
+    def send(self):
+        return "I am a SMS"
+
+
+class PushlNotification:
+    def __init__(self):
+        pass
+
+    def send(self):
+        return "I am a push"
+
+
+notification1 = EmailNotification()
+notification2 = SMSNotification()
+notification3 = PushlNotification()
+
+list_of_notifications = []
+
+list_of_notifications.append(notification1)
+list_of_notifications.append(notification2)
+list_of_notifications.append(notification3)
+
+for notification in list_of_notifications:
+    print(notification.send())
+'''
+# 5.
+# The loop does not need to know the exact class because Python looks at the object and recognizes that it is of the respective type 
+# class.Email, SMS or Push
 
 
 # Part B
@@ -86,9 +131,9 @@ for object in list_of_objects:
 '''
 
 # 5.
-
 # This works because Python looks for what the object "is". And since we defined that while creating them we
 # will get the appropriate display_status() return.
+
 
 # Part D
 
@@ -112,7 +157,6 @@ for type1 in list_of_types:
         print(f"adminuser is not {type1}")
 '''
 # 5.
-
 # the admin_object is considered an instance of User since User is the parent of AdminUser, in the same way that
 # the genus Triceratops is the sub-class of the clade Dinosauria. Triceratops is therefore an instance of Dinosauria.
 
@@ -174,6 +218,7 @@ print(s_account1)
 '''
 
 # Part G
+
 '''
 # 1-4.
 
@@ -195,13 +240,11 @@ print(computer.brand)
 print(computer.cpu.model)
 '''
 # 5.
-
 # It makes more sense since it is true in a very boolean sense :) There is a case to be made that you could make a "computer" without
 # what we call a CPU today, but it is not true that a computer in the modern sense IS-A CPU, the CPU is a part of what makes up a computer.
 # Therefor the computer HAS-A CPU, like it HAS-A Case, a motherbord (That in turn might have a CPU socket) etc.
 
 # 6.
-
 # Car HAS-An Engine, Phone IS-A Device, then it becomes a bit more complicated since:
 # Course HAS-A Teacher, but Teacher also HAS-A Course - but none of them IS the other.
 # Next level of complexity: Manager HAS-An Employee (one could say). But it's also likley that Manager IS-An Employee.
@@ -211,7 +254,8 @@ print(computer.cpu.model)
 
 
 # Part H
-'''
+
+
 class Exporter:
     def __init__(self):
         pass
@@ -293,6 +337,7 @@ for object in list_of_objects:
 
     print(f"{object.export(data1)}, which is{exporter_status}an instance of the Exporter parent class")
 
-'''
 
-# REVISIT 10 + make prettier
+
+
+# Revisit H 10. If time: make H prettier/more interesting, and/or funnier

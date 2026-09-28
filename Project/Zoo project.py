@@ -66,30 +66,32 @@ class Beaver(Animal):
         self.found_stream = False
         
         if self.location == None:
-            self.location = (5, random.randrange(1,8))
+            self.location = (7, random.randrange(1,8))
 
     def movement(self):
         x, y = self.location
         global beaver_dam
 
         if self.found_stream == False:
-            counter = 3
+            counter = 2
             while counter > 0 and self.found_stream == False:
+
                 for stream_square in stream_squares:
                     if stream_square == (x, y):
                         self.found_stream = True
                         if beaver_dam == None:
-                            beaver_dam = y
+                            beaver_dam = {"y_coordinate": y, "working": 1, "progress": 0}
                             print(f"{self.name} has found the stream and started work on the beaver dam!")
                             break
                         else:
-                            print(f"{self.name} has found the stream and will help the other beavers with the beaver dam!") 
+                            print(f"{self.name} has found the stream and will help with the beaver dam!")
+                            beaver_dam["working"] += 1
                             break
            
                 x = x + random.randrange(-1, 1)
                 y = y + random.randrange(-1, 1)
-                print(x, y)
-                print(beaver_dam)
+
+
                 if x > 9:
                     x = 9
                 elif x < 1:
@@ -99,22 +101,20 @@ class Beaver(Animal):
                 elif y < 1:
                     y = 1
                 
-                counter += 1
+                counter -= 1
 
-
-        '''
-        if time_of_day == 1 or time_of_day == 2:
-            x = x + random.randrange(-1,1)
-            y = y + random.randrange(-1,1)
-        elif time_of_day == 3:
-            x = x + random.randrange(-3,3)
-            y = y + random.randrange(-3,3)
-        elif time_of_day == 4:
-            pass
+        else:
             
-        
+            if time_of_day <= 2 and beaver_dam["progress"] < 100:
+                beaver_dam["progress"] = beaver_dam["progress"] + (beaver_dam["working"] * 0.5)
 
-        '''
+            if beaver_dam["progress"] >= 100:
+                pass
+
+            else:
+                pass
+
+        
         self.location = (x, y)
 
 
@@ -158,7 +158,7 @@ class TRex(Animal):
 
 
 
-
+flappy = Beaver("Flappy")
 nibbles = Beaver("Nibbles")
 tommy = Orangutan("Tommy")
 sue = TRex("Sue")
@@ -168,9 +168,10 @@ animals.append(nibbles)
 
 
 
-while day <= 5:
+while day <= 20:
 
     nibbles.movement()
+    flappy.movement()
 
     user_input = input("Enter to continue, write something to quit")
     if user_input != "":

@@ -9,24 +9,13 @@ class SensoryInputModule():
 # If close to wall (sight)
 '''
 
-
+# Environmental:
 
 animals = []
 
 day = 1
 
 time_of_day = 1
-
-
-# Maybe:
-'''
-[
-    {"1": "Morning"},
-    {"2": "Midday"},
-    {"3": "Evening"},
-    {"4": "Night"},
-]
-'''
 
 #trees_in_beaverpen = 50
 
@@ -37,6 +26,21 @@ time_of_day = 1
 #global_climate = 1
 
 #global_event = 0
+
+day_report = []
+
+wall_life = {
+    "b_south": 5000, 
+    "b_north": 5000, 
+    "b_west": 5000, 
+    "b_o": 500, 
+    "o_north": 5000, 
+    "o_south": 5000, 
+    "o_t": 500, 
+    "t_north": 5000, 
+    "t_south": 5000, 
+    "t_east": 5000
+    }
 
 beaver_dam = None
 
@@ -76,7 +80,7 @@ class Beaver(Animal):
                 
             elif beaver_dam["progress"] < 100:
                 self.build_dam()
-                
+
         else:
             pass
 
@@ -91,10 +95,10 @@ class Beaver(Animal):
                     self.found_stream = True
                     if beaver_dam == None:
                         beaver_dam = {"y_coordinate": y, "working": 1, "progress": 0}
-                        print(f"{self.name} has found the stream and started work on the beaver dam!")
+                        day_report.append(f"The beaver {self.name} has found the stream and started work on the beaver dam!")
                         break
                     else:
-                        print(f"{self.name} has found the stream and will help with the beaver dam!")
+                        day_report.append(f"The beaver {self.name} has found the stream and will help with the beaver dam!")
                         beaver_dam["working"] += 1
                         break
            
@@ -116,7 +120,6 @@ class Beaver(Animal):
 
     def build_dam(self):
         beaver_dam["progress"] = beaver_dam["progress"] + (beaver_dam["working"] * 0.5)
-        print(beaver_dam["progress"])
 
 
 
@@ -149,13 +152,21 @@ class TRex(Animal):
             pass
 
         if x > 29:
-            x = 29
+            x = 25
+            wall_life["t_east"] -= 10
+            day_report.append(f"The tyrannosaur {self.name} has nibbled on eastern perimeter wall")
         elif x < 19:
-            x = 19
+            x = 25
+            wall_life["o_t"] -= 10
+            day_report.append(f"The tyrannosaur {self.name} has nibbled on the wall between the orangutang and tyrannosaur pen")
         elif y > 9:
-            y = 9
+            y = 5
+            wall_life["t_north"] -= 10
+            day_report.append(f"The tyrannosaur {self.name} has nibbled on the northern perimeter wall")
         elif y < 1:
-            y = 1
+            y = 5
+            wall_life["t_south"] -= 10
+            day_report.append(f"The tyrannosaur {self.name} has nibbled on the southern perimeter wall")
 
         self.location = (x, y)
 
@@ -168,6 +179,7 @@ sue = TRex("Sue")
 animals.append(sue)
 animals.append(tommy)
 animals.append(nibbles)
+animals.append(flappy)
 
 
 
@@ -175,11 +187,22 @@ while day <= 100:
 
     nibbles.movement()
     flappy.movement()
+    sue.movement()
 
-    user_input = input("Enter to continue, write something to quit")
+    print(f"------------------------\n    | Daily Report |\n------------------------")
+
+    for report in day_report:
+        print(report)
+
+    
+    user_input = input("Enter to continue, write something else to quit: ")
+    
     if user_input != "":
         break
 
+
+            
+    day_report = []
     day += 1
 
 

@@ -254,6 +254,25 @@ print(computer.cpu.model)
 
 
 # Part H
+'''
+list_of_security_points = []
+
+securitydata1 = True
+securitydata2 = True
+securitydata3 = True
+
+list_of_security_points.append(securitydata1)
+list_of_security_points.append(securitydata2)
+list_of_security_points.append(securitydata3)
+
+
+class Security_checker:
+    def __init__(self, secdata):
+        self.secdata = secdata
+
+        self.secdata = all(list_of_security_points)
+
+sec_alg1 = Security_checker(list_of_security_points)
 
 
 class Exporter:
@@ -262,8 +281,12 @@ class Exporter:
 
     def export(self, data):
         self.data = data
-        return data
 
+        if sec_alg1.secdata == True:
+            return data
+        else:
+            print("Transmission not secure")
+            exit()
 
 class ConsoleExporter(Exporter):
     def __init__(self):
@@ -313,12 +336,13 @@ class AnotherExporter:
         return another_addon
 
 
-
 ex1 = ConsoleExporter()
 ex2 = TextExporter()
 ex3 = SummeryExporter()
 ex4 = AnotherExporter()
 data1 = "I am"
+
+
 
 list_of_objects = []
 
@@ -337,7 +361,11 @@ for object in list_of_objects:
 
     print(f"{object.export(data1)}, which is{exporter_status}an instance of the Exporter parent class")
 
+'''
 
+# 10. This Exporter HAS-A SecurityChecker. I thaught it was a nice example since it lets you change the (very rudementary) SecurityChecker algorithm without 
+# changing the rest of the program. I think it's reasonable to say that is a better solution for the Exporter
+# to HAVE a security checker rather than to BE one. The Exporter could of course both be a SecurityChecker and an Exporter, but that is what we're trying to
+# get away from.
 
-
-# Revisit H 10. If time: make H prettier/more interesting, and/or funnier
+# I must admit that would have liked to come up with something funnier, but this is how it is now. We have an Exporter that HAS-A SecurityChecker :)

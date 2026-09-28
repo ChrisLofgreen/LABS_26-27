@@ -66,56 +66,59 @@ class Beaver(Animal):
         self.found_stream = False
         
         if self.location == None:
-            self.location = (7, random.randrange(1,8))
+            self.location = (5, random.randrange(1,8))
 
     def movement(self):
+
+        if time_of_day <= 2:
+            if self.found_stream == False:
+                self.find_stream()
+                
+            elif beaver_dam["progress"] < 100:
+                self.build_dam()
+                
+        else:
+            pass
+
+    def find_stream(self):
         x, y = self.location
         global beaver_dam
+        counter = 2
 
-        if self.found_stream == False:
-            counter = 2
-            while counter > 0 and self.found_stream == False:
-
-                for stream_square in stream_squares:
-                    if stream_square == (x, y):
-                        self.found_stream = True
-                        if beaver_dam == None:
-                            beaver_dam = {"y_coordinate": y, "working": 1, "progress": 0}
-                            print(f"{self.name} has found the stream and started work on the beaver dam!")
-                            break
-                        else:
-                            print(f"{self.name} has found the stream and will help with the beaver dam!")
-                            beaver_dam["working"] += 1
-                            break
+        while counter > 0 and self.found_stream == False:
+            for stream_square in stream_squares:
+                if stream_square == (x, y):
+                    self.found_stream = True
+                    if beaver_dam == None:
+                        beaver_dam = {"y_coordinate": y, "working": 1, "progress": 0}
+                        print(f"{self.name} has found the stream and started work on the beaver dam!")
+                        break
+                    else:
+                        print(f"{self.name} has found the stream and will help with the beaver dam!")
+                        beaver_dam["working"] += 1
+                        break
            
-                x = x + random.randrange(-1, 1)
-                y = y + random.randrange(-1, 1)
+            x = x + random.randrange(-1, 1)
+            y = y + random.randrange(-1, 1)
 
-
-                if x > 9:
-                    x = 9
-                elif x < 1:
-                    x = 1
-                elif y > 9:
-                    y = 9
-                elif y < 1:
-                    y = 1
+            if x > 9:
+                x = 9
+            elif x < 1:
+                x = 1
+            elif y > 9:
+                y = 9
+            elif y < 1:
+                y = 1
                 
-                counter -= 1
+            counter -= 1
 
-        else:
-            
-            if time_of_day <= 2 and beaver_dam["progress"] < 100:
-                beaver_dam["progress"] = beaver_dam["progress"] + (beaver_dam["working"] * 0.5)
-
-            if beaver_dam["progress"] >= 100:
-                pass
-
-            else:
-                pass
-
-        
         self.location = (x, y)
+
+    def build_dam(self):
+        beaver_dam["progress"] = beaver_dam["progress"] + (beaver_dam["working"] * 0.5)
+        print(beaver_dam["progress"])
+
+
 
 
 class Orangutan(Animal):
@@ -168,7 +171,7 @@ animals.append(nibbles)
 
 
 
-while day <= 20:
+while day <= 100:
 
     nibbles.movement()
     flappy.movement()

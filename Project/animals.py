@@ -14,7 +14,7 @@ class Animal():
 
 
 class Beaver(Animal):
-    
+
     def __init__(self, name, location=None):
         super().__init__(name, location)
 
@@ -37,20 +37,15 @@ class Beaver(Animal):
 
     def movement(self):
 
-        day_report.append(self.name, "Movement")
-
         if time_of_day <= 2:
             if self.found_stream == False:
                 self.find_stream()
-                day_report.append(self.name, "Find Stream")
                 
             elif beaver_dam["progress"] < 100:
                 self.build_dam()
-                day_report.append(self.name, "Damming")
 
             elif beaver_dam["progress"] >= 100:
                 #day_report.append(f"The beavers are done with their dam. Expect partial flooding of the beaver pen")
-                day_report.append(self.name, "dam100")
                 pass
 
     def find_stream(self):

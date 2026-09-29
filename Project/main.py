@@ -45,14 +45,6 @@ wall_life = {
 
 
 
-
-
-
-
-
-
-
-
 flappy = animals.Beaver("Flappy")
 nibbles = animals.Beaver("Nibbles")
 beni = animals.Orangutan("Beni")
@@ -66,8 +58,8 @@ animals_in_zoo.append(flappy)
 
 while day <= 100:
 
-    flappy.movement
-    nibbles.movement
+    flappy.movement()
+    nibbles.movement()
     print(flappy.location)
 
     print(animals.beaver_dam)

@@ -1,8 +1,11 @@
 import random
+import environment
 
 time_of_day = 1
 
 day_report = []
+
+beaver_dam = None
 
 class Animal():
     def __init__(self, name, location=None):
@@ -11,6 +14,7 @@ class Animal():
 
 
 class Beaver(Animal):
+    
     def __init__(self, name, location=None):
         super().__init__(name, location)
 
@@ -33,24 +37,30 @@ class Beaver(Animal):
 
     def movement(self):
 
+        day_report.append(self.name, "Movement")
+
         if time_of_day <= 2:
             if self.found_stream == False:
                 self.find_stream()
+                day_report.append(self.name, "Find Stream")
                 
             elif beaver_dam["progress"] < 100:
                 self.build_dam()
+                day_report.append(self.name, "Damming")
 
             elif beaver_dam["progress"] >= 100:
                 #day_report.append(f"The beavers are done with their dam. Expect partial flooding of the beaver pen")
+                day_report.append(self.name, "dam100")
                 pass
 
     def find_stream(self):
         x, y = self.location
-        global beaver_dam
+        print(x, y)
         counter = 2
+        global beaver_dam
 
         while counter > 0 and self.found_stream == False:
-            for stream_square in stream_squares:
+            for stream_square in environment.stream_squares:
                 if stream_square == (x, y):
                     self.found_stream = True
                     if beaver_dam == None:
@@ -164,19 +174,19 @@ class TRex(Animal):
 
         if x > 29:
             x = 25
-            wall_life["t_east"] -= 10
+          #  wall_life["t_east"] -= 10
             day_report.append(f"The tyrannosaur {self.name} has nibbled on the eastern perimeter wall")
         elif x < 19:
             x = 25
-            wall_life["o_t"] -= 10
+           # wall_life["o_t"] -= 10
             day_report.append(f"The tyrannosaur {self.name} has nibbled on the wall between the orangutang and tyrannosaur pen")
         elif y > 9:
             y = 5
-            wall_life["t_north"] -= 10
+           # wall_life["t_north"] -= 10
             day_report.append(f"The tyrannosaur {self.name} has nibbled on the northern perimeter wall")
         elif y < 1:
             y = 5
-            wall_life["t_south"] -= 10
+            #wall_life["t_south"] -= 10
             day_report.append(f"The tyrannosaur {self.name} has nibbled on the southern perimeter wall")
 
         self.location = (x, y)

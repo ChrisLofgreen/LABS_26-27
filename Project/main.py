@@ -1,7 +1,7 @@
 
 import animals
+
 import environment
-import random
 
 
 
@@ -43,18 +43,9 @@ wall_life = {
     "t_east": 5000
     }
 
-beaver_dam = None
 
-stream_squares = [
-    (3, 1),
-    (3, 2),
-    (3, 3),
-    (3, 4), 
-    (3, 5),
-    (3, 6),
-    (3, 7),
-    (3, 8),
-    (3, 9)]
+
+
 
 
 
@@ -75,10 +66,11 @@ animals_in_zoo.append(flappy)
 
 while day <= 100:
 
-    beni.movement
     flappy.movement
     nibbles.movement
-    sue.movement
+    print(flappy.location)
+
+    print(animals.beaver_dam)
 
     print(f"------------------------\n    | Daily Report |\n------------------------")
 

@@ -136,10 +136,11 @@ class Orangutan(Animal):
 
 
 class TRex(Animal):
-    def __init__(self, name, location=None, rage=False):
+    def __init__(self, name, location=None):
         super().__init__(name, location)
 
-        self.rage = rage
+        self.rage = False
+        self.tiredness = 0
         
         if self.location == None:
             self.location = (25, random.randrange(1,8))
@@ -158,7 +159,6 @@ class TRex(Animal):
     def movement(self):
         x, y = self.location
         stored_location = (x, y)
-        print(self.location)
 
         if time_of_day == 1 or time_of_day == 2:
             x = x + random.randrange(-1,1)
@@ -170,33 +170,20 @@ class TRex(Animal):
                     if a == x and b == y:
                         wall.health -= 10
                         day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name} {self.location}")
+                        self.tiredness += 25
 
                         if wall.health > 0:
                             x, y = stored_location
                         else:
                             day_report.append(f"Tyrannosaur {self.name} has destroyed {wall.name}")
+                            self.tiredness -= 10
 
-
-        elif time_of_day == 3:
-            counter = 2
-            while counter > 0:
-                x = x + random.randrange(-1,1)
-                y = y + random.randrange(-1,1)
-
-                for wall in environment.walls:
-                    for coordinate in wall.coordinates:
-                        a, b = coordinate
-                        if a == x and b == y:
-                            wall.health -= 10
-                            day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name} {self.location}")
-
-                            if wall.health > 0:
-                                x, y = stored_location
-                            else:
-                                day_report.append(f"Tyrannosaur {self.name} has destroyed {wall.name}")
-
-
-        elif time_of_day == 4:
+        elif time_of_day >= 3:
             pass
-            
+
+
+        if self.tiredness > 100:
+            y = 5
+            self.tiredness -= 50
+
         self.location = (x, y)

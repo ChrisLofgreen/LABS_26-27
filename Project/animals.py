@@ -1,65 +1,8 @@
-
 import random
-
-
-
-
-'''
-# Maybe:
-class SensoryInputModule():
-    pass
-
-# If close to other animal (smell, sight)
-# If close to wall (sight)
-'''
-
-# Environmental:
-
-animals = []
-
-day = 1
 
 time_of_day = 1
 
-#trees_in_beaverpen = 50
-
-#fruits_in_orangutan_pen = 500
-
-#food_in_trex_pen = 50
-
-#global_climate = 1
-
-#global_event = 0
-
 day_report = []
-
-wall_life = {
-    "b_south": 5000, 
-    "b_north": 5000, 
-    "b_west": 5000, 
-    "b_o": 500, 
-    "o_north": 5000, 
-    "o_south": 5000, 
-    "o_t": 500, 
-    "t_north": 5000, 
-    "t_south": 5000, 
-    "t_east": 5000
-    }
-
-beaver_dam = None
-
-stream_squares = [
-    (3, 1),
-    (3, 2),
-    (3, 3),
-    (3, 4), 
-    (3, 5),
-    (3, 6),
-    (3, 7),
-    (3, 8),
-    (3, 9)]
-
-
 
 class Animal():
     def __init__(self, name, location=None):
@@ -158,6 +101,35 @@ class Orangutan(Animal):
 
             self.location = (x, y, z)
 
+    def movement(self):
+        x, y, z = self.location
+
+        if time_of_day == 1:
+            z = 1
+            x = x + random.randrange(-1,1)
+            y = y + random.randrange(-1,1)
+        if time_of_day == 2:
+            z = random.randrange(3,10)
+            x = x + random.randrange(-2,2)
+            y = y + random.randrange(-2,2)
+        elif time_of_day == 3:
+            z = 10
+            x = x + random.randrange(-1,1)
+            y = y + random.randrange(-1,1)
+        elif time_of_day == 4:
+            pass
+
+        if x > 19:
+            x = 19
+        elif x < 10:
+            x = 10
+        elif y > 19:
+            y = 19
+        elif y < 10:
+            y = 10
+
+        self.location = (x, y, z)
+
 
 
 class TRex(Animal):
@@ -208,90 +180,3 @@ class TRex(Animal):
             day_report.append(f"The tyrannosaur {self.name} has nibbled on the southern perimeter wall")
 
         self.location = (x, y)
-
-
-
-flappy = Beaver("Flappy")
-nibbles = Beaver("Nibbles")
-tommy = Orangutan("Tommy")
-sue = TRex("Sue")
-animals.append(sue)
-animals.append(tommy)
-animals.append(nibbles)
-animals.append(flappy)
-
-
-
-while day <= 100:
-
-    nibbles.movement()
-    flappy.movement()
-    sue.movement()
-
-    print(f"------------------------\n    | Daily Report |\n------------------------")
-
-    for report in day_report:
-        print(report,"\n")
-
-
-    user_input = input("Enter to continue, write something else to quit: ")
-    
-    if user_input != "":
-        break
-
-
-            
-    day_report = []
-    day += 1
-
-
-
-
-# pen structure:
-
-# Southern wall: 0,0 - 30,0
-# Northern wall: 0,10 - 30,10
-
-# Beaver pen:
-
-# Western vertical wall: 0,0 - 0,10
-# Eastern between B and O: 10,0 - 10,10
-# Stream: 3,1 to 3,9
-
-# Orangutan pen:
-
-# Western between B and O: 10,0 - 10,10
-# Eastern between O and TR: 20,0 - 20,10
-
-# Rex pen:
-
-# Eastern vertical wall: 30,0 - 30,10
-# Western between O and TR: 20,0 - 20,10
-
-
-
-# Interface stuff:
-
-'''
-
-print("-----------------------------------------")
-print("|   / /      |             |            |")
-print("|   | |      |             |            |")
-print("|   Beaver   |  Orangutan  |   T-Rex    |")
-print("|   | |      |             |            |")
-print("|   / /      |             |            |")
-print("-----------------------------------------")
-print("                                   _===o ")
-print("                                  //   | ")
-print("                                 //      ")
-'''
-
-'''
-"This is a strange zoo, all animal pens are lush forests where these animals thrive."
-"It is not the best for the visitors to see the animals but it is the best for the animals"
-
-"The beaver-pen has a stream, and the Tyrannosaur-pen has a giant crane to deliver food over the wall."
-"The orangutang-pen has no special amenities, they thrive in the tall forest and eat the produce from the trees"
-
-"The pens can mostly sustain it's inhabitants without intervension, exept for the T-rex, for whom outside food is a necessity for calm behaivior.
-'''

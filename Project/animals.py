@@ -158,6 +158,7 @@ class TRex(Animal):
     def movement(self):
         x, y = self.location
         stored_location = (x, y)
+        print(self.location)
 
         if time_of_day == 1 or time_of_day == 2:
             x = x + random.randrange(-1,1)
@@ -165,9 +166,10 @@ class TRex(Animal):
 
             for wall in environment.walls:
                 for coordinate in wall.coordinates:
-                    if coordinate == (x, y):
+                    a, b = coordinate
+                    if a == x and b == y:
                         wall.health -= 10
-                        day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name}")
+                        day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name} {self.location}")
 
                         if wall.health > 0:
                             x, y = stored_location
@@ -183,15 +185,15 @@ class TRex(Animal):
 
                 for wall in environment.walls:
                     for coordinate in wall.coordinates:
-                        if coordinate == (x, y):
+                        a, b = coordinate
+                        if a == x and b == y:
                             wall.health -= 10
-                            day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name}")
+                            day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name} {self.location}")
 
                             if wall.health > 0:
                                 x, y = stored_location
                             else:
                                 day_report.append(f"Tyrannosaur {self.name} has destroyed {wall.name}")
-
 
 
         elif time_of_day == 4:

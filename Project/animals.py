@@ -14,7 +14,6 @@ class Animal():
 
 
 class Beaver(Animal):
-
     def __init__(self, name, location=None):
         super().__init__(name, location)
 
@@ -50,9 +49,8 @@ class Beaver(Animal):
 
     def find_stream(self):
         x, y = self.location
-        print(x, y)
-        counter = 2
         global beaver_dam
+        counter = 2
 
         while counter > 0 and self.found_stream == False:
             for stream_square in environment.stream_squares:
@@ -138,8 +136,10 @@ class Orangutan(Animal):
 
 
 class TRex(Animal):
-    def __init__(self, name, location=None):
+    def __init__(self, name, location=None, rage=False):
         super().__init__(name, location)
+
+        self.rage = rage
         
         if self.location == None:
             self.location = (25, random.randrange(1,8))
@@ -157,31 +157,44 @@ class TRex(Animal):
 
     def movement(self):
         x, y = self.location
+        stored_location = (x, y)
 
         if time_of_day == 1 or time_of_day == 2:
             x = x + random.randrange(-1,1)
             y = y + random.randrange(-1,1)
+
+            for wall in environment.walls:
+                for coordinate in wall.coordinates:
+                    if coordinate == (x, y):
+                        wall.health -= 10
+                        day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name}")
+
+                        if wall.health > 0:
+                            x, y = stored_location
+                        else:
+                            day_report.append(f"Tyrannosaur {self.name} has destroyed {wall.name}")
+
+
         elif time_of_day == 3:
-            x = x + random.randrange(-3,3)
-            y = y + random.randrange(-3,3)
+            counter = 2
+            while counter > 0:
+                x = x + random.randrange(-1,1)
+                y = y + random.randrange(-1,1)
+
+                for wall in environment.walls:
+                    for coordinate in wall.coordinates:
+                        if coordinate == (x, y):
+                            wall.health -= 10
+                            day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name}")
+
+                            if wall.health > 0:
+                                x, y = stored_location
+                            else:
+                                day_report.append(f"Tyrannosaur {self.name} has destroyed {wall.name}")
+
+
+
         elif time_of_day == 4:
             pass
-
-        if x > 29:
-            x = 25
-          #  wall_life["t_east"] -= 10
-            day_report.append(f"The tyrannosaur {self.name} has nibbled on the eastern perimeter wall")
-        elif x < 19:
-            x = 25
-           # wall_life["o_t"] -= 10
-            day_report.append(f"The tyrannosaur {self.name} has nibbled on the wall between the orangutang and tyrannosaur pen")
-        elif y > 9:
-            y = 5
-           # wall_life["t_north"] -= 10
-            day_report.append(f"The tyrannosaur {self.name} has nibbled on the northern perimeter wall")
-        elif y < 1:
-            y = 5
-            #wall_life["t_south"] -= 10
-            day_report.append(f"The tyrannosaur {self.name} has nibbled on the southern perimeter wall")
-
+            
         self.location = (x, y)

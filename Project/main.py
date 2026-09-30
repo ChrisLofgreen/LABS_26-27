@@ -1,10 +1,10 @@
-
+import time
 import random
 import animals
 import environment
 
 
-
+global_climate = 1
 
 def flooding():
     new_flooded_squares= []
@@ -22,40 +22,49 @@ def flooding():
 
 
 def environmental_change():
-    if animals.beaver_dam != None and (animals.beaver_dam["progress"] > 10 and day % 14 == 0):
+    if animals.beaver_dam != None and (animals.beaver_dam["progress"] > 90 and day % 14 == 0):
         flooding()
 
     for wall in environment.walls:
         if wall.health < 1:
             environment.walls.remove(wall)
 
+    if day % 10 == 0 and animals.time_of_day == 4:
+        global_climate = random.randrange(0, 3)
+        animals.day_report.append(f"The trees have sprouted new fruits across all forests")
+
+        for forest in environment.forests:
+            forest.fruits = forest.fruits + 50 + (50 * global_climate)
+
 
 def check_animal_state():
     for animal in animals_in_zoo:
-        if animal.state == "fleed":
+        if animal.state == "fled":
+            animals.day_report.append(f"The {animal.species} {animal.name} has 'moved out'... (expect a call from the local authorities)")
             animals_in_zoo.remove(animal)
-            animals.day_report.append(f"{animal.name} has 'moved out'... (expect a call from the local authorities)")
+        elif animal.state == "tired":
+            animals.day_report.append(f"{animal.species} {animal.name} worn themselves out and is retreating to the interior of the forest to rest")
 
-    print(len(animals_in_zoo))
 
+def management_decisions():
 
+    
 
 
 
 
 # Environmental:
 
-#trees_in_beaverpen = 50
+# T-rex stuck in beaver-pen
 
-#fruits_in_orangutan_pen = 500
+# T-rex eat orangutan?
 
 #food_in_trex_pen = 50
 
-#global_climate = 1
+
 
 #global_event = 0
 
-#Change randoms -> animals stop + 1
 
 
 
@@ -63,51 +72,58 @@ animals_in_zoo = []
 
 day = 1
 
-
-
-
 flappy = animals.Beaver("Flappy")
 nibbles = animals.Beaver("Nibbles")
 summer = animals.Beaver("Summer")
 slippy = animals.Beaver("Slippy")
+
 beni = animals.Orangutan("Beni")
+cinta = animals.Orangutan("Cinta")
+yutris = animals.Orangutan("Yutris")
+bumi = animals.Orangutan("Bumi")
+monita = animals.Orangutan("Monita")
+
 sue = animals.TRex("Sue")
+jane = animals.TRex("Jane")
+
+
+
 animals_in_zoo.append(sue)
-#animals_in_zoo.append(beni)
-#animals_in_zoo.append(nibbles)
-#animals_in_zoo.append(flappy)
+animals_in_zoo.append(beni)
+animals_in_zoo.append(nibbles)
+animals_in_zoo.append(flappy)
 
+#time.sleep(1)
 
-
-while day <= 100:
+while day <= 50:
 
     for animal in animals_in_zoo:
         animal.movement()
 
     environmental_change()
     check_animal_state()
+    management_decisions()
+
+    animals.time_of_day += 1
+
+    if animals.time_of_day == 5:
     
+        print(f"----------------------------\n    | Report Day {day} |\n----------------------------")
+
+        if len(animals.day_report) > 0:
+            for index, report in enumerate(animals.day_report, start=1):
+                print(f"{index}. {report}\n")
+        else:
+            print("No news today")
     
+        animals.day_report = []
+        day += 1
+        animals.time_of_day = 1
 
+        user_input = input("Enter to continue, write something else to quit: ")
 
-
-
-
-    print(f"------------------------\n    | Daily Report |\n------------------------")
-
-    for report in animals.day_report:
-        print(report,"\n")
-
-
-
-    user_input = input("Enter to continue, write something else to quit: ")
-    
-    if user_input != "":
-        break
-
-
-    animals.day_report = []
-    day += 1
+        if user_input != "":
+            break
 
 
 
@@ -149,6 +165,15 @@ walls_old = {
 '''
 
 # Interface stuff:
+
+
+'''
+Start screen: 
+please type in the number of beavers you want for your simulation (1-12)
+please type in the number of orangutans you would like for your simulation (1-12)
+
+
+'''
 
 '''
 

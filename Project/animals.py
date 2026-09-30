@@ -8,14 +8,15 @@ day_report = []
 beaver_dam = None
 
 class Animal():
-    def __init__(self, name, location=None):
+    def __init__(self, name, location=None, state="alert"):
         self.name = name
         self.location = location
+        self.state = state
 
 
 class Beaver(Animal):
-    def __init__(self, name, location=None):
-        super().__init__(name, location)
+    def __init__(self, name, location=None, state="alert"):
+        super().__init__(name, location, state)
 
         self.found_stream = False
         
@@ -65,8 +66,8 @@ class Beaver(Animal):
                         beaver_dam["working"] += 1
                         break
            
-            x = x + random.randrange(-1, 1)
-            y = y + random.randrange(-1, 1)
+            x = x + random.randrange(-1, 2)
+            y = y + random.randrange(-1, 2)
 
             if x > 9:
                 x = 9
@@ -88,8 +89,8 @@ class Beaver(Animal):
 
 
 class Orangutan(Animal):
-    def __init__(self, name, location=None):
-        super().__init__(name, location)
+    def __init__(self, name, location=None, state="alert"):
+        super().__init__(name, location, state)
         
         if self.location == None:
             self.location = (15, random.randrange(1,8), random.randrange(5,10))             # Orangutans are 3D in scope, they use the z-axis.
@@ -109,16 +110,16 @@ class Orangutan(Animal):
 
         if time_of_day == 1:
             z = 1
-            x = x + random.randrange(-1,1)
-            y = y + random.randrange(-1,1)
+            x = x + random.randrange(-1,2)
+            y = y + random.randrange(-1,2)
         if time_of_day == 2:
             z = random.randrange(3,10)
-            x = x + random.randrange(-2,2)
-            y = y + random.randrange(-2,2)
+            x = x + random.randrange(-1,2)
+            y = y + random.randrange(-1,2)
         elif time_of_day == 3:
             z = 10
-            x = x + random.randrange(-1,1)
-            y = y + random.randrange(-1,1)
+            x = x + random.randrange(-1,2)
+            y = y + random.randrange(-1,2)
         elif time_of_day == 4:
             pass
 
@@ -136,10 +137,9 @@ class Orangutan(Animal):
 
 
 class TRex(Animal):
-    def __init__(self, name, location=None):
-        super().__init__(name, location)
+    def __init__(self, name, location=None, state="alert"):
+        super().__init__(name, location, state)
 
-        self.rage = False
         self.tiredness = 0
         
         if self.location == None:
@@ -157,19 +157,22 @@ class TRex(Animal):
 
 
     def movement(self):
+        # IF out of bounds (fleed)
+        # IF Beaver dam/lake (stuck/drown, help with rage?)
         x, y = self.location
         stored_location = (x, y)
 
-        if time_of_day == 1 or time_of_day == 2:
-            x = x + random.randrange(-1,1)
-            y = y + random.randrange(-1,1)
+        if (time_of_day == 1 or time_of_day == 2) and self.tiredness < 100:
+            self.state = "alert"
+            x = x + random.randrange(-1, 2)
+            y = y + random.randrange(-1, 2)
 
             for wall in environment.walls:
                 for coordinate in wall.coordinates:
                     a, b = coordinate
                     if a == x and b == y:
                         wall.health -= 10
-                        day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name} {self.location}")
+                        day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name}")
                         self.tiredness += 25
 
                         if wall.health > 0:
@@ -179,11 +182,17 @@ class TRex(Animal):
                             self.tiredness -= 10
 
         elif time_of_day >= 3:
+            self.state = "tired"
             pass
-
 
         if self.tiredness > 100:
             y = 5
             self.tiredness -= 50
+            day_report.append(f"Tyrannosaur {self.name} worn themselves out and is retreating to the interior of the forest to rest")
+            self.state = "tired"
+
+        if y > 10 or y < 0 or x > 30 or x < 0:
+            self.state = "fleed"
+            
 
         self.location = (x, y)

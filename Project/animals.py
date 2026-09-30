@@ -1,7 +1,7 @@
 import random
 import environment
 
-time_of_day = 1
+time_of_day = 4
 
 day_report = []
 
@@ -18,6 +18,7 @@ class Beaver(Animal):
     def __init__(self, name, location=None, state="alert"):
         super().__init__(name, location, state)
 
+        self.species = "beaver"
         self.found_stream = False
         
         if self.location == None:
@@ -91,6 +92,8 @@ class Beaver(Animal):
 class Orangutan(Animal):
     def __init__(self, name, location=None, state="alert"):
         super().__init__(name, location, state)
+
+        self.species = "orangutan"
         
         if self.location == None:
             self.location = (15, random.randrange(1,8), random.randrange(5,10))             # Orangutans are 3D in scope, they use the z-axis.
@@ -117,9 +120,20 @@ class Orangutan(Animal):
             x = x + random.randrange(-1,2)
             y = y + random.randrange(-1,2)
         elif time_of_day == 3:
+            for forest in environment.forests:
+                for coordinate in forest.coordinates:
+                    a, b = coordinate
+                    if a == x and b == y:
+                        fruit_craving = random.randrange(0,3)
+                        forest.fruits = forest.fruits - fruit_craving
+                        if fruit_craving > 0:
+                            day_report.append(f"{self.species} {self.name} ate {fruit_craving} fruit(s)")
+                            continue
+
             z = 10
             x = x + random.randrange(-1,2)
             y = y + random.randrange(-1,2)
+
         elif time_of_day == 4:
             pass
 
@@ -127,10 +141,10 @@ class Orangutan(Animal):
             x = 19
         elif x < 10:
             x = 10
-        elif y > 19:
-            y = 19
-        elif y < 10:
-            y = 10
+        elif y > 9:
+            y = 9
+        elif y < 1:
+            y = 1
 
         self.location = (x, y, z)
 
@@ -140,6 +154,7 @@ class TRex(Animal):
     def __init__(self, name, location=None, state="alert"):
         super().__init__(name, location, state)
 
+        self.species = "tyrannosaur"
         self.tiredness = 0
         
         if self.location == None:
@@ -157,7 +172,6 @@ class TRex(Animal):
 
 
     def movement(self):
-        # IF out of bounds (fleed)
         # IF Beaver dam/lake (stuck/drown, help with rage?)
         x, y = self.location
         stored_location = (x, y)

@@ -25,6 +25,19 @@ def environmental_change():
     if animals.beaver_dam != None and (animals.beaver_dam["progress"] > 10 and day % 14 == 0):
         flooding()
 
+    for wall in environment.walls:
+        if wall.health < 1:
+            environment.walls.remove(wall)
+
+
+def check_animal_state():
+    for animal in animals_in_zoo:
+        if animal.state == "fleed":
+            animals_in_zoo.remove(animal)
+            animals.day_report.append(f"{animal.name} has 'moved out'... (expect a call from the local authorities)")
+
+    print(len(animals_in_zoo))
+
 
 
 
@@ -60,21 +73,21 @@ slippy = animals.Beaver("Slippy")
 beni = animals.Orangutan("Beni")
 sue = animals.TRex("Sue")
 animals_in_zoo.append(sue)
-animals_in_zoo.append(beni)
-animals_in_zoo.append(nibbles)
-animals_in_zoo.append(flappy)
+#animals_in_zoo.append(beni)
+#animals_in_zoo.append(nibbles)
+#animals_in_zoo.append(flappy)
 
 
 
-while day <= 50:
+while day <= 100:
 
-    nibbles.movement()
-    flappy.movement()
-
-    print(animals.beaver_dam)
-    print(environment.stream_squares)
+    for animal in animals_in_zoo:
+        animal.movement()
 
     environmental_change()
+    check_animal_state()
+    
+    
 
 
 

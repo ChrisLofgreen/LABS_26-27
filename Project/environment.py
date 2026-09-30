@@ -11,27 +11,10 @@ stream_squares = [
     (3, 8),
     (3, 9)]
 
+forests = []
 
-# pen structure:
+walls = []
 
-# Southern wall: 0,0 - 30,0
-# Northern wall: 0,10 - 30,10
-
-# Beaver pen:
-
-# Western vertical wall: 0,0 - 0,10
-# Eastern between B and O: 10,0 - 10,10
-# Stream: 3,1 to 3,9
-
-# Orangutan pen:
-
-# Western between B and O: 10,0 - 10,10
-# Eastern between O and TR: 20,0 - 20,10
-
-# Rex pen:
-
-# Eastern vertical wall: 30,0 - 30,10
-# Western between O and TR: 20,0 - 20,10
 
 class Wall():
     def __init__(self, name, coordinates):
@@ -42,46 +25,30 @@ class PerimeterWall(Wall):
     def __init__(self, name, coordinates):
         super().__init__(name, coordinates)
         
-        self.health = 5000
+        self.health = 30
 
 class DividingWall(Wall):
     def __init__(self, name, coordinates):
         super().__init__(name, coordinates)
 
-        self.health = 500
+        self.health = 50
 
 class Forest():
-    def __init__(self, name, coordinates):
+    def __init__(self, name, coordinates, x_min, x_max):
         self.name = name
         self.coordinates = coordinates
+        self.x_min = x_min
+        self.x_max = x_max
+        self.fruits = 50
 
 
-
-'''
-walls_old = {
-    "b_south": 5000, 
-    "b_north": 5000, 
-    "b_west": 5000, 
-    "b_o": 500, 
-    "o_north": 5000, 
-    "o_south": 5000, 
-    "o_t": 500, 
-    "t_north": 5000, 
-    "t_south": 5000, 
-    "t_east": 5000
-    }
-'''
-forests = []
-
-b_forest = Forest("Beaver forest", [(x, y) for x in range(1, 10) for y in range(1, 10)])
-o_forest = Forest("Orangutan forest", [(x, y) for x in range(11, 20) for y in range(1, 10)])
-t_forest = Forest("Tyrannosaur forest", [(x, y) for x in range(21, 30) for y in range(1, 10)])
+b_forest = Forest("Beaver forest", [(x, y) for x in range(1, 10) for y in range(1, 10)], 1, 9)
+o_forest = Forest("Orangutan forest", [(x, y) for x in range(11, 20) for y in range(1, 10)], 11, 19)
+t_forest = Forest("Tyrannosaur forest", [(x, y) for x in range(21, 30) for y in range(1, 10)], 21, 29)
 
 forests.append(b_forest)
 forests.append(o_forest)
 forests.append(t_forest)
-
-walls = []
 
 b_west = PerimeterWall("Western Perimeter Wall", [(0,1), (0,2), (0,3), (0,4), (0,5), (0,6), (0,7), (0,8), (0,9)])
 t_east = PerimeterWall("Eastern Perimeter Wall", [(30,1), (30,2), (30,3), (30,4), (30,5), (30,6), (30,7), (30,8), (30,9)])

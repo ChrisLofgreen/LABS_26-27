@@ -19,6 +19,9 @@ class Beaver(Animal):
         super().__init__(name, location, state)
 
         self.species = "Beaver"
+
+        self.release_report = None
+
         self.found_stream = False
         
         if self.location == None:
@@ -26,11 +29,11 @@ class Beaver(Animal):
             x, y = self.location
 
             if y > 5:
-                day_report.append(f"Beaver {self.name} ran deep into the forest upon release")
+                self.release_report = f"Beaver {self.name} ran deep into the forest upon release"
             elif y > 2:
-                day_report.append(f"Beaver {self.name} ran into to the forest upon release")
+                self.release_report = f"Beaver {self.name} ran into to the forest upon release"
             else:
-                day_report.append(f"Beaver {self.name} stayed close to the enrance upon release")
+                self.release_report = f"Beaver {self.name} stayed close to the enrance upon release"
 
             self.location = (x, y)
 
@@ -95,6 +98,8 @@ class Orangutan(Animal):
 
         self.species = "Orangutan"
 
+        self.release_report = None
+
         self.current_forest = environment.o_forest
 
         self.direcion_of_curiosity = None
@@ -106,11 +111,11 @@ class Orangutan(Animal):
             x, y, z = self.location
 
             if y > 5:
-                day_report.append(f"Orangutan {self.name} ran deep into the forest and climbed a tree upon release")
+                self.release_report = f"Orangutan {self.name} ran deep into the forest and climbed a tree upon release"
             elif y > 2:
-                day_report.append(f"Orangutan {self.name} ran into to the forest and climbed a tree upon release")
+                self.release_report = f"Orangutan {self.name} ran into to the forest and climbed a tree upon release"
             else:
-                day_report.append(f"Orangutan {self.name} stayed close to the enrance and climbed a tree upon release")
+                self.release_report = f"Orangutan {self.name} stayed close to the enrance and climbed a tree upon release"
 
             self.location = (x, y, z)
 
@@ -167,14 +172,13 @@ class Orangutan(Animal):
                             if forest.fruits >= fruit_craving:
                                 forest.fruits = forest.fruits - fruit_craving
                                 if fruit_craving > 0:
-                                    day_report.append(f"Orangutan {self.name} ate {fruit_craving} units of fruit")
+                                    day_report.append(f"Orangutan {self.name} ate {fruit_craving} units of fruit in {self.current_forest.name}")
 
                             else:
                                 self.state = "curious"
                                 forest.fruits = 0
                                 self.direcion_of_curiosity = random.choice(self.curiosity_directions)
                                 day_report.append(f"Orangutan {self.name} is not satisfied with the number of fruits in {forest.name} and might look elsewhere")
-                                print(self.direcion_of_curiosity)
 
                 z = 10
                 x = x + random.randrange(-1,2)
@@ -203,6 +207,8 @@ class TRex(Animal):
 
         self.species = "Tyrannosaur"
 
+        self.release_report = None
+
         self.tiredness = 0
         
         if self.location == None:
@@ -210,11 +216,11 @@ class TRex(Animal):
             x, y = self.location
 
             if y > 5:
-                day_report.append(f"Tyrannosaur {self.name} ran deep into the forest upon release")
+                self.release_report = f"Tyrannosaur {self.name} ran deep into the forest upon release"
             elif y > 2:
-                day_report.append(f"Tyrannosaur {self.name} ran into to the forest upon release")
+                self.release_report = f"Tyrannosaur {self.name} ran into to the forest upon release"
             else:
-                day_report.append(f"Tyrannosaur {self.name} stayed close to the enrance upon release")
+                self.release_report = f"Tyrannosaur {self.name} stayed close to the enrance upon release"
 
             self.location = (x, y)
 
@@ -250,8 +256,8 @@ class TRex(Animal):
         if self.tiredness > 100:
             y = 5
             self.tiredness -= 50
-            day_report.append(f"Tyrannosaur {self.name} worn themselves out and is retreating to the interior of the forest to rest")
             self.state = "tired"
+            day_report.append(f"Tyrannosaur {self.name} worn themselves out and is retreating to the interior of the forest to rest")
 
         if y > 10 or y < 0 or x > 30 or x < 0:
             self.state = "fled"

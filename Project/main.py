@@ -1,17 +1,31 @@
 
+import random
 import animals
-
 import environment
 
 
 
 
+def flooding():
+    new_flooded_squares= []
+    for x, y in environment.stream_squares:
+        b = y
+        if b > animals.beaver_dam["y_coordinate"]:
+            a = random.randrange(-1, 2, 2) + x
+            if a <= 9 and a >= 1:
+                a, b = (a, b)
+                new_flooded_squares.append((a, b))
+
+    for square in new_flooded_squares:
+        if square not in environment.stream_squares:
+            environment.stream_squares.append(square)
 
 
+def environmental_change():
+    if animals.beaver_dam != None and (animals.beaver_dam["progress"] > 10 and day % 14 == 0):
+        flooding()
 
-animals_in_zoo = []
 
-day = 1
 
 
 
@@ -28,25 +42,21 @@ day = 1
 
 #global_event = 0
 
+#Change randoms -> animals stop + 1
 
 
-wall_life = {
-    "b_south": 5000, 
-    "b_north": 5000, 
-    "b_west": 5000, 
-    "b_o": 500, 
-    "o_north": 5000, 
-    "o_south": 5000, 
-    "o_t": 500, 
-    "t_north": 5000, 
-    "t_south": 5000, 
-    "t_east": 5000
-    }
+
+animals_in_zoo = []
+
+day = 1
+
 
 
 
 flappy = animals.Beaver("Flappy")
 nibbles = animals.Beaver("Nibbles")
+summer = animals.Beaver("Summer")
+slippy = animals.Beaver("Slippy")
 beni = animals.Orangutan("Beni")
 sue = animals.TRex("Sue")
 animals_in_zoo.append(sue)
@@ -56,18 +66,25 @@ animals_in_zoo.append(flappy)
 
 
 
-while day <= 100:
+while day <= 50:
 
-    flappy.movement()
     nibbles.movement()
-    print(flappy.location)
+    flappy.movement()
 
     print(animals.beaver_dam)
+    print(environment.stream_squares)
+
+    environmental_change()
+
+
+
+
 
     print(f"------------------------\n    | Daily Report |\n------------------------")
 
     for report in animals.day_report:
         print(report,"\n")
+
 
 
     user_input = input("Enter to continue, write something else to quit: ")
@@ -76,7 +93,6 @@ while day <= 100:
         break
 
 
-            
     animals.day_report = []
     day += 1
 
@@ -104,7 +120,20 @@ while day <= 100:
 # Eastern vertical wall: 30,0 - 30,10
 # Western between O and TR: 20,0 - 20,10
 
-
+'''
+walls_old = {
+    "b_south": 5000, 
+    "b_north": 5000, 
+    "b_west": 5000, 
+    "b_o": 500, 
+    "o_north": 5000, 
+    "o_south": 5000, 
+    "o_t": 500, 
+    "t_north": 5000, 
+    "t_south": 5000, 
+    "t_east": 5000
+    }
+'''
 
 # Interface stuff:
 

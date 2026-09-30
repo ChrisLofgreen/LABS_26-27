@@ -6,7 +6,15 @@ import environment
 
 global_climate = 1
 
+day = 1
+
+management_report = []
+
+animals_in_zoo = []
+
+
 def flooding():
+
     new_flooded_squares= []
     for x, y in environment.stream_squares:
         b = y
@@ -22,6 +30,7 @@ def flooding():
 
 
 def environmental_change():
+
     if animals.beaver_dam != None and (animals.beaver_dam["progress"] > 90 and day % 14 == 0):
         flooding()
 
@@ -34,19 +43,58 @@ def environmental_change():
         animals.day_report.append(f"The trees have sprouted new fruits across all forests")
 
         for forest in environment.forests:
-            forest.fruits = forest.fruits + 50 + (50 * global_climate)
+            forest.fruits = forest.fruits + 10 + (50 * global_climate)
 
 
 def check_animal_state():
+
     for animal in animals_in_zoo:
         if animal.state == "fled":
             animals.day_report.append(f"The {animal.species} {animal.name} has 'moved out'... (expect a call from the local authorities)")
             animals_in_zoo.remove(animal)
-        elif animal.state == "tired":
-            animals.day_report.append(f"{animal.species} {animal.name} worn themselves out and is retreating to the interior of the forest to rest")
+
+def animal_release(name):
+
+    animals_in_zoo.append(name)
+    animals.day_report.append(name.release_report)
 
 
 def management_decisions():
+
+    if day == 1 and animals.time_of_day == 4:
+        animal_release(flappy)
+        animal_release(nibbles)
+        
+        management_report.append("Release of beavers Nibbles and Flappy")
+
+    if day == 2 and animals.time_of_day == 4:
+        animal_release(beni)
+        animal_release(cinta)
+        animal_release(yutris)
+        animal_release(bumi)
+        animal_release(monita)
+
+        management_report.append("Release of 5 orangutans")
+
+    if day == 3 and animals.time_of_day == 4:
+        animal_release(sue)
+
+        management_report.append("Release of 1 tyrannosaur")
+
+    if day == 10 and animals.time_of_day == 4:
+        animal_release(jane)
+    
+        management_report.append("Release of 1 tyrannosaur")
+
+    if day == 11 and animals.time_of_day == 4:
+
+        management_report.append("Management feels that their job is done and will no longer interevene")
+        management_report.append("The board celebrates with champagne in agreement!")
+
+    if day == 12 and animals.time_of_day == 4:
+    
+            management_report.append("Now that 'active management' is gone things will run their course")
+            management_report.append("You will be handed a summery report every 15:th day")
 
     
 
@@ -55,11 +103,13 @@ def management_decisions():
 
 # Environmental:
 
+# Beaverdam done
+
 # T-rex stuck in beaver-pen
 
 # T-rex eat orangutan?
 
-#food_in_trex_pen = 50
+# food_in_trex_pen = 50
 
 
 
@@ -68,30 +118,24 @@ def management_decisions():
 
 
 
-animals_in_zoo = []
 
-day = 1
-
+# Beavers
 flappy = animals.Beaver("Flappy")
 nibbles = animals.Beaver("Nibbles")
 summer = animals.Beaver("Summer")
 slippy = animals.Beaver("Slippy")
 
+# Orangutans
 beni = animals.Orangutan("Beni")
 cinta = animals.Orangutan("Cinta")
 yutris = animals.Orangutan("Yutris")
 bumi = animals.Orangutan("Bumi")
 monita = animals.Orangutan("Monita")
 
+# Tyrannosaurs
 sue = animals.TRex("Sue")
 jane = animals.TRex("Jane")
 
-
-
-animals_in_zoo.append(sue)
-animals_in_zoo.append(beni)
-animals_in_zoo.append(nibbles)
-animals_in_zoo.append(flappy)
 
 #time.sleep(1)
 
@@ -110,13 +154,21 @@ while day <= 50:
     
         print(f"----------------------------\n    | Report Day {day} |\n----------------------------")
 
+        
+
         if len(animals.day_report) > 0:
+            print(f"Animal Report:\n")
             for index, report in enumerate(animals.day_report, start=1):
                 print(f"{index}. {report}\n")
-        else:
-            print("No news today")
+
+        if len(management_report) > 0:
+            print(f"Mangement Decisions:\n")
+            for index, report in enumerate(management_report, start=1):
+                print(f"{index}. {report}\n")
+
     
         animals.day_report = []
+        management_report = []
         day += 1
         animals.time_of_day = 1
 
@@ -128,41 +180,7 @@ while day <= 50:
 
 
 
-# pen structure:
 
-# Southern wall: 0,0 - 30,0
-# Northern wall: 0,10 - 30,10
-
-# Beaver pen:
-
-# Western vertical wall: 0,0 - 0,10
-# Eastern between B and O: 10,0 - 10,10
-# Stream: 3,1 to 3,9
-
-# Orangutan pen:
-
-# Western between B and O: 10,0 - 10,10
-# Eastern between O and TR: 20,0 - 20,10
-
-# Rex pen:
-
-# Eastern vertical wall: 30,0 - 30,10
-# Western between O and TR: 20,0 - 20,10
-
-'''
-walls_old = {
-    "b_south": 5000, 
-    "b_north": 5000, 
-    "b_west": 5000, 
-    "b_o": 500, 
-    "o_north": 5000, 
-    "o_south": 5000, 
-    "o_t": 500, 
-    "t_north": 5000, 
-    "t_south": 5000, 
-    "t_east": 5000
-    }
-'''
 
 # Interface stuff:
 

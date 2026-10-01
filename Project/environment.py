@@ -15,6 +15,8 @@ forests = []
 
 walls = []
 
+food_in_tyrannosaur_pen = {"food": False, "location": (29, 1)}
+
 
 class Wall():
     def __init__(self, name, coordinates):
@@ -25,13 +27,13 @@ class PerimeterWall(Wall):
     def __init__(self, name, coordinates):
         super().__init__(name, coordinates)
         
-        self.health = 30
+        self.health = 50
 
 class DividingWall(Wall):
     def __init__(self, name, coordinates):
         super().__init__(name, coordinates)
 
-        self.health = 50
+        self.health = 100
 
 class Forest():
     def __init__(self, name, coordinates, x_min, x_max):
@@ -40,6 +42,8 @@ class Forest():
         self.x_min = x_min
         self.x_max = x_max
         self.fruits = 50
+        self.fruits_eaten = 0
+        self.fruits_eaten_total = 0
 
 
 b_forest = Forest("Beaver forest", [(x, y) for x in range(1, 10) for y in range(1, 10)], 1, 9)
@@ -60,7 +64,7 @@ o_south = PerimeterWall("Orangutan-pen Southern Perimeter Wall", [(11,0), (12,0)
 o_north = PerimeterWall("Orangutan-pen Northern Perimeter Wall", [(11,10), (12,10), (13,10), (14,10), (15,10), (16,10), (17,10), (18,10), (19,10), (20,10)])
 
 t_south = PerimeterWall("Tyrannosaur-pen Southern Perimeter Wall", [(21,0), (22,0), (23,0), (24,0), (25,0), (26,0), (27,0), (28,0), (29,0), (30,0)])
-t_north = PerimeterWall("Tyrannosaur-pen Northern Parimeter Wall", [(21,10), (22,10), (23,10), (24,10), (25,10), (26,10), (27,10), (28,10), (29,10), (30,10)])
+t_north = PerimeterWall("Tyrannosaur-pen Northern Perimeter Wall", [(21,10), (22,10), (23,10), (24,10), (25,10), (26,10), (27,10), (28,10), (29,10), (30,10)])
 
 b_o = DividingWall("Dividing Wall between Beaver-pen and Orangutan-pen", [(10,1), (10,2), (10,3), (10,4), (10,5), (10,6), (10,7), (10,8), (10,9)])
 o_t = DividingWall("Dividing Wall between Orangutan-pan and Tyrannosaur-pen", [(20,1), (20,2), (20,3), (20,4), (20,5), (20,6), (20,7), (20,8), (20,9)])

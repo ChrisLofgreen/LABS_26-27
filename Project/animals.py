@@ -49,8 +49,20 @@ class Beaver(Animal):
                 self.build_dam()
 
             elif beaver_dam["progress"] >= 100:
-                #day_report.append(f"The beavers are done with their dam. Expect partial flooding of the beaver pen")
-                pass
+                x, y = self.location
+                x = x + random.randrange(-1, 2)
+                y = y + random.randrange(-1, 2)
+
+                if x > 9:
+                    x = 9
+                elif x < 1:
+                    x = 1
+                elif y > 9:
+                    y = 9
+                elif y < 1:
+                    y = 1
+
+                self.location = (x, y)
 
     def find_stream(self):
         x, y = self.location

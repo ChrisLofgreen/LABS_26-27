@@ -78,7 +78,7 @@ def check_animal_state():
                 if len(pray.location) == 2 and animal != pray:
                     a, b = pray.location
                     
-                    if abs(x - a) > 2 and abs(y - b) > 2:
+                    if abs(x - a) < 2 and abs(y - b) < 2:
                         pray.state = f"eaten by {animal.species}"
                         if pray.species == "Beaver" and pray.found_stream == True:
                             animals.beaver_dam["working"] = animals.beaver_dam["working"] - 1
@@ -92,7 +92,7 @@ def check_animal_state():
                 elif len(pray.location) == 3 and animal != pray:
                     a, b, c = pray.location
                     
-                    if (abs(x - a) > 2 and abs(y - b) > 2) and c < 4:
+                    if (abs(x - a) < 2 and abs(y - b) < 2) and c < 5:
                         pray.state = f"eaten by {animal.species}"
                         lost_animals.append(pray)
                         animals_in_zoo.remove(pray)
@@ -100,7 +100,7 @@ def check_animal_state():
                         animal.state = "alert"
                         animals.day_report.append(f"{animal.species} {animal.name} has killed {pray.species} {pray.name}")
 
-                    elif (abs(x - a) > 2 and abs(y - b) > 2) and c >= 4:
+                    elif (abs(x - a) > 2 and abs(y - b) > 2) and c >= 5:
                         x, y, z = pray.location
                         pray.location = (x + random.randrange(-2, 3), y + random.randrange(-2, 3), z)
                         animals.day_report.append(f"{animal.species} {animal.name} tried to catch {pray.species} {pray.name}, but {pray.name} was climbing to high")
@@ -114,24 +114,23 @@ def animal_release(name):
 def put_food_in_tyrannosaur_pen():
 
     environment.food_in_tyrannosaur_pen["food"] = True
-    management_report.append("Put food in tyrannosaur pen")
+    management_report.append("Food has been delivered to the tyrannosaur pen")
 
 def summery_report_creator():
 
 
-    summery_report.append(f"  Beaver-pen |Orangutan-pen| T-Rex-pen")
-    summery_report.append(f"-----------------------------------------")
-    summery_report.append(f"|   / /      |             |            |")
-    summery_report.append(f"|   | |      |             |            |")
-    summery_report.append(f"|   | |      |             |            |")
-    summery_report.append(f"|   | |      |             |            |")
-    summery_report.append(f"|   / /      |             |         (*)|")
-    summery_report.append(f"-----------------------------------------")
-    summery_report.append(f"                                   _===o ")
-    summery_report.append(f"                                  //   | ")
-    summery_report.append(f"                                 //      ")
+    summery_report.append(f"      Beaver-pen |Orangutan-pen| T-Rex-pen")
+    summery_report.append(f"    -----------------------------------------")
+    summery_report.append(f"    |   / /      |             |            |")
+    summery_report.append(f"    |   | |      |             |            |")
+    summery_report.append(f"    |   | |      |             |            |")
+    summery_report.append(f"    |   / /      |             |         (*)|")
+    summery_report.append(f"    -----------------------------------------")
+    summery_report.append(f"                                       _===o ")
+    summery_report.append(f"                                      //   | ")
+    summery_report.append(f"                                     //      ")
 
-    summery_report.append(f"\n-------------------Fruits-------------------\n")
+    summery_report.append(f"\n----------------------Fruits----------------------\n")
    
     total_fruits_eaten = 0
 
@@ -147,7 +146,7 @@ def summery_report_creator():
         total_fruits_eaten = 0
 
     if animals.beaver_dam != None:
-        summery_report.append(f"\n-------------------Beaver dam-------------------\n")
+        summery_report.append(f"\n--------------------Beaver dam--------------------\n")
         if animals.beaver_dam["progress"] < 100:
             summery_report.append(f"Beaver dam progress: {animals.beaver_dam["progress"]}% \n")
             summery_report.append(f"Beavers working: {animals.beaver_dam["working"]} \n")
@@ -160,22 +159,29 @@ def summery_report_creator():
                 affected_squares = [(x, y) for x, y in environment.stream_squares if x != 3]
                 summery_report.append(f"{affected_squares}\n")
 
-    summery_report.append(f"\n-------------------Tyrannosaur pen-------------------\n")
+    summery_report.append(f"\n-----------------Tyrannosaur pen------------------\n")
     summery_report.append(f"Food in tyrannosaur pen: {environment.food_in_tyrannosaur_pen["food"]} \n")
+
+    summery_report.append(f"\n-----------------Security status------------------\n")
+    for wall in environment.walls:
+        if wall.health < 0:
+            summery_report.append(f"{wall.name} health: destroyed \n")
+        else:   
+            summery_report.append(f"{wall.name} health: {wall.health} \n")
 
 
     if len(lost_animals) > 0:
-        summery_report.append(f"\n-------------------Lost animals-------------------\n")
+        summery_report.append(f"\n-----------------Lost animals-------------------\n")
         for animal in lost_animals:
-            summery_report.append(f"{animal.species} {animal.name} : {animal.state}\n")
+            summery_report.append(f"{animal.species} {animal.name} : {animal.state}")
 
     if len(animals_in_zoo) > 0:
-        summery_report.append(f"\n-------------------Animals in Zoo-------------------\n")
+        summery_report.append(f"\n-----------------Animals in Zoo-------------------\n")
         for index, animal in enumerate(animals_in_zoo, start=1):
             summery_report.append(f"{index}. {animal.species} {animal.name}")
-        if len(lost_animals) == 1:
+        if len(animals_in_zoo) == 1:
             summery_report.append(f"\nThere is only 1 animal in the zoo, are you sure you want to continue the simulation?\n")
-        summery_report.append(f"\n----------------------------------------------------\n")
+        summery_report.append(f"\n--------------------------------------------------\n")
     elif len(animals_in_zoo) == 0:
         summery_report.append(f"All animals have been lost or died, are you sure you want to continue the simulation?\n")
 
@@ -223,6 +229,7 @@ def management_decisions():
     
         management_report.append("Now that 'active management' is gone things will run their course")
         management_report.append("You will now be handed a summery report every 15 days")
+        management_report.append("There is one last gift for the zoo:")
         put_food_in_tyrannosaur_pen()
 
 
@@ -263,6 +270,8 @@ jane = animals.TRex("Jane")
 
 while day <= 100:
 
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+
     for animal in animals_in_zoo:
         animal.movement()
 
@@ -274,24 +283,28 @@ while day <= 100:
 
     if animals.time_of_day == 5:
     
-        print(f"----------------------------\n     | Report Day {day}  |\n----------------------------")
+        print(f"--------------------------------------------------\n                 | Report Day {day} |\n--------------------------------------------------")
 
         if len(summery_report) > 0:
-            print(f"Summery Report:\n")
+            print(f"                  Summery Report\n")
             for report in summery_report:
                 print(report)
 
         if len(management_report) > 0:
-            print(f"Mangement Decisions:\n")
+            print(f"               Management Decisions\n")
             for index, report in enumerate(management_report, start=1):
                 print(f"{index}. {report}\n")
 
         if len(animals.day_report) > 0:
-            print(f"Animal Report:\n")
+            print(f"                  Animal Report\n")
             for index, report in enumerate(animals.day_report, start=1):
                 print(f"{index}. {report}\n")
 
-    
+        print("flappy", flappy.location)
+        print("nibbles", nibbles.location)
+        print("sue", sue.location, sue.state)
+        print("jane", jane.location, jane.state)
+
         animals.day_report = []
         management_report = []
         summery_report = []
@@ -302,6 +315,8 @@ while day <= 100:
 
         if user_input != "":
             break
+
+        
 
 
 

@@ -10,7 +10,11 @@ day = 1
 
 management_report = []
 
+summery_report = []
+
 animals_in_zoo = []
+
+lost_animals = []
 
 
 def flooding():
@@ -38,29 +42,120 @@ def environmental_change():
         if wall.health < 1:
             environment.walls.remove(wall)
 
+    if animals.time_of_day == 4:
+        for forest in environment.forests:
+            if forest.fruits_eaten > 0:
+                animals.day_report.append(f"Orangutans have eaten {forest.fruits_eaten} fruits from {forest.name}")
+                forest.fruits_eaten = 0
+                
     if day % 10 == 0 and animals.time_of_day == 4:
         global_climate = random.randrange(0, 3)
         animals.day_report.append(f"The trees have sprouted new fruits across all forests")
 
         for forest in environment.forests:
-            forest.fruits = forest.fruits + 10 + (50 * global_climate)
+            forest.fruits = forest.fruits + 10 + (20 * global_climate)
 
 
 def check_animal_state():
 
     for animal in animals_in_zoo:
+
         if animal.state == "fled":
             animals.day_report.append(f"The {animal.species} {animal.name} has 'moved out'... (expect a call from the local authorities)")
+            lost_animals.append(animal)
+            animals_in_zoo.remove(animal)
+        
+        if animal.state == "died from starvation":
+            animals.day_report.append(f"The {animal.species} {animal.name} has died from starvation")
+            lost_animals.append(animal)
             animals_in_zoo.remove(animal)
 
+        if animal.state == "ragehunt":
+            x, y = animal.location
+            for pray in animals_in_zoo:
+
+                if len(pray.location) == 2 and animal != pray:
+                    a, b = pray.location
+                    
+                    if abs(x - a) > 2 and abs(y - b) > 2:
+                        pray.state = f"eaten by {animal.species}"
+                        lost_animals.append(pray)
+                        animals_in_zoo.remove(pray)
+                        animal.hunger = 0
+                        animal.state = "alert"
+                        animals.day_report.append(f"{animal.species} {animal.name} has killed {pray.species} {pray.name}")
+
+                elif len(pray.location) == 3 and animal != pray:
+                    a, b, c = pray.location
+                    
+                    if (abs(x - a) > 2 and abs(y - b) > 2) and c < 4:
+                        pray.state = f"eaten by {animal.species}"
+                        lost_animals.append(pray)
+                        animals_in_zoo.remove(pray)
+                        animal.hunger = 0
+                        animal.state = "alert"
+                        animals.day_report.append(f"{animal.species} {animal.name} has killed {pray.species} {pray.name}")
+
+                    elif (abs(x - a) > 2 and abs(y - b) > 2) and c >= 4:
+                        x, y, z = pray.location
+                        pray.location = (x + random.randrange(-2, 3), y + random.randrange(-2, 3), z)
+                        animals.day_report.append(f"{animal.species} {animal.name} tried to catch {pray.species} {pray.name}, but {pray.name} was climbing to high")
+
+                    
 def animal_release(name):
 
     animals_in_zoo.append(name)
     animals.day_report.append(name.release_report)
 
+def put_food_in_tyrannosaur_pen():
+
+    environment.food_in_tyrannosaur_pen["food"] = True
+    management_report.append("Put food in tyrannosaur pen")
+
+def summery_report_creator():
+
+
+    summery_report.append(f"  Beaver-pen |Orangutan-pen| T-Rex-pen")
+    summery_report.append(f"-----------------------------------------")
+    summery_report.append(f"|   / /      |             |            |")
+    summery_report.append(f"|   | |      |             |            |")
+    summery_report.append(f"|   | |      |             |            |")
+    summery_report.append(f"|   | |      |             |            |")
+    summery_report.append(f"|   / /      |             |         (*)|")
+    summery_report.append(f"-----------------------------------------")
+    summery_report.append(f"                                   _===o ")
+    summery_report.append(f"                                  //   | ")
+    summery_report.append(f"                                 //      ")
+
+    summery_report.append(f"\n-------------------Fruits-------------------\n")
+   
+    total_fruits_eaten = 0
+
+    for forest in environment.forests:
+        summery_report.append(f"Fruits in {forest.name}: {forest.fruits} \n")
+        
+        if forest.fruits_eaten_total > 0:
+            summery_report.append(f"Eaten in: {forest.fruits_eaten_total} : {forest.name} (acc)\n")
+            total_fruits_eaten += forest.fruits_eaten_total
+
+    if total_fruits_eaten > 0:
+        summery_report.append(f"Total fruits eaten: {total_fruits_eaten} (acc)\n")
+        total_fruits_eaten = 0
+
+    if animals.beaver_dam != None:
+        summery_report.append(f"\n-------------------Beaver dam-------------------\n")
+        if animals.beaver_dam["progress"] < 100:
+            summery_report.append(f"Beaver dam progress: {animals.beaver_dam["progress"]}% \n")
+            summery_report.append(f"Beavers working: {animals.beaver_dam["working"]} \n")
+            summery_report.append(f"Beaver dam location: y {animals.beaver_dam["y_coordinate"]} \n")
+
+
 
 def management_decisions():
 
+    if day % 15 == 0 and animals.time_of_day == 4:
+        summery_report_creator()
+        
     if day == 1 and animals.time_of_day == 4:
         animal_release(flappy)
         animal_release(nibbles)
@@ -85,16 +180,20 @@ def management_decisions():
         animal_release(jane)
     
         management_report.append("Release of 1 tyrannosaur")
+        put_food_in_tyrannosaur_pen()
 
     if day == 11 and animals.time_of_day == 4:
 
-        management_report.append("Management feels that their job is done and will no longer interevene")
-        management_report.append("The board celebrates with champagne in agreement!")
+        management_report.append("Management feels that their job is done and they will no longer interevene.")
+        management_report.append("The board celebrates with champagne!")
+        management_report.append("Despite this, the Tyrannosaur pen will have food delivered as has been promised")
 
     if day == 12 and animals.time_of_day == 4:
     
-            management_report.append("Now that 'active management' is gone things will run their course")
-            management_report.append("You will be handed a summery report every 15:th day")
+        management_report.append("Now that 'active management' is gone things will run their course")
+        management_report.append("You will now be handed a summery report every 15 days")
+
+
 
     
 
@@ -103,14 +202,9 @@ def management_decisions():
 
 # Environmental:
 
-# Beaverdam done
+# BEAVERDAM DONE!
 
 # T-rex stuck in beaver-pen
-
-# T-rex eat orangutan?
-
-# food_in_trex_pen = 50
-
 
 
 #global_event = 0
@@ -139,7 +233,7 @@ jane = animals.TRex("Jane")
 
 #time.sleep(1)
 
-while day <= 50:
+while day <= 100:
 
     for animal in animals_in_zoo:
         animal.movement()
@@ -152,23 +246,27 @@ while day <= 50:
 
     if animals.time_of_day == 5:
     
-        print(f"----------------------------\n    | Report Day {day} |\n----------------------------")
+        print(f"----------------------------\n     | Report Day {day}  |\n----------------------------")
 
-        
-
-        if len(animals.day_report) > 0:
-            print(f"Animal Report:\n")
-            for index, report in enumerate(animals.day_report, start=1):
-                print(f"{index}. {report}\n")
+        if len(summery_report) > 0:
+            print(f"Summery Report:\n")
+            for report in summery_report:
+                print(report)
 
         if len(management_report) > 0:
             print(f"Mangement Decisions:\n")
             for index, report in enumerate(management_report, start=1):
                 print(f"{index}. {report}\n")
 
+        if len(animals.day_report) > 0:
+            print(f"Animal Report:\n")
+            for index, report in enumerate(animals.day_report, start=1):
+                print(f"{index}. {report}\n")
+
     
         animals.day_report = []
         management_report = []
+        summery_report = []
         day += 1
         animals.time_of_day = 1
 

@@ -33,7 +33,7 @@ class DividingWall(Wall):
     def __init__(self, name, coordinates):
         super().__init__(name, coordinates)
 
-        self.health = 100
+        self.health = 30
 
 class Forest():
     def __init__(self, name, coordinates, x_min, x_max):

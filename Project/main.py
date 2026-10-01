@@ -53,7 +53,8 @@ def environmental_change():
         animals.day_report.append(f"The trees have sprouted new fruits across all forests")
 
         for forest in environment.forests:
-            forest.fruits = forest.fruits + 10 + (20 * global_climate)
+            if forest.fruits < 50:
+                forest.fruits = forest.fruits + 10 + (20 * global_climate)
 
 
 def check_animal_state():
@@ -79,6 +80,9 @@ def check_animal_state():
                     
                     if abs(x - a) > 2 and abs(y - b) > 2:
                         pray.state = f"eaten by {animal.species}"
+                        if pray.species == "Beaver" and pray.found_stream == True:
+                            animals.beaver_dam["working"] = animals.beaver_dam["working"] - 1
+
                         lost_animals.append(pray)
                         animals_in_zoo.remove(pray)
                         animal.hunger = 0
@@ -135,7 +139,7 @@ def summery_report_creator():
         summery_report.append(f"Fruits in {forest.name}: {forest.fruits} \n")
         
         if forest.fruits_eaten_total > 0:
-            summery_report.append(f"Eaten in: {forest.fruits_eaten_total} : {forest.name} (acc)\n")
+            summery_report.append(f"Eaten in {forest.name}: {forest.fruits_eaten_total}  (acc)\n")
             total_fruits_eaten += forest.fruits_eaten_total
 
     if total_fruits_eaten > 0:
@@ -149,7 +153,33 @@ def summery_report_creator():
             summery_report.append(f"Beavers working: {animals.beaver_dam["working"]} \n")
             summery_report.append(f"Beaver dam location: y {animals.beaver_dam["y_coordinate"]} \n")
 
+        else:
+            summery_report.append(f"Beaver dam has been built at y coordinate {animals.beaver_dam["y_coordinate"]} \n")
+            if len(environment.stream_squares) > 9:
+                summery_report.append(f"the dam has caused local flooding north of the dam affecting squares:")
+                affected_squares = [(x, y) for x, y in environment.stream_squares if x != 3]
+                summery_report.append(f"{affected_squares}\n")
 
+    summery_report.append(f"\n-------------------Tyrannosaur pen-------------------\n")
+    summery_report.append(f"Food in tyrannosaur pen: {environment.food_in_tyrannosaur_pen["food"]} \n")
+
+
+    if len(lost_animals) > 0:
+        summery_report.append(f"\n-------------------Lost animals-------------------\n")
+        for animal in lost_animals:
+            summery_report.append(f"{animal.species} {animal.name} : {animal.state}\n")
+
+    if len(animals_in_zoo) > 0:
+        summery_report.append(f"\n-------------------Animals in Zoo-------------------\n")
+        for index, animal in enumerate(animals_in_zoo, start=1):
+            summery_report.append(f"{index}. {animal.species} {animal.name}")
+        if len(lost_animals) == 1:
+            summery_report.append(f"\nThere is only 1 animal in the zoo, are you sure you want to continue the simulation?\n")
+        summery_report.append(f"\n----------------------------------------------------\n")
+    elif len(animals_in_zoo) == 0:
+        summery_report.append(f"All animals have been lost or died, are you sure you want to continue the simulation?\n")
+
+    
 
 def management_decisions():
 
@@ -178,20 +208,22 @@ def management_decisions():
 
     if day == 10 and animals.time_of_day == 4:
         animal_release(jane)
+        animal_release(slippy)
     
-        management_report.append("Release of 1 tyrannosaur")
+        management_report.append("Release of 1 tyrannosaur and 1 beaver")
         put_food_in_tyrannosaur_pen()
 
     if day == 11 and animals.time_of_day == 4:
 
         management_report.append("Management feels that their job is done and they will no longer interevene.")
         management_report.append("The board celebrates with champagne!")
-        management_report.append("Despite this, the Tyrannosaur pen will have food delivered as has been promised")
+        management_report.append("It has been promised that the Tyrannosaur pen will have food delivered, one wonders if they remembered to call the crane operator...")
 
     if day == 12 and animals.time_of_day == 4:
     
         management_report.append("Now that 'active management' is gone things will run their course")
         management_report.append("You will now be handed a summery report every 15 days")
+        put_food_in_tyrannosaur_pen()
 
 
 
@@ -202,12 +234,8 @@ def management_decisions():
 
 # Environmental:
 
-# BEAVERDAM DONE!
-
 # T-rex stuck in beaver-pen
 
-
-#global_event = 0
 
 
 

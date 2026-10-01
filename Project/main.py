@@ -88,6 +88,8 @@ def check_animal_state():
                         animal.hunger = 0
                         animal.state = "alert"
                         animals.day_report.append(f"{animal.species} {animal.name} has killed {pray.species} {pray.name}")
+                        pray.location = (a, b)
+                        animal.location = (x, y)
 
                 elif len(pray.location) == 3 and animal != pray:
                     a, b, c = pray.location
@@ -99,11 +101,18 @@ def check_animal_state():
                         animal.hunger = 0
                         animal.state = "alert"
                         animals.day_report.append(f"{animal.species} {animal.name} has killed {pray.species} {pray.name}")
+                        pray.location = (a, b, c)
+                        animal.location = (x, y)
 
                     elif (abs(x - a) > 2 and abs(y - b) > 2) and c >= 5:
                         x, y, z = pray.location
                         pray.location = (x + random.randrange(-2, 3), y + random.randrange(-2, 3), z)
                         animals.day_report.append(f"{animal.species} {animal.name} tried to catch {pray.species} {pray.name}, but {pray.name} was climbing to high")
+                        pray.location = (x, y, z)
+                        animal.location = (x, y)
+            
+                animal.location = (x, y)
+    
 
                     
 def animal_release(name):
@@ -199,11 +208,11 @@ def management_decisions():
         management_report.append("Release of beavers Nibbles and Flappy")
 
     if day == 2 and animals.time_of_day == 4:
-        animal_release(beni)
-        animal_release(cinta)
-        animal_release(yutris)
-        animal_release(bumi)
-        animal_release(monita)
+        #animal_release(beni)
+        #animal_release(cinta)
+        #animal_release(yutris)
+        #animal_release(bumi)
+        #animal_release(monita)
 
         management_report.append("Release of 5 orangutans")
 
@@ -302,6 +311,8 @@ while day <= 100:
 
         print("flappy", flappy.location)
         print("nibbles", nibbles.location)
+        print("slippy", slippy.location)
+        print("summer", summer.location)
         print("sue", sue.location, sue.state)
         print("jane", jane.location, jane.state)
 

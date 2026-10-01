@@ -159,8 +159,8 @@ class Orangutan(Animal):
                 z = 1
                 x = x + random.randrange(-1,2)
                 y = y + random.randrange(-1,2)
-            if time_of_day == 2:
-                z = random.randrange(3,10)
+            elif time_of_day == 2:
+                z = random.randrange(2,7)
                 x = x + random.randrange(-1,2)
                 y = y + random.randrange(-1,2)
             elif time_of_day == 3:
@@ -171,14 +171,16 @@ class Orangutan(Animal):
                             fruit_craving = random.randrange(0,3)
                             if forest.fruits >= fruit_craving:
                                 forest.fruits = forest.fruits - fruit_craving
-                                if fruit_craving > 0:
-                                    day_report.append(f"Orangutan {self.name} ate {fruit_craving} units of fruit in {self.current_forest.name}")
+                                forest.fruits_eaten = forest.fruits_eaten + fruit_craving
+                                forest.fruits_eaten_total = forest.fruits_eaten_total + fruit_craving
+                                break
 
                             else:
                                 self.state = "curious"
                                 forest.fruits = 0
                                 self.direcion_of_curiosity = random.choice(self.curiosity_directions)
-                                day_report.append(f"Orangutan {self.name} is not satisfied with the number of fruits in {forest.name} and might look elsewhere")
+                                day_report.append(f"Orangutan {self.name} is not satisfied with the number of fruits in {forest.name} and will look elsewhere")
+                                break
 
                 z = 10
                 x = x + random.randrange(-1,2)
@@ -209,6 +211,8 @@ class TRex(Animal):
 
         self.release_report = None
 
+        self.hunger = 0
+
         self.tiredness = 0
         
         if self.location == None:
@@ -226,22 +230,45 @@ class TRex(Animal):
 
 
     def movement(self):
-        # IF Beaver dam/lake (stuck/drown, help with rage?)
+        # IF Beaver dam/lake (stuck/drown, help with rage/hunger?)
         x, y = self.location
         stored_location = (x, y)
 
+        if (self.state == "searching food" or self.state == "rage") and environment.food_in_tyrannosaur_pen["food"] == True:
+            if 1 < x < 27:
+                x += 2
+                day_report.append(f"Tyrannosaur {self.name} has scented the food in the tyrannosaur pen and is heading towards it")
+            elif 26 < x < 30:
+                x = 29
+                y = 1
+                environment.food_in_tyrannosaur_pen["food"] = False
+                self.hunger = -10
+                day_report.append(f"Tyrannosaur {self.name} has eaten food in tyrannosaur pen")
+
+
         if (time_of_day == 1 or time_of_day == 2) and self.tiredness < 100:
-            self.state = "alert"
+            
             x = x + random.randrange(-1, 2)
             y = y + random.randrange(-1, 2)
+
+            self.hunger += 2
 
             for wall in environment.walls:
                 for coordinate in wall.coordinates:
                     a, b = coordinate
+                    
                     if a == x and b == y:
-                        wall.health -= 10
-                        day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name}")
-                        self.tiredness += 25
+                        
+                        if self.state == "rage":
+                            wall.health -= 50
+                            day_report.append(f"Tyrannosaur {self.name} aggressively attacked {wall.name}")
+
+                        else:
+                            wall.health -= 10
+                            day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name}")
+                            self.tiredness += 25
+
+                        self.hunger += 5
 
                         if wall.health > 0:
                             x, y = stored_location
@@ -250,17 +277,30 @@ class TRex(Animal):
                             self.tiredness -= 10
 
         elif time_of_day >= 3:
-            self.state = "tired"
+            self.hunger += 1
             pass
 
-        if self.tiredness > 100:
+        if self.tiredness > 100 and self.state != "rage":
             y = 5
             self.tiredness -= 50
-            self.state = "tired"
             day_report.append(f"Tyrannosaur {self.name} worn themselves out and is retreating to the interior of the forest to rest")
+
 
         if y > 10 or y < 0 or x > 30 or x < 0:
             self.state = "fled"
-            
+        elif self.hunger > 100:
+            self.state = "died from starvation"
+        elif self.hunger > 80:
+            self.state = "rage"
+        elif self.hunger > 40:
+            self.state = "searching food"
+        elif self.hunger > 0:
+            self.state = "alert"
+        elif self.hunger < 0:
+            self.hunger = 0
 
+        if self.state == "rage" and environment.food_in_tyrannosaur_pen["food"] == False:
+            self.state = "ragehunt"
+
+        
         self.location = (x, y)

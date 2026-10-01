@@ -33,7 +33,7 @@ class Beaver(Animal):
             elif y > 2:
                 self.release_report = f"Beaver {self.name} ran into to the forest upon release"
             else:
-                self.release_report = f"Beaver {self.name} stayed close to the enrance upon release"
+                self.release_report = f"Beaver {self.name} stayed close to the entrance upon release"
 
             self.location = (x, y)
 
@@ -127,7 +127,7 @@ class Orangutan(Animal):
             elif y > 2:
                 self.release_report = f"Orangutan {self.name} ran into to the forest and climbed a tree upon release"
             else:
-                self.release_report = f"Orangutan {self.name} stayed close to the enrance and climbed a tree upon release"
+                self.release_report = f"Orangutan {self.name} stayed close to the entrance and climbed a tree upon release"
 
             self.location = (x, y, z)
 
@@ -236,7 +236,7 @@ class TRex(Animal):
             elif y > 2:
                 self.release_report = f"Tyrannosaur {self.name} ran into to the forest upon release"
             else:
-                self.release_report = f"Tyrannosaur {self.name} stayed close to the enrance upon release"
+                self.release_report = f"Tyrannosaur {self.name} stayed close to the entrance upon release"
 
             self.location = (x, y)
 
@@ -254,29 +254,31 @@ class TRex(Animal):
                 x = 29
                 y = 1
                 environment.food_in_tyrannosaur_pen["food"] = False
-                self.hunger = -10
+                self.hunger = -100
                 day_report.append(f"Tyrannosaur {self.name} has eaten food in tyrannosaur pen")
 
 
-        if (time_of_day == 1 or time_of_day == 2) and self.tiredness < 100:
+        if (time_of_day == 1 or time_of_day == 2):
             
             x = x + random.randrange(-1, 2)
             y = y + random.randrange(-1, 2)
 
             self.hunger += 2
+            self.tiredness += 5
 
             for wall in environment.walls:
                 for coordinate in wall.coordinates:
                     a, b = coordinate
                     
                     if a == x and b == y:
+                        coordinate = (a, b)
                         
                         if self.state == "rage":
                             wall.health -= 50
                             day_report.append(f"Tyrannosaur {self.name} aggressively attacked {wall.name}")
 
                         else:
-                            wall.health -= 10
+                            wall.health -= 20
                             day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name}")
                             self.tiredness += 25
 
@@ -284,9 +286,14 @@ class TRex(Animal):
 
                         if wall.health > 0:
                             x, y = stored_location
+
+                        elif wall.health == None:
+                            pass
                         else:
                             day_report.append(f"Tyrannosaur {self.name} has destroyed {wall.name}")
+                            wall.health = None
                             self.tiredness -= 10
+                    
 
         elif time_of_day >= 3:
             self.hunger += 1
@@ -294,7 +301,7 @@ class TRex(Animal):
 
         if self.tiredness > 100 and self.state != "rage":
             y = 5
-            self.tiredness -= 50
+            self.tiredness = 0
             day_report.append(f"Tyrannosaur {self.name} worn themselves out and is retreating to the interior of the forest to rest")
 
 

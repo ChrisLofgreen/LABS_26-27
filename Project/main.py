@@ -38,10 +38,6 @@ def environmental_change():
     if animals.beaver_dam != None and (animals.beaver_dam["progress"] > 90 and day % 14 == 0):
         flooding()
 
-    for wall in environment.walls:
-        if wall.health < 1:
-            environment.walls.remove(wall)
-
     if animals.time_of_day == 4:
         for forest in environment.forests:
             if forest.fruits_eaten > 0:
@@ -173,7 +169,7 @@ def summery_report_creator():
 
     summery_report.append(f"\n-----------------Security status------------------\n")
     for wall in environment.walls:
-        if wall.health < 0:
+        if wall.health == None:
             summery_report.append(f"{wall.name} health: destroyed \n")
         else:   
             summery_report.append(f"{wall.name} health: {wall.health} \n")
@@ -208,11 +204,11 @@ def management_decisions():
         management_report.append("Release of beavers Nibbles and Flappy")
 
     if day == 2 and animals.time_of_day == 4:
-        #animal_release(beni)
-        #animal_release(cinta)
-        #animal_release(yutris)
-        #animal_release(bumi)
-        #animal_release(monita)
+        animal_release(beni)
+        animal_release(cinta)
+        animal_release(yutris)
+        animal_release(bumi)
+        animal_release(monita)
 
         management_report.append("Release of 5 orangutans")
 
@@ -308,13 +304,6 @@ while day <= 100:
             print(f"                  Animal Report\n")
             for index, report in enumerate(animals.day_report, start=1):
                 print(f"{index}. {report}\n")
-
-        print("flappy", flappy.location)
-        print("nibbles", nibbles.location)
-        print("slippy", slippy.location)
-        print("summer", summer.location)
-        print("sue", sue.location, sue.state)
-        print("jane", jane.location, jane.state)
 
         animals.day_report = []
         management_report = []

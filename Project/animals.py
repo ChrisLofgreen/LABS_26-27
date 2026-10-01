@@ -273,22 +273,25 @@ class TRex(Animal):
                     if a == x and b == y:
                         coordinate = (a, b)
                         
-                        if self.state == "rage":
+                        if (self.state == "rage" or self.state == "ragehunt") and wall.health != None:
                             wall.health -= 50
                             day_report.append(f"Tyrannosaur {self.name} aggressively attacked {wall.name}")
 
-                        else:
+                        elif wall.health != None:
                             wall.health -= 20
                             day_report.append(f"Tyrannosaur {self.name} nibbled on {wall.name}")
                             self.tiredness += 25
 
                         self.hunger += 5
 
-                        if wall.health > 0:
+                        if wall.health != None:
+                            if wall.health < 1:
+                                wall.health = None
                             x, y = stored_location
 
                         elif wall.health == None:
                             pass
+                        
                         else:
                             day_report.append(f"Tyrannosaur {self.name} has destroyed {wall.name}")
                             wall.health = None

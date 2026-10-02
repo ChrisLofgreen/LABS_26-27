@@ -312,6 +312,7 @@ class TRex(Animal):
         elif self.hunger > 0:
             self.state = "alert"
         elif self.hunger < 0:
+            self.state = "alert"
             self.hunger = 0
 
         if self.state == "rage" and environment.food_in_tyrannosaur_pen["food"] == False:

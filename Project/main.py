@@ -128,7 +128,10 @@ def summery_report_creator():
     summery_report.append(f"    |   / /      |             |            |")
     summery_report.append(f"    |   | |      |             |            |")
     summery_report.append(f"    |   | |      |             |            |")
-    summery_report.append(f"    |   / /      |             |         (*)|")
+    if environment.food_in_tyrannosaur_pen["food"] == False:
+        summery_report.append(f"    |   | |      |             |            |")
+    else:
+        summery_report.append(f"    |   / /      |             |         (*)|")
     summery_report.append(f"    -----------------------------------------")
     summery_report.append(f"                                       _===o ")
     summery_report.append(f"                                      //   | ")

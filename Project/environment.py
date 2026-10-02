@@ -27,7 +27,7 @@ class PerimeterWall(Wall):
     def __init__(self, name, coordinates):
         super().__init__(name, coordinates)
         
-        self.health = 50
+        self.health = 70
 
 class DividingWall(Wall):
     def __init__(self, name, coordinates):

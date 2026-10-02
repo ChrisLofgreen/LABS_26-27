@@ -1,4 +1,3 @@
-import time
 import random
 import animals
 import environment
@@ -69,42 +68,42 @@ def check_animal_state():
 
         if animal.state == "ragehunt":
             x, y = animal.location
-            for pray in animals_in_zoo:
+            for prey in animals_in_zoo:
 
-                if len(pray.location) == 2 and animal != pray:
-                    a, b = pray.location
+                if len(prey.location) == 2 and animal.name != prey.name:
+                    a, b = prey.location
                     
                     if abs(x - a) < 2 and abs(y - b) < 2:
-                        pray.state = f"eaten by {animal.species}"
-                        if pray.species == "Beaver" and pray.found_stream == True:
+                        prey.state = f"eaten by {animal.species}"
+                        
+                        if prey.species == "Beaver" and prey.found_stream == True:
                             animals.beaver_dam["working"] = animals.beaver_dam["working"] - 1
 
-                        lost_animals.append(pray)
-                        animals_in_zoo.remove(pray)
+                        lost_animals.append(prey)
+                        animals_in_zoo.remove(prey)
                         animal.hunger = 0
                         animal.state = "alert"
-                        animals.day_report.append(f"{animal.species} {animal.name} has killed {pray.species} {pray.name}")
-                        pray.location = (a, b)
+                        animals.day_report.append(f"{animal.species} {animal.name} has killed {prey.species} {prey.name}")
+                        prey.location = (a, b)
                         animal.location = (x, y)
 
-                elif len(pray.location) == 3 and animal != pray:
-                    a, b, c = pray.location
+                elif len(prey.location) == 3 and animal.name != prey.name:
+                    a, b, c = prey.location
                     
                     if (abs(x - a) < 2 and abs(y - b) < 2) and c < 5:
-                        pray.state = f"eaten by {animal.species}"
-                        lost_animals.append(pray)
-                        animals_in_zoo.remove(pray)
+                        prey.state = f"eaten by {animal.species}"
+                        lost_animals.append(prey)
+                        animals_in_zoo.remove(prey)
                         animal.hunger = 0
                         animal.state = "alert"
-                        animals.day_report.append(f"{animal.species} {animal.name} has killed {pray.species} {pray.name}")
-                        pray.location = (a, b, c)
+                        animals.day_report.append(f"{animal.species} {animal.name} has killed {prey.species} {prey.name}")
+                        prey.location = (a, b, c)
                         animal.location = (x, y)
 
-                    elif (abs(x - a) > 2 and abs(y - b) > 2) and c >= 5:
-                        x, y, z = pray.location
-                        pray.location = (x + random.randrange(-2, 3), y + random.randrange(-2, 3), z)
-                        animals.day_report.append(f"{animal.species} {animal.name} tried to catch {pray.species} {pray.name}, but {pray.name} was climbing to high")
-                        pray.location = (x, y, z)
+                    elif (abs(x - a) < 2 and abs(y - b) < 2) and c >= 5:
+                        prey.location = (a + random.randrange(-2, 3), b + random.randrange(-2, 3), c)
+                        animals.day_report.append(f"{animal.species} {animal.name} tried to catch {prey.species} {prey.name}, but {prey.name} was climbing to high")
+                        prey.location = (a, b, c)
                         animal.location = (x, y)
             
                 animal.location = (x, y)
@@ -149,6 +148,13 @@ def summery_report_creator():
     if total_fruits_eaten > 0:
         summery_report.append(f"Total fruits eaten: {total_fruits_eaten} (acc)\n")
         total_fruits_eaten = 0
+
+    if global_climate == 0:
+        summery_report.append(f"The climate has been cold, the trees have sprouted few fruits\n")
+    elif global_climate == 1:
+        summery_report.append(f"The climate has been moderate, the trees have sprouted a decent amount of fruits\n")
+    else:
+        summery_report.append(f"The climate has been warm, the trees have sprouted a lot of fruits\n")
 
     if animals.beaver_dam != None:
         summery_report.append(f"\n--------------------Beaver dam--------------------\n")
@@ -239,20 +245,6 @@ def management_decisions():
 
 
 
-    
-
-
-
-
-# Environmental:
-
-# T-rex stuck in beaver-pen
-
-
-
-
-
-
 # Beavers
 flappy = animals.Beaver("Flappy")
 nibbles = animals.Beaver("Nibbles")
@@ -270,12 +262,33 @@ monita = animals.Orangutan("Monita")
 sue = animals.TRex("Sue")
 jane = animals.TRex("Jane")
 
+print("\n\n\n\n\n        Welcome to the strange animal simulator\n")
+print("       -----------------------------------------")
+print("       |   / /      |             |            |")
+print("       |   | |      |             |            |")
+print("       |   Beaver   |  Orangutan  |   T-Rex    |")
+print("       |   | |      |             |            |")
+print("       |   / /      |             |            |")
+print("       -----------------------------------------")
+print("                                          _===o ")
+print("                                         //   | ")
+print("                                        //      ")
 
-#time.sleep(1)
 
-while day <= 100:
 
-    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+print("\nThis is a strange zoo, all animal pens have lush forests where these animals thrive.")
+print("It might not be the best for visitors, which is probably why we don't have any...\n")
+
+print("The beaver-pen has a stream, and the Tyrannosaur-pen has a giant crane to deliver food over the wall.")
+print("The orangutang-pen has no special amenities as they thrive in the tall forest and eat the produce from the trees.\n")
+
+print("The pens can mostly sustain it's inhabitants without intervension, exept for the tyrannosaurs, for whom outside food is a necessity for calm behaivior.\n\n\n")
+
+
+while day <= 90:
+
+    if day != 1 and animals.time_of_day != 4:
+        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
     for animal in animals_in_zoo:
         animal.movement()
@@ -305,6 +318,7 @@ while day <= 100:
             for index, report in enumerate(animals.day_report, start=1):
                 print(f"{index}. {report}\n")
 
+
         animals.day_report = []
         management_report = []
         summery_report = []
@@ -315,45 +329,3 @@ while day <= 100:
 
         if user_input != "":
             break
-
-        
-
-
-
-
-
-
-# Interface stuff:
-
-
-'''
-Start screen: 
-please type in the number of beavers you want for your simulation (1-12)
-please type in the number of orangutans you would like for your simulation (1-12)
-
-
-'''
-
-'''
-
-print("-----------------------------------------")
-print("|   / /      |             |            |")
-print("|   | |      |             |            |")
-print("|   Beaver   |  Orangutan  |   T-Rex    |")
-print("|   | |      |             |            |")
-print("|   / /      |             |            |")
-print("-----------------------------------------")
-print("                                   _===o ")
-print("                                  //   | ")
-print("                                 //      ")
-'''
-
-'''
-"This is a strange zoo, all animal pens are lush forests where these animals thrive."
-"It is not the best for the visitors to see the animals but it is the best for the animals"
-
-"The beaver-pen has a stream, and the Tyrannosaur-pen has a giant crane to deliver food over the wall."
-"The orangutang-pen has no special amenities, they thrive in the tall forest and eat the produce from the trees"
-
-"The pens can mostly sustain it's inhabitants without intervension, exept for the T-rex, for whom outside food is a necessity for calm behaivior.
-'''

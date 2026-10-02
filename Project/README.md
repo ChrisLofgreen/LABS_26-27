@@ -27,4 +27,4 @@ Lumbering around, resting, destroying walls and moving out or eating supplied fo
 
 ### To run
 
-run main.py
+run python main.py (with python installed)

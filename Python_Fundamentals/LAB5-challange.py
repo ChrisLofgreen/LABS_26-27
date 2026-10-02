@@ -1,5 +1,9 @@
 
 
+
+
+# 1.
+
 products = [
     {"name": "Gibson Les Paul Standard",
      "colour": "Cherry Sunburst",
@@ -54,6 +58,7 @@ customers = [
          "customer_email": "slash@gnr.com"}
 ]
 
+# 2.
 
 last_order_id = 0
 
@@ -139,7 +144,7 @@ print(gearlist_unpacker(*list_a))
 
 '''
 '''
-# Second example: We know that there will be one guitars in the tuple
+# Second example: We know that there will be exactly one guitars in the tuple
 
 tuple_a = ("Guthrie Govan", "Marshall Plexi", "Vigier Excalibur Surfreter Special")
 
@@ -152,4 +157,5 @@ def geartuple_unpacker(artist, amplifier, guitar):
 
 print(geartuple_unpacker(*tuple_a))
 '''
+
 

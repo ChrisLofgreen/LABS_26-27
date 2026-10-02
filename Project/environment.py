@@ -67,7 +67,7 @@ t_south = PerimeterWall("Tyrannosaur-pen Southern Perimeter Wall", [(21,0), (22,
 t_north = PerimeterWall("Tyrannosaur-pen Northern Perimeter Wall", [(21,10), (22,10), (23,10), (24,10), (25,10), (26,10), (27,10), (28,10), (29,10), (30,10)])
 
 b_o = DividingWall("Dividing Wall between Beaver-pen and Orangutan-pen", [(10,1), (10,2), (10,3), (10,4), (10,5), (10,6), (10,7), (10,8), (10,9)])
-o_t = DividingWall("Dividing Wall between Orangutan-pan and Tyrannosaur-pen", [(20,1), (20,2), (20,3), (20,4), (20,5), (20,6), (20,7), (20,8), (20,9)])
+o_t = DividingWall("Dividing Wall between Orangutan-pen and Tyrannosaur-pen", [(20,1), (20,2), (20,3), (20,4), (20,5), (20,6), (20,7), (20,8), (20,9)])
 
 walls.append(b_west)
 walls.append(t_east)

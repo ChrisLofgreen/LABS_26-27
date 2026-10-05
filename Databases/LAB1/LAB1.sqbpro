@@ -75,7 +75,7 @@
 
 
 
--- DAY 1 EXTRA CHALLANGES: SELECT
+-- DAY 1 EXTRA CHALLENGES: SELECT
 
 -- LEVEL 1
 
@@ -123,20 +123,52 @@
 -- 7. Show every customer's first name and city, but write Unknown instead of NULL.
 -- Look up: COALESCE · Expected: 10 rows
 
---SELECT first_name, coalesce(city, 'Unknown') FROM customers
+--SELECT first_name, coalesce(city, 'Unknown')
+--FROM customers
 
 -- 8. Which customers joined in the first half of a year (January to June), whatever the year?
 -- Look up: strftime · Expected: 6 rows
 
 --SELECT first_name, last_name, joined_date 
---FROM customers WHERE strftime('%m', joined_date) BETWEEN '01' AND '06'; 
+--FROM customers
+--WHERE strftime('%m', joined_date) BETWEEN '01' AND '06'; 
 
 -- 9. Which product has the longest name?
 -- Look up: LENGTH · Expected: 1 row
 
---SELECT name FROM products ORDER BY length(name) DESC LIMIT 1;
+--SELECT name 
+--FROM products 
+--ORDER BY length(name) DESC LIMIT 1;
 
 -- 10. Show each customer's email username: the part before the @.
 -- Look up: substr and instr · Expected: 10 row
 
---SELECT substr(email,1,instr(email, '@')-1) AS username FROM customers</sql><current_tab id="0"/></tab_sql></sqlb_project>
+--SELECT substr(email,1,instr(email, '@')-1)
+--AS username
+--FROM customers;
+
+
+-- LEVEL 3
+
+-- 11. Which products cost more than the average price? Don't type the average yourself: let SQL
+-- calculate it inside the query.
+-- Expected: 5 rows
+
+--SELECT name, price 
+--FROM products
+--WHERE price &gt; (SELECT avg(price) FROM products)
+
+-- 12. Make a price list with one column that says, for example, &quot;Socks 3-pack costs 129 kr&quot;. Only
+-- products in stock, cheapest first. Watch out: does it say 129 or 129.0? Fix it.
+-- Expected: 10 rows
+
+--SELECT name|| ' costs ' ||substr(price,1,instr(price, '.')-1) AS name_price
+--FROM products;
+
+-- 13. How many customers live in each city? Biggest city first.
+-- Look up: GROUP BY · Expected: 6 rows
+
+--SELECT city, count(*) AS city_count
+--FROM customers
+--GROUP BY city
+--ORDER BY city_count DESC;</sql><current_tab id="0"/></tab_sql></sqlb_project>

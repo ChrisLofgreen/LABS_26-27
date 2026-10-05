@@ -73,4 +73,33 @@ SELECT * FROM products ORDER BY price ASC LIMIT 5 OFFSET 5;
 -- 5. Show customers who joined before 2025 and don't live in Uppsala. Sort by city, and by last name within the same city. (4 rows)
 SELECT * FROM customers WHERE joined_date &lt; 2025 AND city != 'Uppsala' ORDER BY city, last_name;
 
+
+
+-- DAY 1 EXTRA CHALLANGES: SELECT
+
+-- LEVEL 1
+
+-- 1. Show products that are not Accessories, are in stock, and have a space in their name. Sort by
+-- category, then by price from highest to lowest.
+-- Expected: 6 rows
+
+SELECT * FROM products WHERE category != 'Accessories' AND stock != 0 AND name LIKE '% %' ORDER BY category, price DESC;
+
+-- 2. Show customers who live in a city starting with S or M, plus customers with no city at all.
+-- Expected: 4 rows
+
+SELECT * FROM customers WHERE city LIKE 'S%' OR city LIKE 'M%' OR city IS NULL;
+
+-- 3. Which Shoes product is the second most expensive? Show only that one.
+-- Expected: 1 row
+
+SELECT * FROM products WHERE category = 'Shoes' ORDER BY price DESC LIMIT 1 OFFSET 1;
+
+-- 4. Of the customers who joined in 2024 or 2025, show the 3 who joined most recently. Solve it
+-- without BETWEEN and without &gt;=.
+-- Expected: 3 rows
+
+SELECT * FROM customers WHERE joined_date LIKE '2024%' OR joined_date LIKE '2025%' ORDER BY joined_date DESC LIMIT 3;
+
+
 </sql><current_tab id="0"/></tab_sql></sqlb_project>

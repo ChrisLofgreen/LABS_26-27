@@ -4,74 +4,74 @@
 
 -- 1. Show the first name and email of all customers. (10 rows)
 
-SELECT first_name, email FROM customers;
+--SELECT first_name, email FROM customers;
 
 -- 2. Show all products in the Shoes category. (3 rows)
 
-SELECT * FROM products WHERE category = 'Shoes';
+--SELECT * FROM products WHERE category = 'Shoes';
 
 -- 3. Which customers live in Uppsala? (3 rows)
 
-SELECT * FROM customers WHERE city = 'Uppsala';
+--SELECT * FROM customers WHERE city = 'Uppsala';
 
 -- 4. Which product costs exactly 199 kr? (1 row)
 
-SELECT * FROM products WHERE price = 199;
+--SELECT * FROM products WHERE price = 199;
 
 -- 5. Show all products sorted by name, A to Z. (12 rows)
 
-SELECT * FROM products ORDER BY name ASC;
+--SELECT * FROM products ORDER BY name ASC;
 
 -- 6. Show all customers, the one who joined first at the top. (10 rows)
 
-SELECT * FROM customers ORDER BY joined_date ASC;
+--SELECT * FROM customers ORDER BY joined_date ASC;
 
 -- 7. Which products are sold out (stock is 0)? (2 rows)
 
-SELECT * FROM products WHERE stock = 0;
+--SELECT * FROM products WHERE stock = 0;
 
 -- 8. Show the 3 newest customers. (3 rows)
 
-SELECT * FROM customers
-ORDER BY joined_date DESC LIMIT 3;
+--SELECT * FROM customers
+--ORDER BY joined_date DESC LIMIT 3;
 
 -- 9. Show customers from Stockholm or Göteborg. Use IN. (4 rows)
 
-SELECT * FROM customers
-WHERE city IN ('Stockholm', 'Göteborg');
+--SELECT * FROM customers
+--WHERE city IN ('Stockholm', 'Göteborg');
 
 -- 10. Show product name and price, but call the columns product and price_sek. (12 rows)
 
-SELECT name product, price price_sek FROM products;
+--SELECT name product, price price_sek FROM products;
 
 
 
 -- Bonus questions:
 
 -- 1. Show products that are Clothing or Shoes and cost more than 1000 kr. Hint: you need brackets. Try without them too: why is the answer different? (3 rows)
-SELECT * FROM products WHERE price &gt; 1000 AND category IN ('Shoes', 'Clothing');
+--SELECT * FROM products WHERE price &gt; 1000 AND category IN ('Shoes', 'Clothing');
 -- OR
-SELECT * FROM products WHERE price &gt; 1000 AND (category = 'Clothing' OR category = 'Shoes');
+--SELECT * FROM products WHERE price &gt; 1000 AND (category = 'Clothing' OR category = 'Shoes');
 
-SELECT * FROM products WHERE price &gt; 1000 AND category = 'Clothing' OR category = 'Shoes'; -- &lt;- This one returns Clothing above 1000 but all Shoes.
+--SELECT * FROM products WHERE price &gt; 1000 AND category = 'Clothing' OR category = 'Shoes'; -- &lt;- This one returns Clothing above 1000 but all Shoes.
 -- This is because it will read: price &gt; 1000 AND 'clothing' as the first possibility. OR. (any)'Shoes' as the second possibility
 
 
 -- 2. For every product in stock, show name, price, stock and the total value of the stock (price × stock) as stock_value. Highest value first. (10 rows)
-SELECT name, price, stock, price * stock AS stock_value 
-from products WHERE stock != 0 ORDER BY stock_value DESC;
+--SELECT name, price, stock, price * stock AS stock_value 
+--from products WHERE stock != 0 ORDER BY stock_value DESC;
 
 
 -- 3. Which customers have a first name with exactly 4 letters? Hint: _ in LIKE means &quot;exactly one character&quot;. (4 rows)
-SELECT * FROM customers WHERE first_name LIKE '____';
+--SELECT * FROM customers WHERE first_name LIKE '____';
 
 
 -- 4. Sort the products by price, cheapest first, and show only products number 6 to 10. Hint: look up OFFSET. (5 rows)
-SELECT * FROM products ORDER BY price ASC LIMIT 5 OFFSET 5;
+--SELECT * FROM products ORDER BY price ASC LIMIT 5 OFFSET 5;
 
 
 -- 5. Show customers who joined before 2025 and don't live in Uppsala. Sort by city, and by last name within the same city. (4 rows)
-SELECT * FROM customers WHERE joined_date &lt; 2025 AND city != 'Uppsala' ORDER BY city, last_name;
+--SELECT * FROM customers WHERE joined_date &lt; 2025 AND city != 'Uppsala' ORDER BY city, last_name;
 
 
 
@@ -83,23 +83,60 @@ SELECT * FROM customers WHERE joined_date &lt; 2025 AND city != 'Uppsala' ORDER 
 -- category, then by price from highest to lowest.
 -- Expected: 6 rows
 
-SELECT * FROM products WHERE category != 'Accessories' AND stock != 0 AND name LIKE '% %' ORDER BY category, price DESC;
+--SELECT * FROM products WHERE category != 'Accessories' AND stock != 0 AND name LIKE '% %' ORDER BY category, price DESC;
 
 -- 2. Show customers who live in a city starting with S or M, plus customers with no city at all.
 -- Expected: 4 rows
 
-SELECT * FROM customers WHERE city LIKE 'S%' OR city LIKE 'M%' OR city IS NULL;
+--SELECT * FROM customers WHERE city LIKE 'S%' OR city LIKE 'M%' OR city IS NULL;
 
 -- 3. Which Shoes product is the second most expensive? Show only that one.
 -- Expected: 1 row
 
-SELECT * FROM products WHERE category = 'Shoes' ORDER BY price DESC LIMIT 1 OFFSET 1;
+--SELECT * FROM products WHERE category = 'Shoes' ORDER BY price DESC LIMIT 1 OFFSET 1;
 
 -- 4. Of the customers who joined in 2024 or 2025, show the 3 who joined most recently. Solve it
 -- without BETWEEN and without &gt;=.
 -- Expected: 3 rows
 
-SELECT * FROM customers WHERE joined_date LIKE '2024%' OR joined_date LIKE '2025%' ORDER BY joined_date DESC LIMIT 3;
+--SELECT * FROM customers WHERE joined_date LIKE '2024%' OR joined_date LIKE '2025%' ORDER BY joined_date DESC LIMIT 3;
 
 
-</sql><current_tab id="0"/></tab_sql></sqlb_project>
+-- LEVEL 2
+
+-- 5. Show each customer's full name in one column called full_name (like &quot;Anna Lindqvist&quot;), sorted by last name.
+-- Look up: || · Expected: 10 rows
+
+--SELECT first_name || ' ' ||last_name AS full_name FROM customers ORDER BY last_name;
+
+-- 6. Give every product a price level: budget under 200 kr, mid from 200 to 799 kr, premium from 800kr.
+-- Look up: CASE WHEN · Expected: 12 rows: 4 budget, 5 mid, 3 premium
+
+--SELECT name, price,
+--CASE
+--WHEN price &lt; 200 THEN 'budget'
+--WHEN price &lt; 800 THEN 'mid'
+--WHEN price &gt;= 800 THEN 'premium'
+--END AS price_level 
+--FROM products;
+
+-- 7. Show every customer's first name and city, but write Unknown instead of NULL.
+-- Look up: COALESCE · Expected: 10 rows
+
+--SELECT first_name, coalesce(city, 'Unknown') FROM customers
+
+-- 8. Which customers joined in the first half of a year (January to June), whatever the year?
+-- Look up: strftime · Expected: 6 rows
+
+--SELECT first_name, last_name, joined_date 
+--FROM customers WHERE strftime('%m', joined_date) BETWEEN '01' AND '06'; 
+
+-- 9. Which product has the longest name?
+-- Look up: LENGTH · Expected: 1 row
+
+--SELECT name FROM products ORDER BY length(name) DESC LIMIT 1;
+
+-- 10. Show each customer's email username: the part before the @.
+-- Look up: substr and instr · Expected: 10 row
+
+--SELECT substr(email,1,instr(email, '@')-1) AS username FROM customers</sql><current_tab id="0"/></tab_sql></sqlb_project>

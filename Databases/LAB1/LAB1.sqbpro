@@ -171,4 +171,14 @@
 --SELECT city, count(*) AS city_count
 --FROM customers
 --GROUP BY city
---ORDER BY city_count DESC;</sql><current_tab id="0"/></tab_sql></sqlb_project>
+--ORDER BY city_count DESC;
+
+-- OR Below if we don't want to count NULL
+
+--SELECT city, count(city) AS city_count
+--FROM customers
+--GROUP BY city
+--ORDER BY city_count DESC;
+
+
+</sql><current_tab id="0"/></tab_sql></sqlb_project>

@@ -18,7 +18,7 @@ Finding a stream and building a dam, and the resulting flooding.
 
 #### Orangutans
 
-Eating fruit and migrating or moving out if there is no fruit in the forest.
+Eating fruit and migrating or moving out if there is no fruit in the forest. Fruit growth is affected by variable global climate.
 
 #### Tyrannosaurs
 

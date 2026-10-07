@@ -14,7 +14,7 @@
 CREATE TABLE teacher_instruments (
 	teacher_id INTEGER NOT NULL,
 	instrument TEXT NOT NULL,
-	FOREIGN KEY (teacher_id) REFERENCES teachers (teacher_id)
+	FOREIGN KEY (teacher_id) REFERENCES teachers (teacher_id) ON DELETE CASCADE
 );
 
 CREATE TABLE students (
@@ -28,5 +28,15 @@ CREATE TABLE teachers (
 );
 
 
+INSERT INTO lessons (teacher_id, student_id, lesson_date, lesson_time, room, instrument)
+VALUES (1, 1, '2026-10-07', '10:30', '101', 'trombone');
 
+INSERT INTO teachers (name)
+VALUES ('Ann');
+
+INSERT INTO teacher_instruments (teacher_id, instrument)
+VALUES (1, 'trombone');
+
+DELETE FROM teachers
+WHERE teacher_id = 1;
 </sql><current_tab id="0"/></tab_sql></sqlb_project>

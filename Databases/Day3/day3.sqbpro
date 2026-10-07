@@ -87,4 +87,30 @@ DELETE FROM orders WHERE order_id = 7;
 -- Check!
 
 
+-- 10.
+
+-- Look at this table: student | phone_numbers | course1 | course2 | course3. List every problem you can find.
+
+-- Problems:
+--			 1. Lacks obvious PRIMARY KEY
+--           2. 'student' is ambiguous, is it the name of the student? Then it should probably be called 'name' or two columns: 'first_name' and 'last_name'.
+--              If it refers to some kind of status it should be named accordingly (ex. student_status), and the name could have to be another column
+--           3. 'phone_numbers' implies that there could be serveral phone numbers in that cell, which is not a good idea (1NF)
+--           4. The connection between the student and the courses are probably better expressed in a different table *student_courses* or something like that, 
+--              and 'student_courses' would then in turn reference tables: 'students' and *courses*.
+
+
+-- 11.
+
+-- It breaks Normal Form 1 because there are serveral products on each row. One row per product and a column for quantity would fix it
+
+
+-- 12. 
+
+-- A table has: order_id | customer_id | customer_email | order_date. Which column is in the wrong place? Why?
+
+-- 'customer_email' is in the wrong place. It breaks 2NF since it does not depend on the whole key ('order_id', 'customer_id'), it only depends on *customer_id'.
+
+
+
 </sql><current_tab id="0"/></tab_sql></sqlb_project>

@@ -84,9 +84,7 @@ WHERE oi.product_id IS NULL;
 SELECT c.first_name, p.name product_name, oi.quantity
 FROM order_items oi
 LEFT JOIN orders o ON oi.order_id = o.order_id
-LEFT JOIN customers c ON c.customer_id = o.customer_id
+RIGHT JOIN customers c ON c.customer_id = o.customer_id
 LEFT JOIN products p ON oi.product_id = p.product_id
 WHERE c.city = 'Uppsala'
-ORDER BY c.first_name ASC;
-
-</sql><current_tab id="0"/></tab_sql></sqlb_project>
+ORDER BY c.first_name ASC;</sql><current_tab id="0"/></tab_sql></sqlb_project>

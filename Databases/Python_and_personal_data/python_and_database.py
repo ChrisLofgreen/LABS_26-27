@@ -48,6 +48,11 @@ cursor.execute("SELECT COUNT(*) FROM products WHERE category = ?", (user_cat,))
 user_cat_num, = cursor.fetchone()
 
 print(user_cat_num)
+
+conn.close()
 '''
 
 # 4.
+
+# An F-string can contain many things (thats why we like it). Problem is that it can contain code to manipulate a database query.
+# The placeholder ? makes sure that any input is treated like a value and not as a codestring to be executed.

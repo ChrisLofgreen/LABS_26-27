@@ -7,6 +7,7 @@
 import sqlite3
 
 conn = sqlite3.connect("Databases/Python_and_personal_data/webshop.db")
+conn.execute("PRAGMA foreign_keys = ON")
 cursor = conn.cursor()
 
 cursor.execute("SELECT first_name, last_name, city FROM customers")
@@ -21,6 +22,7 @@ conn.close()
 import sqlite3
 
 conn = sqlite3.connect("Databases/Python_and_personal_data/webshop.db")
+conn.execute("PRAGMA foreign_keys = ON")
 cursor = conn.cursor()
 
 maxprice = input("Type your max price: ")
@@ -39,6 +41,7 @@ conn.close()
 import sqlite3
 
 conn = sqlite3.connect("Databases/Python_and_personal_data/webshop.db")
+conn.execute("PRAGMA foreign_keys = ON")
 cursor = conn.cursor()
 
 user_cat = input("Type a category:")

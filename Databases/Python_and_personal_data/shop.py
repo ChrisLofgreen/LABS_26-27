@@ -27,7 +27,12 @@ def search_customers(conn):
 def add_product(conn):
     name = input("Name: ")
     category = input("Category: ")
-    price = float(input("Price: "))
+    while True:
+        try:
+            price = float(input("Price: "))
+            break
+        except ValueError:
+            print("\nOnly numbers in price, please try again\n")
     stock = int(input("Stock: "))
     conn.execute(
         "INSERT INTO products (name, category, price, stock) VALUES (?, ?, ?, ?)",
@@ -49,7 +54,8 @@ def change_stock(conn):
 def show_receipt(conn):
     order_id = int(input("Order id: "))
     cursor = conn.execute(
-        """SELECT p.name, oi.quantity, p.price, p.price * oi.quantity line_total 
+        """
+        SELECT p.name, oi.quantity, p.price, p.price * oi.quantity line_total 
         FROM order_items oi 
         JOIN products p ON oi.product_id = p.product_id 
         WHERE order_id = ?""",
@@ -58,10 +64,24 @@ def show_receipt(conn):
         print(f"{name:<16}|Quantity: {quant}|Price: {price:.0f}|Line total: {line_total}|")
 
 
+def best_selling_products(conn):
+    cursor = conn.execute(
+        """
+        SELECT p.name, SUM(oi.quantity) AS quant_count
+        FROM order_items oi
+        JOIN products p ON oi.product_id = p.product_id
+        GROUP BY p.name
+        ORDER BY quant_count DESC
+        LIMIT 3
+        """)
+    for name, quant in cursor.fetchall():
+        print(f"{name:<16}| Items Sold: {quant}")
+    
+
 def main():
     conn = connect()
     while True:
-        print("\n1) List products  2) Search customers  3) Add product 4) Change stock 5) Show receipt 0) Quit")
+        print("\n1) List products  2) Search customers  3) Add product 4) Change stock 5) Show receipt 6) Top 3 best-selling products 0) Quit")
         choice = input("> ")
         if choice == "1":
             list_products(conn)
@@ -73,6 +93,8 @@ def main():
             change_stock(conn)
         elif choice == "5":
             show_receipt(conn)
+        elif choice == "6":
+            best_selling_products(conn)
         elif choice == "0":
             break
     conn.close()

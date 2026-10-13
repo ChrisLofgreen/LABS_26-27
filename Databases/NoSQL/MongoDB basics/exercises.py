@@ -120,3 +120,11 @@ result = db.customers.replace_one(query_filter, replace_document)
 print(result)
 '''
 
+# Delete one
+'''
+from bson.objectid import ObjectId
+
+result = db.customers.delete_one({"_id": ObjectId('6ace32cc864bf955d26cb820')})
+
+print(result)
+'''

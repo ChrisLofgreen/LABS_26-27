@@ -48,11 +48,14 @@ for customer in db.customers.find({"newsletter": True}):
 
 # 7.
 '''
+from datetime import datetime
+
 new_customer = db.customers.insert_one({
     "first_name": "Christofer",
     "last_name": "Löfgreen",
     "email": "ch@lo.com",
     "city": "Stockholm",
+    "joined": datetime(2026, 10, 13),
     "phone": "070-1234567"
 })
 
@@ -63,6 +66,8 @@ from pprint import pprint
 result = db.customers.find_one({"email": "ch@lo.com"})
 pprint(result)
 '''
+for customer in db.customers.find():
+    print(customer["joined"])
 
 # 8.
 '''
@@ -82,7 +87,7 @@ for customer in db.customers.find():
 
 # 10.
 '''
-for order in db.orders.find():
+for order in db.orders.find({}):
     if len(order["items"]) == 1:
         print(f"Order {order["_id"]}: {len(order["items"])} item")
     else:

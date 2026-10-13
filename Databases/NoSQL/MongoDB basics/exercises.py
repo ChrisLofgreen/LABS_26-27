@@ -102,3 +102,21 @@ result = db.customers.update_one({"first_name": "Christofer"}, {'$set': {"email"
 print(result)
 '''
 
+# Replace one (Customer remove request scenario)
+'''
+from datetime import datetime
+from bson.objectid import ObjectId
+
+query_filter = {"_id": ObjectId('6ace32cc864bf955d26cb820')}
+replace_document = { "first_name": "N/A",
+                     "last_name": "N/A",
+                     "email": "N/A",
+                     "city" : "N/A",
+                     "joined": datetime(1, 1, 1),
+                     "phone": "N/A"
+                   }
+result = db.customers.replace_one(query_filter, replace_document)
+
+print(result)
+'''
+

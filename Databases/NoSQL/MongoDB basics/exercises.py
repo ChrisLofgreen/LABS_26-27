@@ -66,8 +66,6 @@ from pprint import pprint
 result = db.customers.find_one({"email": "ch@lo.com"})
 pprint(result)
 '''
-for customer in db.customers.find():
-    print(customer["joined"])
 
 # 8.
 '''
@@ -93,3 +91,14 @@ for order in db.orders.find({}):
     else:
         print(f"Order {order["_id"]}: {len(order["items"])} items")
 '''
+
+
+# Extras
+
+# Update one
+'''
+result = db.customers.update_one({"first_name": "Christofer"}, {'$set': {"email": "test@test.io"}})
+
+print(result)
+'''
+

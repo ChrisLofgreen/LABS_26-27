@@ -51,3 +51,26 @@ for product in db.products.find({}, {"name": 1, "price": 1, "_id": 0}).sort("pri
 for order in db.orders.find({"items.product_id": 2}):
     print("Order:" ,order["_id"])
 '''
+
+# 8.
+'''
+db.products.update_many({"category": "Accessories"}, {"$inc": {"price": 20}})
+for product in db.products.find({"category": "Accessories"}, {"name": 1, "price": 1, "_id": 0}):
+    print(product["name"], ":",product["price"])
+'''
+
+# 9. 
+'''
+from datetime import datetime
+
+db.products.update_one(
+    {"_id": 11},
+    {"$set": {"restock_date": datetime.now()}} |
+    {"$push": {"tags": "new"}},
+    upsert=True
+    )
+
+
+result = db.products.find_one({"_id": 11})
+print(result)
+'''

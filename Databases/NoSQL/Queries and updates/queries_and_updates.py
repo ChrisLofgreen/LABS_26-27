@@ -72,5 +72,17 @@ db.products.update_one(
 
 
 result = db.products.find_one({"_id": 11})
-print(result)
+pprint(result)
 '''
+
+# 10.
+'''
+from datetime import datetime
+
+result = db.orders.count_documents({"status": "new", "order_date": {"$lt": datetime(2026, 3, 20)}})
+print("Document count:", result)
+
+result = db.orders.delete_many({"status": "new", "order_date": {"$lt": datetime(2026, 3, 20)}})
+print("Deleted count:", result.deleted_count)
+'''
+

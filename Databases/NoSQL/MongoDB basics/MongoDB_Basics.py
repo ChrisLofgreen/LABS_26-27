@@ -11,10 +11,10 @@ db = client["webshop"]
 
 
 # 1.
-'''
+
 for product in db.products.find({"category": "Accessories"}):
     print(product["name"])
-'''
+
 
 # 2.
 '''
@@ -112,7 +112,7 @@ replace_document = { "first_name": "N/A",
                      "last_name": "N/A",
                      "email": "N/A",
                      "city" : "N/A",
-                     "joined": datetime(1, 1, 1),
+                     "joined": "N/A",
                      "phone": "N/A"
                    }
 result = db.customers.replace_one(query_filter, replace_document)

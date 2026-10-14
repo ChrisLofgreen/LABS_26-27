@@ -86,3 +86,29 @@ result = db.orders.delete_many({"status": "new", "order_date": {"$lt": datetime(
 print("Deleted count:", result.deleted_count)
 '''
 
+
+# Extras
+
+# 1. make campaign-codes on products
+'''
+result = db.products.update_many(
+    {"category": "Clothing"},
+    {"$set": {"campaign-code": {"clothing_bonanza": 50}}},
+    upsert=True
+    )
+
+print(result)
+'''
+
+
+# 2. Look for active codes
+'''
+active_codes = []
+
+for product in db.products.find({"campaign-code": {"$exists": True}}):
+    active_codes.append([product["_id"], product["campaign-code"]])
+
+for code in active_codes:
+    print ("Product id",code[0])
+    print(code[1])
+'''

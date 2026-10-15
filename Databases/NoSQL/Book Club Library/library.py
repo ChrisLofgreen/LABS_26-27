@@ -52,11 +52,11 @@ def register():
     if str(first_name.replace(" ","") + last_name.replace(" ","")).isalpha():
         pass
     else:
-        print("only a-z, A-Z in name please!")
+        print("only a-z, A-Z in name please! Blank space between double names")
+        time.sleep(1)
         register()
-        time.sleep(0.1)
 
-    print(f"\nEnter email adress:")
+    print(f"\nEnter valid email adress:")
     email = input()
 
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -65,12 +65,27 @@ def register():
     if valid:
         pass
     else:
-        print("That doesnt seem like a valid e-mail address, try again after a short wait")
-        time.sleep(1)
+        print("That doesnt seem like a valid e-mail address, try again")
+        register()
+        
+    match_test = db.members.find_one({"email": email}, {"email": 1, "_id": 0})
+    if match_test == None:
+        pass
+    else:
+        print("The e-mail you provided has already been registered, you can try again after a short wait")
+        time.sleep(2)
+        main()
 
+    db.members.insert_one({
+        "first_name": first_name, 
+        "last_name": last_name, 
+        "email": email, 
+        "borrowed_books": [], 
+        "overdue": False
+    })
 
+    return "You have been added to the bookclub library. Best of luck with your journey through the world of literature!"
 
-    #db.members.insert_one()
 
 def change_email():
     pass

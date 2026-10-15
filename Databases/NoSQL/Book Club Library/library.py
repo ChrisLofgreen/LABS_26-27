@@ -16,6 +16,7 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client["library"]
 
 import time
+import re
 
 '''
 books = [
@@ -32,8 +33,9 @@ books = [
 
 db.books.insert_many(books)
 '''
-
-
+'''
+db.members.insert_one({"first_name": "John", "last_name": "Test", "email": "john@test.com", "borrowed_books": [], "overdue": False})
+'''
 
 def borrow():
     pass
@@ -43,16 +45,30 @@ def statistics():
 
 def register():
     
-    numbers = ["0","1","2","3","4","5","6","7","8","9"]
-    
-    print(f"\nEnter First name")
+    print(f"\nEnter First name:")
     first_name = input().strip()
-    print(f"\nEnter Last name")
+    print(f"\nEnter Last name:")
     last_name = input().strip()
-    print(f"\nEnter email adress")
+    if str(first_name.replace(" ","") + last_name.replace(" ","")).isalpha():
+        pass
+    else:
+        print("only a-z, A-Z in name please!")
+        register()
+        time.sleep(0.1)
+
+    print(f"\nEnter email adress:")
     email = input()
-    time.sleep(0.5)
-    print(first_name, last_name, email)
+
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    valid = re.match(pattern, email)
+
+    if valid:
+        pass
+    else:
+        print("That doesnt seem like a valid e-mail address, try again after a short wait")
+        time.sleep(1)
+
+
 
     #db.members.insert_one()
 

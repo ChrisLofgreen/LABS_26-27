@@ -93,7 +93,16 @@ print("Deleted count:", result.deleted_count)
 '''
 result = db.products.update_many(
     {"category": "Clothing"},
-    {"$set": {"campaign-code": {"clothing_bonanza": 50}}},
+    {"$set": {"campaign-codes": [{"clothing_bonanza": 50}]}},
+    upsert=True
+    )
+
+print(result)
+
+
+result = db.products.update_one(
+    {"_id": 2},
+    {"$push": {"campaign-codes": {"t-shirt_bonanza": 20}}},
     upsert=True
     )
 
@@ -105,10 +114,16 @@ print(result)
 '''
 active_codes = []
 
-for product in db.products.find({"campaign-code": {"$exists": True}}):
-    active_codes.append([product["_id"], product["campaign-code"]])
+for product in db.products.find({"campaign-codes": {"$exists": True}}):
+    active_codes.append([product["_id"], product["campaign-codes"]])
 
-for code in active_codes:
-    print ("Product id",code[0])
-    print(code[1])
+print(active_codes)
+
+
+for id in active_codes:
+    print(f"Product: {id[0]} - Active Codes:")
+    for code in id[1]:
+        print (code)
+    
+    print("")
 '''

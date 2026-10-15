@@ -15,6 +15,7 @@ from pymongo import MongoClient
 client = MongoClient("mongodb://localhost:27017/")
 db = client["library"]
 
+import time
 
 '''
 books = [
@@ -41,7 +42,19 @@ def statistics():
     pass
 
 def register():
-    pass
+    
+    numbers = ["0","1","2","3","4","5","6","7","8","9"]
+    
+    print(f"\nEnter First name")
+    first_name = input().strip()
+    print(f"\nEnter Last name")
+    last_name = input().strip()
+    print(f"\nEnter email adress")
+    email = input()
+    time.sleep(0.5)
+    print(first_name, last_name, email)
+
+    #db.members.insert_one()
 
 def change_email():
     pass
@@ -53,15 +66,13 @@ def check_user_input_menu(user_input):
     except ValueError:
         print("\nOnly one single number, please try again")
 
-
 def members():
     
     while True:
 
         print(f"\nType an option (number):\n\n1. Register as a member | 2. Change e-mail | 0. Exit to main menu")
 
-        user_input = input()
-        user_input = check_user_input_menu(user_input)
+        user_input = check_user_input_menu(input())
 
         if user_input == 1:
             print(register())
@@ -78,8 +89,7 @@ def main():
 
         print(f"\nType an option (number):\n\n1. Members | 2. Borrow (members only) | 3. Statistics | 0. Quit")
 
-        user_input = input()
-        user_input = check_user_input_menu(user_input)
+        user_input = check_user_input_menu(input())
 
         if user_input == 1:
             print(members())

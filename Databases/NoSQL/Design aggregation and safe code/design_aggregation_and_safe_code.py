@@ -81,3 +81,19 @@ orders = db.orders.aggregate([
 for order in orders:
     print(order)
 '''
+
+# 8.
+'''
+categories = (db.orders.aggregate([
+    {"$unwind": "$items"},
+    {"$lookup": {"from": "products", 
+                 "localField": "items.product_id", 
+                 "foreignField": "_id", 
+                 "as": "product"}},
+    {"$group": {"_id": "$product.category",
+                    "units": {"$sum": "$items.quantity"}}}
+]))
+
+for category in categories:
+    print(category)
+'''

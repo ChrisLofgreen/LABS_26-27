@@ -85,6 +85,7 @@ for order in orders:
 # 8.
 '''
 categories = (db.orders.aggregate([
+    {"$match": {"status" :{"$ne": "cancelled"}}},
     {"$unwind": "$items"},
     {"$lookup": {"from": "products", 
                  "localField": "items.product_id", 
@@ -96,4 +97,17 @@ categories = (db.orders.aggregate([
 
 for category in categories:
     print(category)
+'''
+
+# 9.
+'''
+statuses = (db.orders.aggregate([
+    {"$unwind": "$items"},
+    {"$project": {"status": 1, "line_total": {"$multiply": ["$items.unit_price", "$items.quantity"]}}},
+    {"$group": {"_id": "$status",
+                    "total": {"$sum": "$line_total"}}}
+]))
+
+for status in statuses:
+    print(status)
 '''

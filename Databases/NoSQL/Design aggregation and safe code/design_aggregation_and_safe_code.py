@@ -34,3 +34,27 @@ db.newsletter_signups.insert_one({"email": "test@test.com", "source": "web"})
 # Fails on source:
 db.newsletter_signups.insert_one({"email": "test2@test2.com", "source": "word on the street"})
 '''
+
+# 4.
+'''
+cities = (db.customers.aggregate([
+    {"$group": {"_id": "$city",
+                 "city": {"$sum": 1}}},
+                 {"$sort": {"city": -1}}
+]))
+
+for city in cities:
+    print(city)
+'''
+# 5.
+
+'''
+categories = (db.products.aggregate([
+    {"$group": {"_id": "$category",
+                "max": {"$max": "$price"}, 
+                "min": {"$min": "$price"}}}
+]))
+
+for category in categories:
+    print(category)
+'''

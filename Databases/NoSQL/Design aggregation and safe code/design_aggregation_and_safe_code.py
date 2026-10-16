@@ -58,3 +58,26 @@ categories = (db.products.aggregate([
 for category in categories:
     print(category)
 '''
+
+# 6.
+'''
+customers = db.orders.aggregate([
+    {"$group": {"_id": "$customer_id",
+                "orders": {"$sum": 1}}},
+    {"$match": {"orders" :{"$gte": 2}}},
+    {"$sort": {"orders": -1}}
+])
+
+for customer in customers:
+    print(customer)
+'''
+
+# 7.
+'''
+orders = db.orders.aggregate([
+    {"$project": {"items": {"$size": "$items"}}}
+])
+
+for order in orders:
+    print(order)
+'''

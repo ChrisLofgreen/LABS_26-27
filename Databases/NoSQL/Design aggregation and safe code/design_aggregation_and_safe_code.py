@@ -111,3 +111,15 @@ statuses = (db.orders.aggregate([
 for status in statuses:
     print(status)
 '''
+
+# 10.
+'''
+tags = (db.products.aggregate([
+    {"$unwind": "$tags"},
+    {"$group": {"_id": "$tags", "count": {"$sum": 1}}},
+    {"$sort": {"count": -1}}
+]))
+
+for tag in tags:
+    print(tag)
+'''

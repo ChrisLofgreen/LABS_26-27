@@ -28,7 +28,7 @@ def get_movies():
 
 # 2. 
 
-@app.get("movies/{movie_id}")
+@app.get("/movies/{movie_id}")
 def get_movie(movie_id: int):
     for movie in movies:
         if movie["id"] == movie_id:
@@ -79,3 +79,24 @@ def add_movie(movie: Movie):
 
 # 5.
 
+@app.put("/movies/{movie_id}")
+def replace_movie(movie_id: int, movie: Movie):
+    replace_id = get_movie(movie_id)
+    replace_id["title"] = movie.title
+    replace_id["director"] = movie.director
+    replace_id["year"] = movie.year
+    return replace_id
+
+@app.delete("/movies/{movie_id}", status_code=204)
+def delete_movie(movie_id: int):
+    delete_id = get_movie(movie_id)
+    movies.remove(delete_id)
+
+# The second time returns 404 Error: not found
+# Upon server restart the movies list is returned to the original state
+
+
+# 6.
+
+# Check, see client.py
+# Responses as expected

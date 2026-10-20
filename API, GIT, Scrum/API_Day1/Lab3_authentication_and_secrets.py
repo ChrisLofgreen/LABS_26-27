@@ -22,7 +22,7 @@ import os
 from dotenv import load_dotenv
 from api_client import get_json
 
-load_dotenv("API, GIT, Scrum/Lab1-4/other/.env")
+load_dotenv("API, GIT, Scrum/API_Day1/other/.env")
 
 username = str(input("Type usename:")).strip()
 
@@ -43,7 +43,7 @@ import os
 from dotenv import load_dotenv
 from api_client import get_json
 
-load_dotenv("API, GIT, Scrum/Lab1-4/other/.env")
+load_dotenv("API, GIT, Scrum/API_Day1/other/.env")
 
 username = str(input("Type usename:")).strip()
 
@@ -75,7 +75,7 @@ import os
 from dotenv import load_dotenv
 from api_client import get_json
 
-load_dotenv("API, GIT, Scrum/Lab1-4/other/.env")
+load_dotenv("API, GIT, Scrum/API_Day1/other/.env")
 
 username = str(input("Type usename:")).strip()
 

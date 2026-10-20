@@ -92,7 +92,7 @@ def delete_movie(movie_id: int):
     delete_id = get_movie(movie_id)
     movies.remove(delete_id)
 
-# The second time returns 404 Error: not found
+# The second time returns 404 Error: not found since it cannot find the movie with get_movie()
 # Upon server restart the movies list is returned to the original state
 
 
@@ -100,3 +100,44 @@ def delete_movie(movie_id: int):
 
 # Check, see client.py
 # Responses as expected
+
+
+
+
+# Part 2: PATCH
+
+
+# 1.
+
+class MovieUpdate(BaseModel):
+    title: str | None = None
+    director: str | None = None
+    year: int | None = None
+
+
+@app.patch("/movies/{movie_id}")
+def update_movie(movie_id: int, changes: MovieUpdate):
+    movie = get_movie(movie_id)
+    update_data = changes.model_dump(exclude_unset=True)
+    movie.update(update_data)
+
+    return movie
+
+# 2.
+
+# Check
+
+
+# 3.
+
+# Empty body gives 200 but changes noting
+# Year as text gives error 422
+# Missing id gives error 404
+
+
+# 4.
+
+# Put might be useful if there is there is a reason to replace every field, like a product being replaced with a new model, but even then...
+# Wouldnt you want a new id for the new model!? Ok, any situation where a full change of all fields are required an non shall remain untuched,
+# A full anonymization maybe? PUT makes sure that all fields are taken care of, so it could be used for that.
+# PATCH seems like the right choice for almost every scanario exept the ones described above.

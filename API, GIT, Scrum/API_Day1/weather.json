@@ -1,0 +1,10 @@
+[
+  {
+    "city": "Stockholm",
+    "country": "Sweden",
+    "temperature": 11.7,
+    "temperature_unit": "\u00b0C",
+    "windspeed": 20.9,
+    "windspeed_unit": "km/h"
+  }
+]

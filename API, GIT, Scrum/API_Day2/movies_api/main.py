@@ -1,5 +1,15 @@
 #pip install "fastapi[standard]"
 #python -m fastapi dev main.py
+#git init
+#git status
+
+import os
+from dotenv import load_dotenv
+from fastapi import Depends, Header
+
+load_dotenv("secrets/.env")
+
+
 
 
 # Part 1: Your own API
@@ -25,6 +35,15 @@ def get_movies():
     return movies
 '''
 #print(get_movies())
+
+
+
+# Check key function for part 3
+def check_key(x_api_key: str | None = Header(default=None)):
+    expected = os.getenv("API_KEY")
+    if x_api_key is None or x_api_key != expected:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+
 
 # 2. 
 
@@ -66,7 +85,7 @@ class Movie(BaseModel):
     year: int
 
 
-@app.post("/movies", status_code=201)
+@app.post("/movies", status_code=201, dependencies=[Depends(check_key)])
 def add_movie(movie: Movie):
     new_id = max((mov["id"] for mov in movies), default=0) + 1
     new_movie = {"id": new_id, "title": movie.title, "director": movie.director, "year": movie.year}
@@ -79,7 +98,7 @@ def add_movie(movie: Movie):
 
 # 5.
 
-@app.put("/movies/{movie_id}")
+@app.put("/movies/{movie_id}", dependencies=[Depends(check_key)])
 def replace_movie(movie_id: int, movie: Movie):
     replace_id = get_movie(movie_id)
     replace_id["title"] = movie.title
@@ -87,7 +106,7 @@ def replace_movie(movie_id: int, movie: Movie):
     replace_id["year"] = movie.year
     return replace_id
 
-@app.delete("/movies/{movie_id}", status_code=204)
+@app.delete("/movies/{movie_id}", status_code=204, dependencies=[Depends(check_key)])
 def delete_movie(movie_id: int):
     delete_id = get_movie(movie_id)
     movies.remove(delete_id)
@@ -115,7 +134,7 @@ class MovieUpdate(BaseModel):
     year: int | None = None
 
 
-@app.patch("/movies/{movie_id}")
+@app.patch("/movies/{movie_id}", dependencies=[Depends(check_key)])
 def update_movie(movie_id: int, changes: MovieUpdate):
     movie = get_movie(movie_id)
     update_data = changes.model_dump(exclude_unset=True)
@@ -137,7 +156,34 @@ def update_movie(movie_id: int, changes: MovieUpdate):
 
 # 4.
 
-# Put might be useful if there is there is a reason to replace every field, like a product being replaced with a new model, but even then...
+# Put might be useful if there is a reason to replace every field, like a product being replaced with a new model, but even then...
 # Wouldnt you want a new id for the new model!? Ok, any situation where a full change of all fields are required an non shall remain untuched,
 # A full anonymization maybe? PUT makes sure that all fields are taken care of, so it could be used for that.
 # PATCH seems like the right choice for almost every scanario exept the ones described above.
+
+
+
+# Part 3: Protect your API with a key
+
+
+# 1-4.
+
+# Check
+
+
+# 5.
+
+# without key: 401
+# with key: 204
+# wrong key: 401
+
+
+# 6.
+
+# without key: 401
+# with key: 201
+
+
+# 7.
+
+# Check

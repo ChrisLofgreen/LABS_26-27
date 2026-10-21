@@ -7,8 +7,33 @@
 
 # Modified base program from lab 2 (made it slightly cleaner with a separete function ("get_info()") to merge data from the two sources into "data")
 
+
+# 1.
+
+# weather.json reads:
+'''
+[
+  {
+    "city": "Stockholm",
+    "country": "Sweden",
+    "temperature": 11.6,
+    "temperature_unit": "\u00b0C",
+    "windspeed": 21.2,
+    "windspeed_unit": "km/h"
+  }
+]
+'''
+
+# 2.
+
+
+
+
 from api_client import get_json
-from retry_requests import retry
+import json, os, time
+
+
+weather_data = []
 
 
 def get_city_info(city_name):
@@ -27,6 +52,7 @@ def get_city_info(city_name):
 def get_weather(coordinates):
     latitude, longitude = coordinates
     weather = get_json("https://api.open-meteo.com/v1/forecast", params= {"latitude" : latitude, "longitude": longitude, "current": ["temperature_2m", "wind_speed_10m"]})
+    
     try:
         weather_info = [weather["current"]["temperature_2m"], 
                     weather["current_units"]["temperature_2m"], 
@@ -43,16 +69,30 @@ def get_info(user_city):
     if len(city_info) > 0:
         weather = get_weather(city_info[2])
         if len(weather) > 0:
-            return f"{city_info[0]}, {city_info[1]}: {weather[0]} {weather[1]}, wind {weather[2]} {weather[3]}"
+            return {"city": city_info[0], 
+                    "country": city_info[1], 
+                    "temperature": weather[0], 
+                    "temperature_unit": weather[1], 
+                    "windspeed": weather[2], 
+                    "windspeed_unit": weather[3]}
         else:
              return "Weather not availible"
     else:
         return "City not found"
 
 
-data = get_info(str(input("type city to get the weather:")).strip())
+def save_data():
+    config_data = weather_data
+    weather_file = 'weather.json'
 
-print(data)
+    with open(weather_file, 'w') as config_file:
+        json.dump(config_data, config_file, indent=2)
+
+    return f"\nData successfully written to {weather_file}"
 
 
-# 1.
+weather_query = get_info(str(input("type city to get the weather:\n")).strip())
+
+weather_data.append(weather_query)
+
+save_data()

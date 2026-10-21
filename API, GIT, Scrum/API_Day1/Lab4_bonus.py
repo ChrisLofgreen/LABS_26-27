@@ -76,7 +76,8 @@ def get_info(user_city):
                     "temperature_unit": weather[1], 
                     "windspeed": weather[2], 
                     "windspeed_unit": weather[3],
-                    "timestamp": time.time()}
+                    "timestamp": time.time(),
+                    "source": "query"}
         else:
              return {"city": "Errormess", "error": "Weather not availible", "timestamp": time.time()}
     else:
@@ -100,7 +101,7 @@ def load_data():
         with open(weather_file, 'r') as config_file:
             data_loaded = json.load(config_file)
         weather_data = data_loaded
-        print("Weatherfile loaded.")
+        print("weatherfile loaded.\n")
         return weather_data
 
     except FileNotFoundError:
@@ -108,22 +109,33 @@ def load_data():
         return weather_data
 
 
+def remove_old_data():
+    for data in weather_data:
+        if ((time.time() - data["timestamp"]) / 60) > 10:
+            weather_data.remove(data) 
+
+
+
 weather_data = load_data()
+remove_old_data()
+weather_query = None
+
+user_input = str(input("Type city to get it's current weather:\n")).strip()
+
 
 for data in weather_data:
-    if ((time.time() - data["timestamp"]) / 60) > 1:
-        print("removing", data)
-        weather_data.remove(data) 
+        if data["city"].lower() == user_input.lower() and ((time.time() - data["timestamp"]) / 60) < 10:
+            data["source"] = "from store"
+            weather_query = data
+            continue
 
-user_input = str(input("type city to get the weather:\n")).strip()
+if weather_query is None : weather_query = get_info(user_input)
 
-for city in weather_data:
-        if city["city"].lower() == user_input.lower() and ((time.time() - city["timestamp"]) / 60) < 10:
-            print(city, "from store")
-
-
-
-weather_query = get_info(user_input)
+if weather_query["city"] == "Errormess":
+    print(f"\n{weather_query["error"]}")
+else:
+    print(f"\n{weather_query["city"]}, {weather_query["country"]}: temp {weather_query["temperature"]} {weather_query["temperature_unit"]}, wind {weather_query["windspeed"]} {weather_query["windspeed_unit"]}")
+    print(f"data source: {weather_query["source"]}")
 
 weather_data.append(weather_query)
 

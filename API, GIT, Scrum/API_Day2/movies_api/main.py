@@ -18,7 +18,7 @@ api_key = os.getenv("API_KEY")
 
 
 
-# 1.
+
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -27,15 +27,9 @@ app = FastAPI()
 
 
 
-'''
-@app.get("/movies")
-def get_movies():
-    return movies
-'''
-#print(get_movies())
 
 
-# Load movie function for part 4
+# Load movies function for part 4
 def load_movies():
 
     movies_filename = 'movies.json'
@@ -57,11 +51,33 @@ def load_movies():
         return movies
 
 
+# Save movies function for part 4
+def save_movies():
+    config_data = movies
+    movies_filename = 'movies.json'
+
+    with open(movies_filename, 'w') as config_file:
+        json.dump(config_data, config_file, indent=2)
+
+    return f"\nData successfully written to {movies_filename}"
+
+
 # Check key function for part 3
 def check_key(x_api_key: str | None = Header(default=None)):
     expected = api_key
     if x_api_key is None or x_api_key != expected:
         raise HTTPException(status_code=401, detail="Invalid API key")
+
+
+
+
+# 1.
+
+'''
+@app.get("/movies")
+def get_movies():
+    return movies
+'''
 
 
 # 2. 
@@ -109,6 +125,7 @@ def add_movie(movie: Movie):
     new_id = max((mov["id"] for mov in movies), default=0) + 1
     new_movie = {"id": new_id, "title": movie.title, "director": movie.director, "year": movie.year}
     movies.append(new_movie)
+    save_movies()
     return new_movie
 
 # If no director it gives Code: 422, Error: Unprocessable Content. It brings up both problems:
@@ -123,12 +140,14 @@ def replace_movie(movie_id: int, movie: Movie):
     replace_id["title"] = movie.title
     replace_id["director"] = movie.director
     replace_id["year"] = movie.year
+    save_movies()
     return replace_id
 
 @app.delete("/movies/{movie_id}", status_code=204, dependencies=[Depends(check_key)])
 def delete_movie(movie_id: int):
     delete_id = get_movie(movie_id)
     movies.remove(delete_id)
+    save_movies()
 
 # The second time returns 404 Error: not found since it cannot find the movie with get_movie()
 # Upon server restart the movies list is returned to the original state
@@ -158,7 +177,7 @@ def update_movie(movie_id: int, changes: MovieUpdate):
     movie = get_movie(movie_id)
     update_data = changes.model_dump(exclude_unset=True)
     movie.update(update_data)
-
+    save_movies()
     return movie
 
 
@@ -217,7 +236,13 @@ def update_movie(movie_id: int, changes: MovieUpdate):
 
 movies = load_movies()
 
+# save_movies() added in POST, PUT, DELETE and PATCH
 
-def save_movies():
-    pass
+
+# 2-3
+
+# Check
+
+
+# 4.
 

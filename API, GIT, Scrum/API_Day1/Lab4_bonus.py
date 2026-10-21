@@ -25,6 +25,11 @@
 '''
 
 # 2.
+# Yes, it can repeat the answer any number of times within 10 minutes from the quiry timestamp
+
+# 3.
+# Short time local storage could be useful for many reasons but token cost, internet access, internet-cost and usage limits are certainly a few.
+# Then there is the thing that a new query will be slightly slower and poses a risk of failing. So reused might make for a snappier application.
 
 
 from api_client import get_json

@@ -69,6 +69,8 @@ def check_key(x_api_key: str | None = Header(default=None)):
         raise HTTPException(status_code=401, detail="Invalid API key")
 
 
+movies = load_movies()
+
 # 1.
 
 '''
@@ -97,7 +99,7 @@ def get_movie(movie_id: int):
 @app.get("/movies")
 def get_movies(director: str | None = None, year: int | None = None):
     filtered = []
-    if director != None or year != None:
+    if director != None and year != None:
         for movie in movies:
             if movie["director"].lower() == director.lower() or movie["year"] == year:
                 filtered.append(movie)
@@ -107,7 +109,7 @@ def get_movies(director: str | None = None, year: int | None = None):
     else:
         return movies
     
-# print(get_movies("james cameron", 1992))
+# print(get_movies("David Lynch", 1992))
 
 
 # 4.
@@ -232,7 +234,7 @@ def update_movie(movie_id: int, changes: MovieUpdate):
 
 # 1.
 
-movies = load_movies()
+# movies = load_movies() added to top
 
 # save_movies() added to POST, PUT, DELETE and PATCH
 
@@ -247,5 +249,5 @@ movies = load_movies()
 # If two people were to write in the same json file at the same time the results could be really interesting (I had to look this up). 
 # It could render a corrupt file by for example intertwining the data! (among other things)
 # Real world applications use databases so that above does not happen, but also for example: for the ease of querying a large dataset.
-# If I try to define the database usecase it would sound something like this: 
+# If I'd try to define the database usecase it would sound something like this: 
 # Databases are made for many users(who write) and/or large datasets.

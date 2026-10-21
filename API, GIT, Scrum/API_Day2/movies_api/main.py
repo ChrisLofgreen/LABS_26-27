@@ -69,8 +69,6 @@ def check_key(x_api_key: str | None = Header(default=None)):
         raise HTTPException(status_code=401, detail="Invalid API key")
 
 
-
-
 # 1.
 
 '''
@@ -236,7 +234,7 @@ def update_movie(movie_id: int, changes: MovieUpdate):
 
 movies = load_movies()
 
-# save_movies() added in POST, PUT, DELETE and PATCH
+# save_movies() added to POST, PUT, DELETE and PATCH
 
 
 # 2-3
@@ -246,3 +244,8 @@ movies = load_movies()
 
 # 4.
 
+# If two people were to write in the same json file at the same time the results could be really interesting (I had to look this up). 
+# It could render a corrupt file by for example intertwining the data! (among other things)
+# Real world applications use databases so that above does not happen, but also for example: for the ease of querying a large dataset.
+# If I try to define the database usecase it would sound something like this: 
+# Databases are made for many users(who write) and/or large datasets.

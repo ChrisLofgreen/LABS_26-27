@@ -27,20 +27,16 @@
 # 2.
 
 
-
-
 from api_client import get_json
 import json, os, time
 
 
-weather_data = []
+
+
+
 
 
 def get_city_info(city_name):
-    for city in weather_data:
-        if city["city"].lower() == city_name.lower() and ((time.time() - city["timestamp"]) / 60) < 10:
-            return"test"
-
     city = get_json("https://geocoding-api.open-meteo.com/v1/search", params= {"name" : city_name, "count": 1})
     
     try:
@@ -82,10 +78,9 @@ def get_info(user_city):
                     "windspeed_unit": weather[3],
                     "timestamp": time.time()}
         else:
-             return "Weather not availible"
+             return {"city": "Errormess", "error": "Weather not availible", "timestamp": time.time()}
     else:
-        return "City not found"
-
+        return {"city": "Errormess", "error": "City not found", "timestamp": time.time()}
 
 
 def save_data():
@@ -98,10 +93,37 @@ def save_data():
     return f"\nData successfully written to {weather_file}"
 
 
+def load_data():
+
+    weather_file = 'weather.json'
+    try:
+        with open(weather_file, 'r') as config_file:
+            data_loaded = json.load(config_file)
+        weather_data = data_loaded
+        print("Weatherfile loaded.")
+        return weather_data
+
+    except FileNotFoundError:
+        weather_data = []
+        return weather_data
+
+
+weather_data = load_data()
+
+for data in weather_data:
+    if ((time.time() - data["timestamp"]) / 60) > 1:
+        print("removing", data)
+        weather_data.remove(data) 
+
+user_input = str(input("type city to get the weather:\n")).strip()
+
+for city in weather_data:
+        if city["city"].lower() == user_input.lower() and ((time.time() - city["timestamp"]) / 60) < 10:
+            print(city, "from store")
 
 
 
-weather_query = get_info(str(input("type city to get the weather:\n")).strip())
+weather_query = get_info(user_input)
 
 weather_data.append(weather_query)
 

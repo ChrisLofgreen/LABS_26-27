@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv("secrets/.env")
 
-
+api_key = os.getenv("API_KEY")
 
 
 BASE = "http://127.0.0.1:8000"
@@ -78,6 +78,6 @@ movie = {
 }
 
 
-result = requests.post(f"{BASE}/movies", json=movie, timeout=1, headers={"X-API-Key": os.getenv("API_KEY")})
+result = requests.post(f"{BASE}/movies", json=movie, timeout=1, headers={"X-API-Key": api_key})
 print(result.status_code)
 print(result.json())

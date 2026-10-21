@@ -9,7 +9,7 @@ from fastapi import Depends, Header
 
 load_dotenv("secrets/.env")
 
-
+api_key = os.getenv("API_KEY")
 
 
 # Part 1: Your own API
@@ -40,7 +40,7 @@ def get_movies():
 
 # Check key function for part 3
 def check_key(x_api_key: str | None = Header(default=None)):
-    expected = os.getenv("API_KEY")
+    expected = api_key
     if x_api_key is None or x_api_key != expected:
         raise HTTPException(status_code=401, detail="Invalid API key")
 

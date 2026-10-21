@@ -37,6 +37,10 @@ weather_data = []
 
 
 def get_city_info(city_name):
+    for city in weather_data:
+        if city["city"].lower() == city_name.lower() and ((time.time() - city["timestamp"]) / 60) < 10:
+            return"test"
+
     city = get_json("https://geocoding-api.open-meteo.com/v1/search", params= {"name" : city_name, "count": 1})
     
     try:
@@ -64,6 +68,7 @@ def get_weather(coordinates):
     return weather_info
 
 
+
 def get_info(user_city):
     city_info = get_city_info(user_city)
     if len(city_info) > 0:
@@ -74,11 +79,13 @@ def get_info(user_city):
                     "temperature": weather[0], 
                     "temperature_unit": weather[1], 
                     "windspeed": weather[2], 
-                    "windspeed_unit": weather[3]}
+                    "windspeed_unit": weather[3],
+                    "timestamp": time.time()}
         else:
              return "Weather not availible"
     else:
         return "City not found"
+
 
 
 def save_data():
@@ -89,6 +96,9 @@ def save_data():
         json.dump(config_data, config_file, indent=2)
 
     return f"\nData successfully written to {weather_file}"
+
+
+
 
 
 weather_query = get_info(str(input("type city to get the weather:\n")).strip())

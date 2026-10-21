@@ -30,7 +30,7 @@ movie = {
 }
 
 
-result = requests.post(f"{BASE}/movies", json=movie, timeout=1, headers={"X-API-Key": api_key})
+result = requests.post(f"{BASE}/movies", json=movie, timeout=1)
 print(result.status_code)
 print(result.json())
 
@@ -70,6 +70,7 @@ result = requests.patch(f"{BASE}/movies/99", json=movie, timeout=1)
 print(result.status_code)
 '''
 
+# Client POST
 
 movie = {
     "title": "Shutter Island",

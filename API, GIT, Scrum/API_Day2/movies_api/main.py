@@ -3,16 +3,20 @@
 #git init
 #git status
 
+
+# Part 1: Your own API ------------------------------------------------------------------------------------------
+
+
 import os
 from dotenv import load_dotenv
 from fastapi import Depends, Header
+import json
 
 load_dotenv("secrets/.env")
 
 api_key = os.getenv("API_KEY")
 
 
-# Part 1: Your own API
 
 # 1.
 
@@ -23,12 +27,6 @@ app = FastAPI()
 
 
 
-movies = [
-    {"id": 1, "title": "Terminator 2", "director": "James Cameron", "year": 1991},
-    {"id": 2, "title": "Fire Walk with Me", "director": "David Lynch", "year": 1992},
-    {"id": 3, "title": "Life of Brian", "director": "Terry Jones", "year": 1979},
-    {"id": 4, "title": "Modern Times", "director": "Charlie Chaplin", "year": 1936}
-]
 '''
 @app.get("/movies")
 def get_movies():
@@ -36,6 +34,27 @@ def get_movies():
 '''
 #print(get_movies())
 
+
+# Load movie function for part 4
+def load_movies():
+
+    movies_filename = 'movies.json'
+    try:
+        with open(movies_filename, 'r') as config_file:
+            data_loaded = json.load(config_file)
+        movies = data_loaded
+        print("Movies loaded from file.\n")
+        return movies
+
+    except FileNotFoundError:
+        movies = [
+        {"id": 1, "title": "Terminator 2", "director": "James Cameron", "year": 1991},
+        {"id": 2, "title": "Fire Walk with Me", "director": "David Lynch", "year": 1992},
+        {"id": 3, "title": "Life of Brian", "director": "Terry Jones", "year": 1979},
+        {"id": 4, "title": "Modern Times", "director": "Charlie Chaplin", "year": 1936}
+        ]
+        print("movies.json not found, starting with standard movies.")
+        return movies
 
 
 # Check key function for part 3
@@ -123,7 +142,7 @@ def delete_movie(movie_id: int):
 
 
 
-# Part 2: PATCH
+# Part 2: PATCH -------------------------------------------------------------------------------------------------------------------------
 
 
 # 1.
@@ -141,6 +160,7 @@ def update_movie(movie_id: int, changes: MovieUpdate):
     movie.update(update_data)
 
     return movie
+
 
 # 2.
 
@@ -163,7 +183,7 @@ def update_movie(movie_id: int, changes: MovieUpdate):
 
 
 
-# Part 3: Protect your API with a key
+# Part 3: Protect your API with a key ----------------------------------------------------------------------------------------------
 
 
 # 1-4.
@@ -187,3 +207,17 @@ def update_movie(movie_id: int, changes: MovieUpdate):
 # 7.
 
 # Check
+
+
+
+# Part 4: Protect your API with a key ----------------------------------------------------------------------------------------------
+
+
+# 1.
+
+movies = load_movies()
+
+
+def save_movies():
+    pass
+

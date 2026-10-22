@@ -1,0 +1,85 @@
+
+
+
+
+Exercises: Agile methods and Scrum
+
+
+1.
+
+Any change in what the program should do can get acknowledged to late (or suffocated by the inconvinience and cost of a major change)
+And those ideas that might have been useful as the project develops might come up until testing, which is when whole thing has been built
+
+
+2.
+
+"Responding to change over following a plan" AND "Customer collaboration over contract negotiation":
+
+This might be that you improve the idea itself as the work progresses.
+This can provide insights from the developmet process that a customer needs make the best possible
+decisions regarding the end product, its marketing goals etc.
+
+One can imagine a function(in the everyday sense) that is in the original plan but in real life
+doesnt seem intuitive or useful to the end user in practice.
+This can be a case where you need to change it or scrap it entierly, which might
+change part of the original idea.
+
+This make contract negotiation second hand to collaboration over a great product.
+
+
+3. 
+
+a) Product owner
+b) Developers
+c) Scrum master
+d) Product owner
+e) Scrum master
+
+
+4.
+
+The product owner makes the decision on what to build, but the sprint must finish.
+
+
+5.
+
+Sprint review is focused on the product. Sprint retrospective is focused on the process of producing the product
+All in sprint review, Scrum master and Developers in retrospective
+
+
+6.
+
+a) As a sales manager I want a customer login feature so that I can understand individual customer behaivior.
+b) As a logistitian I want export orders to excel so that i can easily prioritize the days shipments.
+c) As an administrator I want dark mode to put less strain on my eyes.
+
+
+7.
+
+clicking the tab "order history" now shows customer their order history 
+
+
+8.
+
+- Feature works as expected
+- The code has been checked by a second developer
+- The tests have been passed
+- The feature has been implemented
+
+9.
+
+Refrain from doing full reports, just what they have done, what their going to do next and 
+if there is any hinderence to acheaving that.
+
+
+10.
+
+a) Scrum, this is bulding something new that can make use of collaborative development aspects of Scrum
+b and c) Kanban. I think both of these could make use of the higher short term flexibility, 
+although c might be an edgecase depending on the type of work that needs to be done
+
+
+11.
+
+Get the opinions of everyone, the thirteen might be extra important to listen to, maybe they have seen something that the others have not.
+Then do another round and see if there is more concensus in the scoring.

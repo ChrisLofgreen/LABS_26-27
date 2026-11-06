@@ -33,11 +33,7 @@
 
 
 from api_client import get_json
-import json, os, time
-
-
-
-
+import json, time
 
 
 
@@ -100,7 +96,6 @@ def save_data():
 
 
 def load_data():
-
     weather_file = 'weather.json'
     try:
         with open(weather_file, 'r') as config_file:

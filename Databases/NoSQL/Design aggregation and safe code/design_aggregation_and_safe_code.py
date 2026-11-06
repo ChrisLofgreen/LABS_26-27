@@ -48,16 +48,17 @@ for city in cities:
 '''
 # 5.
 
-'''
+
 categories = (db.products.aggregate([
     {"$group": {"_id": "$category",
                 "max": {"$max": "$price"},
-                "min": {"$min": "$price"}}}
+                "min": {"$min": "$price"},
+                "$name": 1}}
 ]))
 
 for category in categories:
     print(category)
-'''
+
 
 # 6.
 '''

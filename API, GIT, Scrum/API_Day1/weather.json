@@ -2,24 +2,46 @@
   {
     "city": "Errormess",
     "error": "City not found",
-    "timestamp": 1792590636.718577
+    "timestamp": 1792593869.245839
   },
   {
     "city": "Stockholm",
     "country": "Sweden",
-    "temperature": 11.5,
+    "temperature": 11.4,
     "temperature_unit": "\u00b0C",
-    "windspeed": 21.2,
+    "windspeed": 20.9,
     "windspeed_unit": "km/h",
-    "timestamp": 1792590649.6876342
+    "timestamp": 1792593991.7222497,
+    "source": "from store"
   },
   {
-    "city": "London",
-    "country": "United Kingdom",
-    "temperature": 9.4,
+    "city": "Stockholm",
+    "country": "Sweden",
+    "temperature": 11.4,
     "temperature_unit": "\u00b0C",
-    "windspeed": 22.7,
+    "windspeed": 20.9,
     "windspeed_unit": "km/h",
-    "timestamp": 1792590662.9028237
+    "timestamp": 1792593991.7222497,
+    "source": "from store"
+  },
+  {
+    "city": "Stockholm",
+    "country": "Sweden",
+    "temperature": 11.4,
+    "temperature_unit": "\u00b0C",
+    "windspeed": 20.9,
+    "windspeed_unit": "km/h",
+    "timestamp": 1792593991.7222497,
+    "source": "from store"
+  },
+  {
+    "city": "Stockholm",
+    "country": "Sweden",
+    "temperature": 11.4,
+    "temperature_unit": "\u00b0C",
+    "windspeed": 20.9,
+    "windspeed_unit": "km/h",
+    "timestamp": 1792593991.7222497,
+    "source": "from store"
   }
 ]

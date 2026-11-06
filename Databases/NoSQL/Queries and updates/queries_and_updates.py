@@ -90,7 +90,7 @@ print("Deleted count:", result.deleted_count)
 # Extras
 
 # 1. make campaign-codes on products
-'''
+
 result = db.products.update_many(
     {"category": "Clothing"},
     {"$set": {"campaign-codes": [{"clothing_bonanza": 50}]}},
@@ -107,11 +107,11 @@ result = db.products.update_one(
     )
 
 print(result)
-'''
+
 
 
 # 2. Look for active codes
-'''
+
 active_codes = []
 
 for product in db.products.find({"campaign-codes": {"$exists": True}}):
@@ -126,4 +126,3 @@ for id in active_codes:
         print (code)
     
     print("")
-'''

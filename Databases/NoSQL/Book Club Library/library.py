@@ -18,7 +18,7 @@ db = client["library"]
 import time
 import re
 
-
+'''
 books = [
     {"_id": 1, "title": "brave new world", "author": "Aldous Huxley", "genre": "fiction", "copies" : 2, "reviews": [], "search": ["brave", "new", "world", "aldous", "huxley", "fiction"]},
     {"_id": 2, "title": "1984", "author": "George Orwell", "genre": "fiction", "copies" : 3, "reviews": [], "search": ["1984", "george", "orwell", "fiction"]},
@@ -32,7 +32,7 @@ books = [
 ]
 
 db.books.insert_many(books)
-
+'''
 '''
 db.members.insert_one({"first_name": "John", "last_name": "Test", "email": "john@test.com", "borrowed_books": [], "overdue": False})
 '''

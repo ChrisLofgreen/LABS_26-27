@@ -252,7 +252,22 @@ def management_decisions():
 
 def zoo_map():
 
-    animal_release(summer)
+    fig = tx.figure
+    fig.clear()
+
+    tx.add_theme("zoo",
+        canvas = "default",                         # canvas background color
+        text = ("white", 24),                       # axes, rulers, labels and legend pixel
+        grid = 24)                                  # grid lines color
+    
+    fig.theme("zoo")
+
+
+    species_color = {
+    "Orangutan": "orange+",
+    "T-rex": "red+",
+    "Beaver": "cyan",
+    }
 
     animal_name = []
     species = []
@@ -266,10 +281,9 @@ def zoo_map():
             a, b = animal.location
 
         animal_name.append(animal.name)
-        species.append(animal.name)
+        species.append(animal.species)
         x.append(a)
         y.append(b)
-
 
     animal_coords = pd.DataFrame({
     "animal": animal_name,
@@ -277,6 +291,17 @@ def zoo_map():
     "x": x,
     "y": y,
     })
+
+
+    for species_name, group in animal_coords.groupby("species"):
+        color = species_color.get(species_name, "white")
+        gps = fig.signal(
+            group["x"].tolist(),
+            group["y"].tolist(),
+            marker=tx.marker("hd", pixel=(color, "default")),
+        )
+        fig.draw(gps)
+
 
     nw_coords = pd.DataFrame({
     "x": [0, 30],
@@ -288,21 +313,7 @@ def zoo_map():
     "y": [10, 10],
     })
 
-    tx.add_theme("zoo",
-              canvas = "default",                         # canvas background color
-              text = ("white", 24),                       # axes, rulers, labels and legend pixel
-              sequence = ["red+", "blue+", "white"],      # signal colors
-              grid = 24)                                  # grid lines color
 
-    fig = tx.figure
-    fig.clear()
-    fig.theme("zoo")
-
-    residents = fig.signal(
-        animal_coords["x"].tolist(),
-        animal_coords["y"].tolist(),
-        marker=tx.marker("hd", pixel=("red", "default")),
-    )
     north_wall = fig.signal(
         nw_coords["x"].tolist(),
         nw_coords["y"].tolist(),
@@ -321,7 +332,6 @@ def zoo_map():
     fig.ruler("y").ticks([0, 2, 4, 6, 8, 10])
     fig.draw(south_wall)
     fig.draw(north_wall)
-    fig.draw(residents)
     fig.title("Zoo map")
     fig.show()
 

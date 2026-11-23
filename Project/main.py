@@ -251,7 +251,35 @@ def management_decisions():
 
 
 def zoo_plot():
-    
+
+    animal_release(summer)
+
+
+    #animal_name = ["Beni", "Cinta", "Sue", "Slippy"]
+    #species = ["Orangutan", "Orangutan", "T-rex", "Beaver"]
+    #x = [1, 3, 7, 5]
+    #y = [4, 6, 8, 2]
+
+    animal_name = []
+    species = []
+    x = []
+    y = []
+
+    for animal in animals_in_zoo:
+        a, b = animal.location
+        animal_name.append(animal.name)
+        species.append(animal.name)
+        x.append(a)
+        y.append(b)
+
+
+    animal_coords = pd.DataFrame({
+    "animal": animal_name,
+    "species": species,
+    "x": x,
+    "y": y,
+    })
+
     nw_coords = pd.DataFrame({
     "x": [0, 30],
     "y": [0, 0],
@@ -262,22 +290,15 @@ def zoo_plot():
     "y": [10, 10],
     })
 
-    animal_coords = pd.DataFrame({
-    "animal": ["Beni", "Cinta", "Sue", "Flappy"],
-    "species": ["Orangutan", "Orangutan", "T-rex", "Beaver"],
-    "x": [1, 3, 7, 5],
-    "y": [4, 6, 8, 2],
-    })
+    tx.add_theme("zoo",
+              canvas = "default",                         # canvas background color
+              text = ("white", 24),                       # axes, rulers, labels and legend pixel
+              sequence = ["red+", "blue+", "white"],      # signal colors
+              grid = 24)                                  # grid lines color
 
     fig = tx.figure
     fig.clear()
-
-    tx.add_theme("zoo",
-              canvas = 24,                                # canvas background color
-              text = ("white", 24),                       # axes, rulers, labels and legend pixel
-              sequence = ["red+", "blue+", "white"],      # signal colors
-              grid = 31)                                  # grid lines color
-
+    fig.theme("zoo")
 
     residents = fig.signal(
         animal_coords["x"].tolist(),
@@ -287,15 +308,19 @@ def zoo_plot():
     north_wall = fig.signal(
         nw_coords["x"].tolist(),
         nw_coords["y"].tolist(),
+        marker=tx.marker("hd", pixel=("blue", "default")),
     ).lines()
 
     south_wall = fig.signal(
         sw_coords["x"].tolist(),
         sw_coords["y"].tolist(),
+        marker=tx.marker("hd", pixel=("blue", "default")),
     ).lines()
+
     
-    fig.theme("zoo")
     fig.plot_size(60, 10)
+    fig.ruler("x").ticks([0, 10, 20, 30])
+    fig.ruler("y").ticks([0, 2, 4, 6, 8, 10])
     fig.draw(south_wall)
     fig.draw(north_wall)
     fig.draw(residents)

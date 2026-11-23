@@ -127,21 +127,21 @@ def put_food_in_tyrannosaur_pen():
 
 def summery_report_creator():
 
-    summery_report.append(f"      Beaver-pen |Orangutan-pen| T-Rex-pen")
-    summery_report.append(f"    -----------------------------------------")
-    summery_report.append(f"    |   / /      |             |            |")
-    summery_report.append(f"    |   | |      |             |            |")
-    summery_report.append(f"    |   | |      |             |            |")
-    if environment.food_in_tyrannosaur_pen["food"] == False:
-        summery_report.append(f"    |   | |      |             |            |")
-    else:
-        summery_report.append(f"    |   / /      |             |         (*)|")
-    summery_report.append(f"    -----------------------------------------")
-    summery_report.append(f"                                       _===o ")
-    summery_report.append(f"                                      //   | ")
-    summery_report.append(f"                                     //      ")
+    #summery_report.append(f"      Beaver-pen |Orangutan-pen| T-Rex-pen")
+    #summery_report.append(f"    -----------------------------------------")
+    #summery_report.append(f"    |   / /      |             |            |")
+    #summery_report.append(f"    |   | |      |             |            |")
+    #summery_report.append(f"    |   | |      |             |            |")
+    #if environment.food_in_tyrannosaur_pen["food"] == False:
+    #    summery_report.append(f"    |   | |      |             |            |")
+    #else:
+    #    summery_report.append(f"    |   / /      |             |         (*)|")
+    #summery_report.append(f"    -----------------------------------------")
+    #summery_report.append(f"                                       _===o ")
+    #summery_report.append(f"                                      //   | ")
+    #summery_report.append(f"                                     //      ")
 
-    summery_report.append(f"\n----------------------Fruits----------------------\n")
+    summery_report.append(f"\n---------------------------Fruits---------------------------\n")
    
     total_fruits_eaten = 0
 
@@ -164,7 +164,7 @@ def summery_report_creator():
         summery_report.append(f"The climate has been warm, the trees have sprouted a lot of fruits\n")
 
     if animals.beaver_dam != None:
-        summery_report.append(f"\n--------------------Beaver dam--------------------\n")
+        summery_report.append(f"\n-------------------------Beaver dam-------------------------\n")
         if animals.beaver_dam["progress"] < 100:
             summery_report.append(f"Beaver dam progress: {animals.beaver_dam["progress"]}% \n")
             summery_report.append(f"Beavers working: {animals.beaver_dam["working"]} \n")
@@ -177,10 +177,10 @@ def summery_report_creator():
                 affected_squares = [(x, y) for x, y in environment.stream_squares if x != 3]
                 summery_report.append(f"{affected_squares}\n")
 
-    summery_report.append(f"\n-----------------Tyrannosaur pen------------------\n")
+    summery_report.append(f"\n----------------------Tyrannosaur pen-----------------------\n")
     summery_report.append(f"Food in tyrannosaur pen: {environment.food_in_tyrannosaur_pen["food"]} \n")
 
-    summery_report.append(f"\n-----------------Security status------------------\n")
+    summery_report.append(f"\n----------------------Security status-----------------------\n")
     for wall in environment.walls:
         if wall.health == None:
             summery_report.append(f"{wall.name} health: destroyed \n")
@@ -189,17 +189,17 @@ def summery_report_creator():
 
 
     if len(lost_animals) > 0:
-        summery_report.append(f"\n-----------------Lost animals-------------------\n")
+        summery_report.append(f"\n----------------------Lost animals------------------------\n")
         for animal in lost_animals:
             summery_report.append(f"{animal.species} {animal.name} : {animal.state}")
 
     if len(animals_in_zoo) > 0:
-        summery_report.append(f"\n-----------------Animals in Zoo-------------------\n")
+        summery_report.append(f"\n----------------------Animals in Zoo------------------------\n")
         for index, animal in enumerate(animals_in_zoo, start=1):
             summery_report.append(f"{index}. {animal.species} {animal.name}")
         if len(animals_in_zoo) == 1:
             summery_report.append(f"\nThere is only 1 animal in the zoo, are you sure you want to continue the simulation?\n")
-        summery_report.append(f"\n--------------------------------------------------\n")
+        summery_report.append(f"\n------------------------------------------------------------\n")
     elif len(animals_in_zoo) == 0:
         summery_report.append(f"All animals have been lost or died, are you sure you want to continue the simulation?\n")
 
@@ -271,8 +271,8 @@ def zoo_map():
 
     animal_name = []
     species = []
-    x = []
-    y = []
+    ax = []
+    ay = []
 
     for animal in animals_in_zoo:
         if len(animal.location) == 3:
@@ -282,14 +282,14 @@ def zoo_map():
 
         animal_name.append(animal.name)
         species.append(animal.species)
-        x.append(a)
-        y.append(b)
+        ax.append(a)
+        ay.append(b)
 
     animal_coords = pd.DataFrame({
     "animal": animal_name,
     "species": species,
-    "x": x,
-    "y": y,
+    "x": ax,
+    "y": ay,
     })
 
 
@@ -303,35 +303,25 @@ def zoo_map():
         fig.draw(gps)
 
 
-    nw_coords = pd.DataFrame({
-    "x": [0, 30],
-    "y": [0, 0],
-    })
+    for wall in environment.walls:
+        if wall.health == None:
+            continue
+        
+        wx = [point[0] for point in wall.coordinates]
+        wy = [point[1] for point in wall.coordinates]
 
-    sw_coords = pd.DataFrame({
-    "x": [0, 30],
-    "y": [10, 10],
-    })
+        line = fig.signal(
+            wx,
+            wy,
+            marker=tx.marker("hd", pixel=("blue", "default")),
+        ).lines()
+
+        fig.draw(line)
 
 
-    north_wall = fig.signal(
-        nw_coords["x"].tolist(),
-        nw_coords["y"].tolist(),
-        marker=tx.marker("hd", pixel=("blue", "default")),
-    ).lines()
-
-    south_wall = fig.signal(
-        sw_coords["x"].tolist(),
-        sw_coords["y"].tolist(),
-        marker=tx.marker("hd", pixel=("blue", "default")),
-    ).lines()
-
-    
     fig.plot_size(60, 10)
-    fig.ruler("x").ticks([0, 10, 20, 30])
-    fig.ruler("y").ticks([0, 2, 4, 6, 8, 10])
-    fig.draw(south_wall)
-    fig.draw(north_wall)
+    fig.ruler("x").ticks([])
+    fig.ruler("y").ticks([])
     fig.title("Zoo map")
     fig.show()
 
@@ -358,18 +348,16 @@ jane = animals.TRex("Jane")
 
 print("\n\n\n\n\n        Welcome to the strange animal simulator\n")
 
-zoo_map()
-
-#print("       -----------------------------------------")
-#print("       |   / /      |             |            |")
-#print("       |   | |      |             |            |")
-#print("       |   Beaver   |  Orangutan  |   T-Rex    |")
-#print("       |   | |      |             |            |")
-#print("       |   / /      |             |            |")
-#print("       -----------------------------------------")
-#print("                                          _===o ")
-#print("                                         //   | ")
-#print("                                        //      ")
+print("       -----------------------------------------")
+print("       |   / /      |             |            |")
+print("       |   | |      |             |            |")
+print("       |   Beaver   |  Orangutan  |   T-Rex    |")
+print("       |   | |      |             |            |")
+print("       |   / /      |             |            |")
+print("       -----------------------------------------")
+print("                                          _===o ")
+print("                                         //   | ")
+print("                                        //      ")
 
 
 
@@ -397,24 +385,25 @@ while True:
     animals.time_of_day += 1
 
     if animals.time_of_day == 5:
-    
-        print(f"--------------------------------------------------\n                 | Report Day {day} |\n--------------------------------------------------")
+
+        
+        print(f"------------------------------------------------------------\n                      | Report Day {day} |\n------------------------------------------------------------")
 
         if len(animals_in_zoo) > 0:
             zoo_map()
 
         if len(summery_report) > 0:
-            print(f"                  Summery Report\n")
+            print(f"                      Summery Report\n")
             for report in summery_report:
                 print(report)
 
         if len(management_report) > 0:
-            print(f"               Management Decisions\n")
+            print(f"\n                   Management Decisions\n")
             for index, report in enumerate(management_report, start=1):
                 print(f"{index}. {report}\n")
 
         if len(animals.day_report) > 0:
-            print(f"                  Animal Report\n")
+            print(f"                      Animal Report\n")
             for index, report in enumerate(animals.day_report, start=1):
                 print(f"{index}. {report}\n")
 

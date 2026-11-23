@@ -252,6 +252,8 @@ def management_decisions():
 
 def zoo_map():
 
+    print("    " + tx.colorize("Dotted line", ("blue")) + " = stream   " + tx.colorize("Line", ("gray")) + " = wall    "     + tx.colorize("F", ("red")) + " = T-rex food")
+
     fig = tx.figure
     fig.clear()
 
@@ -262,12 +264,6 @@ def zoo_map():
     
     fig.theme("zoo")
 
-
-    species_color = {
-    "Orangutan": "yellow",
-    "Tyrannosaur": "red",
-    "Beaver": "orange",
-    }
 
     animal_name = []
     species = []
@@ -292,16 +288,34 @@ def zoo_map():
     "y": ay,
     })
 
+    species_color = {
+    "Orangutan": "yellow",
+    "Tyrannosaur": "red",
+    "Beaver": "magenta",
+    }
+
     animal_positions = set(zip(ax, ay))
     visible_stream = [pos for pos in environment.stream_squares if pos not in animal_positions]
 
     stream = fig.signal(
         [x for x, y in visible_stream],
         [y for x, y in visible_stream],
-        marker=tx.marker("hd", pixel=("blue", "default")),
-        )
+        marker=tx.marker("braille", pixel=("blue", "default")),
+        ).lines()
 
     fig.draw(stream)
+
+
+    if environment.food_in_tyrannosaur_pen["food"]:
+        food_x, food_y = environment.food_in_tyrannosaur_pen["location"]
+
+        food_marker = fig.signal(
+            [food_x],
+            [food_y],
+            marker=tx.marker("F", pixel=("red+", "default")),
+            )
+        
+        fig.draw(food_marker)
 
 
     for wall in environment.walls:
@@ -314,7 +328,7 @@ def zoo_map():
         line = fig.signal(
             wx,
             wy,
-            marker=tx.marker("hd", pixel=("blue", "default")),
+            marker=tx.marker("hd", pixel=("gray", "default")),
         ).lines()
 
         fig.draw(line)
@@ -325,17 +339,18 @@ def zoo_map():
         gps = fig.signal(
             group["x"].tolist(),
             group["y"].tolist(),
-            marker=tx.marker("hd", pixel=(color, "default")),
-        )
+            marker=tx.marker("circle", pixel=(color, "default")),
+            )
+        
         fig.draw(gps)
 
 
     fig.plot_size(60, 12)
     fig.ruler("x").ticks([])
     fig.ruler("y").ticks([])
-    fig.title("Zoo map")
     fig.show()
 
+    print("       " + tx.colorize("● Beaver", ("magenta")) + "         " + tx.colorize("● Orangutan", ("yellow")) + "       " + tx.colorize("● Tyrannosaur", ("red")))
 
 
 # Beavers

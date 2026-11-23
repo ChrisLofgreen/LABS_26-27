@@ -2,6 +2,11 @@ import random
 import animals
 import environment
 
+import pandas as pd
+import matplotlib.pyplot as plt
+import plotext as tx
+import seaborn as sns
+
 
 global_climate = 1
 
@@ -121,6 +126,25 @@ def put_food_in_tyrannosaur_pen():
     management_report.append("Food has been delivered to the tyrannosaur pen")
 
 def summery_report_creator():
+
+
+    animal_coords = pd.DataFrame({
+    "animal": ["Beni", "Cinta", "Sue", "Flappy"],
+    "species": ["Orangutan", "Orangutan", "T-rex", "Beaver"],
+    "x": [2, 3, 7, 5],
+    "y": [4, 6, 8, 2],
+    })
+
+    fig = tx.figure
+    fig.clear()
+
+    signal = fig.signal(
+        animal_coords["x"].tolist(),
+        animal_coords["y"].tolist(),
+    )
+    fig.draw(signal)
+    fig.title("Zoo map")
+    fig.show()
 
 
     summery_report.append(f"      Beaver-pen |Orangutan-pen| T-Rex-pen")
@@ -288,7 +312,7 @@ print("The orangutang-pen has no special amenities as they thrive in the tall fo
 print("The pens can mostly sustain it's inhabitants without intervension, exept for the tyrannosaurs, for whom outside food is a necessity for calm behaivior.\n\n\n")
 
 
-while day <= 90:
+while True:
 
     if day != 1 and animals.time_of_day != 4:
         print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")

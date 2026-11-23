@@ -250,15 +250,9 @@ def management_decisions():
         put_food_in_tyrannosaur_pen()
 
 
-def zoo_plot():
+def zoo_map():
 
     animal_release(summer)
-
-
-    #animal_name = ["Beni", "Cinta", "Sue", "Slippy"]
-    #species = ["Orangutan", "Orangutan", "T-rex", "Beaver"]
-    #x = [1, 3, 7, 5]
-    #y = [4, 6, 8, 2]
 
     animal_name = []
     species = []
@@ -266,7 +260,11 @@ def zoo_plot():
     y = []
 
     for animal in animals_in_zoo:
-        a, b = animal.location
+        if len(animal.location) == 3:
+            a, b, c = animal.location
+        else:
+            a, b = animal.location
+
         animal_name.append(animal.name)
         species.append(animal.name)
         x.append(a)
@@ -350,7 +348,8 @@ jane = animals.TRex("Jane")
 
 print("\n\n\n\n\n        Welcome to the strange animal simulator\n")
 
-zoo_plot()
+zoo_map()
+
 #print("       -----------------------------------------")
 #print("       |   / /      |             |            |")
 #print("       |   | |      |             |            |")
@@ -390,6 +389,9 @@ while True:
     if animals.time_of_day == 5:
     
         print(f"--------------------------------------------------\n                 | Report Day {day} |\n--------------------------------------------------")
+
+        if len(animals_in_zoo) > 0:
+            zoo_map()
 
         if len(summery_report) > 0:
             print(f"                  Summery Report\n")

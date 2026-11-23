@@ -189,7 +189,7 @@ def summery_report_creator():
 
 
     if len(lost_animals) > 0:
-        summery_report.append(f"\n----------------------Lost animals------------------------\n")
+        summery_report.append(f"\n-----------------------Lost animals-------------------------\n")
         for animal in lost_animals:
             summery_report.append(f"{animal.species} {animal.name} : {animal.state}")
 
@@ -257,16 +257,16 @@ def zoo_map():
 
     tx.add_theme("zoo",
         canvas = "default",                         # canvas background color
-        text = ("white", 24),                       # axes, rulers, labels and legend pixel
+        text = ("white"),                           # axes, rulers, labels and legend pixel
         grid = 24)                                  # grid lines color
     
     fig.theme("zoo")
 
 
     species_color = {
-    "Orangutan": "orange+",
-    "T-rex": "red+",
-    "Beaver": "cyan",
+    "Orangutan": "yellow",
+    "Tyrannosaur": "red",
+    "Beaver": "orange",
     }
 
     animal_name = []
@@ -292,21 +292,22 @@ def zoo_map():
     "y": ay,
     })
 
+    animal_positions = set(zip(ax, ay))
+    visible_stream = [pos for pos in environment.stream_squares if pos not in animal_positions]
 
-    for species_name, group in animal_coords.groupby("species"):
-        color = species_color.get(species_name, "white")
-        gps = fig.signal(
-            group["x"].tolist(),
-            group["y"].tolist(),
-            marker=tx.marker("hd", pixel=(color, "default")),
+    stream = fig.signal(
+        [x for x, y in visible_stream],
+        [y for x, y in visible_stream],
+        marker=tx.marker("hd", pixel=("blue", "default")),
         )
-        fig.draw(gps)
+
+    fig.draw(stream)
 
 
     for wall in environment.walls:
         if wall.health == None:
             continue
-        
+
         wx = [point[0] for point in wall.coordinates]
         wy = [point[1] for point in wall.coordinates]
 
@@ -319,7 +320,17 @@ def zoo_map():
         fig.draw(line)
 
 
-    fig.plot_size(60, 10)
+    for species_name, group in animal_coords.groupby("species"):
+        color = species_color.get(species_name, "white")
+        gps = fig.signal(
+            group["x"].tolist(),
+            group["y"].tolist(),
+            marker=tx.marker("hd", pixel=(color, "default")),
+        )
+        fig.draw(gps)
+
+
+    fig.plot_size(60, 12)
     fig.ruler("x").ticks([])
     fig.ruler("y").ticks([])
     fig.title("Zoo map")
@@ -389,21 +400,21 @@ while True:
         
         print(f"------------------------------------------------------------\n                      | Report Day {day} |\n------------------------------------------------------------")
 
-        if len(animals_in_zoo) > 0:
+        if len(animals_in_zoo) > 0 and day > 1:
             zoo_map()
 
         if len(summery_report) > 0:
-            print(f"                      Summery Report\n")
+            print(f"                       Summery Report\n")
             for report in summery_report:
                 print(report)
 
         if len(management_report) > 0:
-            print(f"\n                   Management Decisions\n")
+            print(f"\n                    Management Decisions\n")
             for index, report in enumerate(management_report, start=1):
                 print(f"{index}. {report}\n")
 
         if len(animals.day_report) > 0:
-            print(f"                      Animal Report\n")
+            print(f"                       Animal Report\n")
             for index, report in enumerate(animals.day_report, start=1):
                 print(f"{index}. {report}\n")
 

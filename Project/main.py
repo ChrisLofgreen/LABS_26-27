@@ -252,7 +252,7 @@ def management_decisions():
 
 def zoo_map():
 
-    print("    " + tx.colorize("Dotted line", ("blue")) + " = stream   " + tx.colorize("Line", ("gray")) + " = wall    "     + tx.colorize("F", ("red")) + " = T-rex food")
+    print("    " + tx.colorize("Small dots", ("blue")) + " = stream   " + tx.colorize("Line", ("gray")) + " = wall    "     + tx.colorize("F", ("red")) + " = T-rex food")
 
     fig = tx.figure
     fig.clear()
@@ -263,7 +263,6 @@ def zoo_map():
         grid = 24)                                  # grid lines color
     
     fig.theme("zoo")
-
 
     animal_name = []
     species = []
@@ -313,7 +312,7 @@ def zoo_map():
             [food_x],
             [food_y],
             marker=tx.marker("F", pixel=("red+", "default")),
-            )
+        )
         
         fig.draw(food_marker)
 
@@ -340,7 +339,7 @@ def zoo_map():
             group["x"].tolist(),
             group["y"].tolist(),
             marker=tx.marker("circle", pixel=(color, "default")),
-            )
+        )
         
         fig.draw(gps)
 

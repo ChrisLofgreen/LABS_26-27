@@ -127,26 +127,6 @@ def put_food_in_tyrannosaur_pen():
 
 def summery_report_creator():
 
-
-    animal_coords = pd.DataFrame({
-    "animal": ["Beni", "Cinta", "Sue", "Flappy"],
-    "species": ["Orangutan", "Orangutan", "T-rex", "Beaver"],
-    "x": [2, 3, 7, 5],
-    "y": [4, 6, 8, 2],
-    })
-
-    fig = tx.figure
-    fig.clear()
-
-    signal = fig.signal(
-        animal_coords["x"].tolist(),
-        animal_coords["y"].tolist(),
-    )
-    fig.draw(signal)
-    fig.title("Zoo map")
-    fig.show()
-
-
     summery_report.append(f"      Beaver-pen |Orangutan-pen| T-Rex-pen")
     summery_report.append(f"    -----------------------------------------")
     summery_report.append(f"    |   / /      |             |            |")
@@ -223,7 +203,6 @@ def summery_report_creator():
     elif len(animals_in_zoo) == 0:
         summery_report.append(f"All animals have been lost or died, are you sure you want to continue the simulation?\n")
 
-    
 
 def management_decisions():
 
@@ -271,6 +250,59 @@ def management_decisions():
         put_food_in_tyrannosaur_pen()
 
 
+def zoo_plot():
+    
+    nw_coords = pd.DataFrame({
+    "x": [0, 30],
+    "y": [0, 0],
+    })
+
+    sw_coords = pd.DataFrame({
+    "x": [0, 30],
+    "y": [10, 10],
+    })
+
+    animal_coords = pd.DataFrame({
+    "animal": ["Beni", "Cinta", "Sue", "Flappy"],
+    "species": ["Orangutan", "Orangutan", "T-rex", "Beaver"],
+    "x": [1, 3, 7, 5],
+    "y": [4, 6, 8, 2],
+    })
+
+    fig = tx.figure
+    fig.clear()
+
+    tx.add_theme("zoo",
+              canvas = 24,                                # canvas background color
+              text = ("white", 24),                       # axes, rulers, labels and legend pixel
+              sequence = ["red+", "blue+", "white"],      # signal colors
+              grid = 31)                                  # grid lines color
+
+
+    residents = fig.signal(
+        animal_coords["x"].tolist(),
+        animal_coords["y"].tolist(),
+        marker=tx.marker("hd", pixel=("red", "default")),
+    )
+    north_wall = fig.signal(
+        nw_coords["x"].tolist(),
+        nw_coords["y"].tolist(),
+    ).lines()
+
+    south_wall = fig.signal(
+        sw_coords["x"].tolist(),
+        sw_coords["y"].tolist(),
+    ).lines()
+    
+    fig.theme("zoo")
+    fig.plot_size(60, 10)
+    fig.draw(south_wall)
+    fig.draw(north_wall)
+    fig.draw(residents)
+    fig.title("Zoo map")
+    fig.show()
+
+
 
 # Beavers
 flappy = animals.Beaver("Flappy")
@@ -289,17 +321,21 @@ monita = animals.Orangutan("Monita")
 sue = animals.TRex("Sue")
 jane = animals.TRex("Jane")
 
+
+
 print("\n\n\n\n\n        Welcome to the strange animal simulator\n")
-print("       -----------------------------------------")
-print("       |   / /      |             |            |")
-print("       |   | |      |             |            |")
-print("       |   Beaver   |  Orangutan  |   T-Rex    |")
-print("       |   | |      |             |            |")
-print("       |   / /      |             |            |")
-print("       -----------------------------------------")
-print("                                          _===o ")
-print("                                         //   | ")
-print("                                        //      ")
+
+zoo_plot()
+#print("       -----------------------------------------")
+#print("       |   / /      |             |            |")
+#print("       |   | |      |             |            |")
+#print("       |   Beaver   |  Orangutan  |   T-Rex    |")
+#print("       |   | |      |             |            |")
+#print("       |   / /      |             |            |")
+#print("       -----------------------------------------")
+#print("                                          _===o ")
+#print("                                         //   | ")
+#print("                                        //      ")
 
 
 

@@ -321,20 +321,21 @@ def zoo_map():
         if wall.health == None:
             continue
 
-        wx = [point[0] for point in wall.coordinates]
-        wy = [point[1] for point in wall.coordinates]
+        wx = [x for x, y in wall.coordinates]
+        wy = [y for x, y in wall.coordinates]
 
-        line = fig.signal(
+        wall = fig.signal(
             wx,
             wy,
             marker=tx.marker("hd", pixel=("gray", "default")),
         ).lines()
 
-        fig.draw(line)
+        fig.draw(wall)
 
 
     for species_name, group in animal_coords.groupby("species"):
         color = species_color.get(species_name, "white")
+
         gps = fig.signal(
             group["x"].tolist(),
             group["y"].tolist(),
